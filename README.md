@@ -1,5 +1,5 @@
 # lowympact-front
-A Long Duration Project in 4th year at INSA Lyon - Front-end part of a food traceability application on top of Ethereum's blockchain
+A HexaOne's project made at INSA Lyon - Lowympact is a food traceability application on top of Ethereum's blockchain.
 
 # Working on the project
 When pulling work from github, don't forget to download the latest librairies by running `npm install`
