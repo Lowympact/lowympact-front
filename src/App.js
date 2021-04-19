@@ -1,15 +1,33 @@
-import logo from './images/logo.svg';
-import './App.css';
+import React, { Component, Suspense, lazy } from 'react';
+import {
+	BrowserRouter as Router,
+	Route,
+	Redirect,
+	Switch
+} from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="logo" alt="logo" />
-        <h1>Lowympact</h1>
-      </header>
-    </div>
-  );
-}
+import './App.css';
+import Homepage from './pages/Homepage';
+import Error404 from './pages/Error404';
+
+
+class App extends Component {
+	render() {
+		return (
+			<Router>
+				 <Switch>
+					{/* Front Pages */}
+					<Route path="/" component={ Homepage } exact />
+					
+					{/* Errors Pages */}
+					<Route path="/error404" component={ Error404 } />
+					<Redirect to="/error404" />
+					{/* <Route path="/MAINTENANCE" component={ Maintenance } /> */}
+				 </Switch>
+				{/* </Suspense> */}
+			</Router>
+		);
+	}
+};
 
 export default App;
