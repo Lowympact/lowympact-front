@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "name": "Lowympact, la traçabilité des produits alimentaires",
+  "short_name": "Lowympact",
+  "description": "Scanne les produits alimentaires afin d'obtenir leur traçabilité, et leur impact environnemental.",
   "icons": [
     {
       "src": "favicon.ico",
