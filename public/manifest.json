@@ -1,5 +1,5 @@
 {
-  "name": "Lowympact, la traçabilité des produits alimentaires",
+  "name": "Lowympact, la traçabilité des produits alimentaires dans votre poche",
   "short_name": "Lowympact",
   "description": "Scanne les produits alimentaires afin d'obtenir leur traçabilité, et leur impact environnemental.",
   "icons": [
@@ -9,12 +9,12 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "logo.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "logo.png",
       "type": "image/png",
       "sizes": "512x512"
     }
