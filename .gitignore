@@ -1,1 +1,11 @@
 node_modules
+.vscode
+
+#bubblewrap related
+gradle
+app
+*.keystore
+*.gradle
+gradle.properties
+gradlew
+gradlew.bat
