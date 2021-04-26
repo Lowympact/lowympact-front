@@ -1,7 +1,21 @@
-.navbar-container{
-    width: 100vw;
-    height: 100px;
-    position: fixed;
-    bottom:0px;
-    background-color: red;
+.navbar-container {
+  width: 100vw;
+  height: 100px;
+  position: fixed;
+  bottom: 0px;
+  background-color: white;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  color: grey;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  box-shadow: 0% 10% white;
+}
+.navbar-text-right {
+  margin-right: 3%;
+}
+.navbar-text-left {
+  margin-left: 3%;
 }
