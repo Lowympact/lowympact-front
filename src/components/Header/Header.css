@@ -1,0 +1,14 @@
+.header-container{
+    width: 100vw;
+    height: 100px;
+    position: fixed;
+    top:0px;
+    background-color: rgb(120,190,149);
+    vertical-align: middle;
+    display: flex;
+    align-items:center;
+}
+.header-logo{
+    max-width: 100px;
+    height: auto;
+  }

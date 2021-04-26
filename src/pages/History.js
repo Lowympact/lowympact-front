@@ -1,17 +1,15 @@
 import React from 'react';
-import logo from '../assets/images/logo.svg';
+import fruits from '../assets/images/fruits-vegetables-basket-by-oblik-studio.svg';
 import Navbar from '../components/Navbar/Navbar';
+import Header from '../components/Header/Header';
 
 function Homepage() {
   return (
     <React.Fragment>
+      <Header/>
       <Navbar/>
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="logo" alt="logo" />
-          <h1>Lowympact</h1>
-
-        </header>
+        <img src={fruits} className="logo"/>
       </div>
     </React.Fragment>
   );
