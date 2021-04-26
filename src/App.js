@@ -1,4 +1,4 @@
-import React, { Component, Suspense, lazy } from 'react';
+import React, { Component } from 'react';
 import {
 	BrowserRouter as Router,
 	Route,
@@ -7,8 +7,11 @@ import {
 } from 'react-router-dom';
 
 import './App.css';
-import Homepage from './pages/Homepage';
+import History from './pages/History';
 import Error404 from './pages/Error404';
+import Login from './pages/Login';
+import Product from './pages/Product';
+
 
 
 class App extends Component {
@@ -17,7 +20,11 @@ class App extends Component {
 			<Router>
 				 <Switch>
 					{/* Front Pages */}
-					<Route path="/" component={ Homepage } exact />
+					<Route path="/" component={ History } exact />
+					<Route path="/history" component={ History } exact />
+					<Route path="/login" component={ Login } exact />
+					<Route path="/products/:barcode/:bcProductId" component={ Product } exact />
+					<Route path="/products/:barcode" component={ Product } exact />
 					
 					{/* Errors Pages */}
 					<Route path="/error404" component={ Error404 } />
