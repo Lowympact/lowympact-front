@@ -33,9 +33,17 @@
 }
 
 .logo {
-	max-width: 30%;
+	max-width: 70%;
 	height: auto;
 	margin: 0 auto;
+}
+
+.logo-text {
+	max-width: 100%;
+	height: auto;
+	margin: 0 auto;
+	font-family: "Comfortaa";
+	color: #1b3044;
 }
 
 .uppercase {
