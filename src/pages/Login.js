@@ -12,8 +12,8 @@ class Login extends React.Component{
                 <div className="login-logo">
                     <img src={logo} className="logo"/>
                 </div>
-                <div className="login-konsume">
-                    Konsume
+                <div className="login-lowympact">
+                    Lowympact
                 </div>
                 <div className="button-account">
                     <ButtonCreateAccount />

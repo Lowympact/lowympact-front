@@ -1,15 +1,15 @@
 .login-logo {
-  max-width: 300px;
+  max-width: 250px;
   height: auto;
   position: fixed;
-  left: calc(50vw - 150px);
+  left: calc(50vw - 125px);
   align-items: center;
   display: flex;
   justify-content: center;
   vertical-align: middle;
   top: 20%;
 }
-.login-konsume {
+.login-lowympact {
   width: 200px;
   height: 50px;
   position: fixed;
@@ -18,43 +18,43 @@
   display: flex;
   justify-content: center;
   vertical-align: middle;
-  top: 45%;
+  top: 40%;
   font-family: "Comfortaa";
   color: #1b3044;
-  font-size: 40px;
+  font-size: 33px;
   font-weight: bold;
   letter-spacing: 2px;
 }
 .button-account {
-  width: 170px;
-  height: 50px;
+  width: 160px;
+  height: 45px;
   border-radius: 10px;
   position: fixed;
-  left: calc(50vw - 85px);
+  left: calc(50vw - 80px);
   /*text*/
   align-items: center;
   display: flex;
   justify-content: center;
   vertical-align: middle;
   background-color: #78be95;
-  top: 60%;
+  top: 55%;
   font-family: "Comfortaa";
   color: white;
   font-size: 14px;
 }
 .button-connect {
-  width: 170px;
-  height: 50px;
+  width: 160px;
+  height: 45px;
   border-radius: 10px;
   position: fixed;
-  left: calc(50vw - 85px);
+  left: calc(50vw - 80px);
   /*text*/
   align-items: center;
   display: flex;
   justify-content: center;
   vertical-align: middle;
   background-color: #78be95;
-  top: 70%;
+  top: 65%;
   font-family: "Comfortaa";
   color: white;
   font-size: 14px;

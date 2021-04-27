@@ -1,11 +1,11 @@
 .App {
   text-align: center;
   height: calc(100vh - 200px);
-  margin-top:100px;
-  text-align:center;
+  margin-top: 100px;
+  text-align: center;
   display: flex;
-    justify-content: center;
-    align-items: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .App-logo {
@@ -32,14 +32,16 @@
   }
 }
 
-.logo{
+.logo {
   max-width: 70%;
   height: auto;
   margin: 0 auto;
 }
 
-.logo-text{
+.logo-text {
   max-width: 100%;
   height: auto;
   margin: 0 auto;
+  font-family: "Comfortaa";
+  color: #1b3044;
 }
