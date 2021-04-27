@@ -9,7 +9,10 @@ function History() {
 			<Header />
 			<Navbar />
 			<div className="App">
-				<img src={fruits} className="logo" />
+				<div>
+				<img src={fruits} className="logo"/>
+				<p className="logo-text">Commencer à scanner des produits!</p>
+				</div>
 			</div>
 		</React.Fragment>
 	);
