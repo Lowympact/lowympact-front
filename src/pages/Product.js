@@ -49,7 +49,7 @@ class Product extends React.Component {
 				if (genericName) {
 					this.setState({ genericName: genericName });
 				}
-				if (ecoScore && ecoScore != "not-applicable") {
+				if (ecoScore && ecoScore !== "not-applicable") {
 					this.setState({ ecoScore: ecoScore });
 				}
 			});
@@ -65,6 +65,7 @@ class Product extends React.Component {
 				<img
 					src={this.state.productImageUrl}
 					className="product-image"
+					alt="produit"
 				/>
 			);
 		}
@@ -101,6 +102,7 @@ class Product extends React.Component {
 					<img
 						className="product-bitmap-image"
 						src="/images/utils/bitmap.png"
+						alt=""
 					/>
 				</div>
 				<div className="product-image-container">
