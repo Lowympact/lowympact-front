@@ -113,6 +113,8 @@
 }
 
 .product-image-container {
+	transition: transform 0.8s;
+	transform-style: preserve-3d;
 	margin-top: -50px;
 	top: 100px;
 	min-height: 230px;

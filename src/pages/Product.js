@@ -55,6 +55,14 @@ class Product extends React.Component {
 			});
 	};
 
+	flip = (event) => {
+		if (event.target.style.transform == "rotateY(360deg)") {
+			event.target.style.transform = "rotateY(0deg)";
+		} else {
+			event.target.style.transform = "rotateY(360deg)";
+		}
+	};
+
 	render = () => {
 		let image = <React.Fragment />;
 		let productName = <React.Fragment />;
@@ -105,7 +113,7 @@ class Product extends React.Component {
 						alt=""
 					/>
 				</div>
-				<div className="product-image-container">
+				<div className="product-image-container" onClick={this.flip}>
 					{image}
 					{productName}
 					<div className="product-bottom-image-div">
