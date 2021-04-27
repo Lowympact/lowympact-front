@@ -1,7 +1,6 @@
-import {React, View, styles} from "react";
+import {React} from "react";
 
 function ButtonScan() {
-
   return (
     <div>
       <div>

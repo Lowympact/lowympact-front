@@ -12,7 +12,7 @@
   height: auto;
   position: fixed;
   top: 150px;
-  left: 365px;
+  right: -60px;
 }
 .blob-top {
   max-width: 185px;

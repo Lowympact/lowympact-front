@@ -10,7 +10,7 @@ class Login extends React.Component{
         return (
             <React.Fragment>
                 <div className="login-logo">
-                    <img src={logo} className="logo"/>
+                    <img src={logo} className="logo" alt="Logo"/>
                 </div>
                 <div className="login-lowympact">
                     Lowympact
@@ -22,7 +22,7 @@ class Login extends React.Component{
                     <ButtonLogin />
                 </div>
                 <div className="logo-fruits">
-                    <img src={fruits} className="logo"/>
+                    <img src={fruits} className="logo" alt="Fruits"/>
                 </div>
             </React.Fragment>
             
