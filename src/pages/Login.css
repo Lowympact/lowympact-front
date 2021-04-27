@@ -1,0 +1,11 @@
+.login {
+  text-align: center;
+}
+.button-account {
+  width: 25vw;
+  height: 100px;
+  text-align: center;
+  align-items: center;
+  background-color: #78be95;
+  color: white;
+}
