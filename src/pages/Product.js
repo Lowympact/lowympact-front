@@ -78,7 +78,7 @@ class Product extends React.Component {
 			let scoreClass = "color_score_" + this.state.ecoScore;
 			ecoScore = (
 				<div className="product-ecoscore">
-					<span className={"circle " + scoreClass}>⬤ </span>
+					<span className={"circle-score " + scoreClass}>⬤ </span>
 					EcoScore :
 					<span className="uppercase ">
 						{" " + this.state.ecoScore}
@@ -111,6 +111,7 @@ class Product extends React.Component {
 						{ecoScore}
 					</div>
 				</div>
+				<div className="product-bottom-container"></div>
 				<Navbar />
 			</div>
 		);
