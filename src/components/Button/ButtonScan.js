@@ -1,17 +1,19 @@
+import {React, View, styles} from "react";
 
 function ButtonScan() {
-    return (
+
+  return (
+    <div>
       <div>
-        <div>
-          <span class="material-icons">
-            qr_code_scanner
-          </span>
-        </div>
-        <div>
-          scan
-        </div>
+        <span class="material-icons">
+          qr_code_scanner
+        </span>
       </div>
-    );
-  }
+      <div>
+        scan
+      </div>
+    </div>
+  );
+}
 
 export default ButtonScan;

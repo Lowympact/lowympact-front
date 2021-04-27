@@ -11,7 +11,7 @@ function Navbar() {
 				<div className="navbar-text-left">
 					<ButtonHistory />
 				</div>
-				<div>
+				<div className="circle">
 					<ButtonScan />
 				</div>
 				<div className="navbar-text-right">

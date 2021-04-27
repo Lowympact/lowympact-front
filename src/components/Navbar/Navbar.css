@@ -11,11 +11,33 @@
   color: grey;
   border-top-left-radius: 40px;
   border-top-right-radius: 40px;
-  box-shadow: 0% 10% white;
+  box-shadow: 0px 0px 8px grey;
 }
 .navbar-text-right {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-right: 3%;
 }
 .navbar-text-left {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-left: 3%;
+}
+
+.circle{
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  box-shadow: 0px 0px 8px grey;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 100px;
 }
