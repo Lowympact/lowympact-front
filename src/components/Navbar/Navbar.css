@@ -41,6 +41,7 @@
 	align-items: center;
 	justify-content: center;
 	margin-bottom: 70px;
+	overflow: hidden;
 }
 
 .navbar-scan-text {
@@ -72,7 +73,7 @@
 	);
 	background-clip: padding-box;
 	opacity: 0.3;
-	animation: shine 3s infinite;
+	animation: shine 5s infinite;
 }
 
 @keyframes shine {
