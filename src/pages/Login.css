@@ -1,11 +1,67 @@
-.login {
-  text-align: center;
+.login-logo {
+  max-width: 300px;
+  height: auto;
+  position: fixed;
+  left: calc(50vw - 150px);
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  vertical-align: middle;
+  top: 20%;
+}
+.login-konsume {
+  width: 200px;
+  height: 50px;
+  position: fixed;
+  left: calc(50vw - 100px);
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  vertical-align: middle;
+  top: 45%;
+  font-family: "Comfortaa";
+  color: #1b3044;
+  font-size: 40px;
+  font-weight: bold;
+  letter-spacing: 2px;
 }
 .button-account {
-  width: 25vw;
-  height: 100px;
-  text-align: center;
+  width: 170px;
+  height: 50px;
+  border-radius: 10px;
+  position: fixed;
+  left: calc(50vw - 85px);
+  /*text*/
   align-items: center;
+  display: flex;
+  justify-content: center;
+  vertical-align: middle;
   background-color: #78be95;
+  top: 60%;
+  font-family: "Comfortaa";
   color: white;
+  font-size: 14px;
+}
+.button-connect {
+  width: 170px;
+  height: 50px;
+  border-radius: 10px;
+  position: fixed;
+  left: calc(50vw - 85px);
+  /*text*/
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  vertical-align: middle;
+  background-color: #78be95;
+  top: 70%;
+  font-family: "Comfortaa";
+  color: white;
+  font-size: 14px;
+}
+.logo-fruits {
+  width: 50vw;
+  position: fixed;
+  bottom: -5vw;
+  left: -12vw;
 }

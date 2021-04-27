@@ -1,5 +1,4 @@
-import React from 'react';
-
+import '../../pages/Login.css';
 function ButtonCreateAccount() {
     return (
       <div>
