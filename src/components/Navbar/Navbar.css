@@ -14,9 +14,19 @@
   box-shadow: 0px 0px 8px grey;
 }
 .navbar-text-right {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-right: 3%;
 }
 .navbar-text-left {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-left: 3%;
 }
 
