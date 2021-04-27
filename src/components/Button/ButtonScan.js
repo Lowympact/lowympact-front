@@ -1,17 +1,13 @@
+import { React } from "react";
 
 function ButtonScan() {
-    return (
-      <div>
-        <div>
-          <span class="material-icons">
-            qr_code_scanner
-          </span>
-        </div>
-        <div>
-          scan
-        </div>
-      </div>
-    );
-  }
+	return (
+		<div>
+			<div className="navbar-scan-icon">
+				<span class="material-icons">qr_code_scanner</span>
+			</div>
+		</div>
+	);
+}
 
 export default ButtonScan;

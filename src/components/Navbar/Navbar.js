@@ -8,15 +8,16 @@ function Navbar() {
 	return (
 		<React.Fragment>
 			<div className="navbar-container">
-				<div className="navbar-text-left">
+				<a href="/history" className="navbar-link navbar-text-left">
 					<ButtonHistory />
-				</div>
-				<div>
+				</a>
+				<div className="navbar-circle">
 					<ButtonScan />
 				</div>
-				<div className="navbar-text-right">
+				<span className="navbar-scan-text">scan</span>
+				<a href="/profil" className="navbar-link navbar-text-right">
 					<ButtonProfil />
-				</div>
+				</a>
 			</div>
 		</React.Fragment>
 	);
