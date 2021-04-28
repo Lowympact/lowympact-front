@@ -1,40 +1,48 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
 	BrowserRouter as Router,
 	Route,
 	Redirect,
-	Switch
-} from 'react-router-dom';
+	Switch,
+} from "react-router-dom";
 
-import './App.css';
-import History from './pages/History';
-import Error404 from './pages/Error404';
-import Login from './pages/Login';
-import Product from './pages/Product';
-
-
+import "./App.css";
+import History from "./pages/History";
+import Error404 from "./pages/Error404";
+import Login from "./pages/Login";
+import Product from "./pages/Product";
+import Profil from "./pages/Profil";
 
 class App extends Component {
 	render() {
 		return (
 			<Router>
-				 <Switch>
+				<Switch>
 					{/* Front Pages */}
-					<Route path="/" component={ History } exact />
-					<Route path="/history" component={ History } exact />
-					<Route path="/login" component={ Login } exact />
-					<Route path="/products/:barcode/:bcProductId" component={ Product } exact />
-					<Route path="/products/:barcode" component={ Product } exact />
-					
+					<Route path="/" component={History} exact />
+					<Route path="/history" component={History} exact />
+					<Route path="/login" component={Login} exact />
+					<Route path="/profil" component={Profil} exact />
+					<Route
+						path="/products/:barcode/:bcProductId"
+						component={Product}
+						exact
+					/>
+					<Route
+						path="/products/:barcode"
+						component={Product}
+						exact
+					/>
+
 					{/* Errors Pages */}
-					<Route path="/error404" component={ Error404 } />
+					<Route path="/error404" component={Error404} />
 					<Redirect to="/error404" />
 					{/* <Route path="/MAINTENANCE" component={ Maintenance } /> */}
-				 </Switch>
+				</Switch>
 				{/* </Suspense> */}
 			</Router>
 		);
 	}
-};
+}
 
 export default App;
