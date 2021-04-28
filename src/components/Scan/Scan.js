@@ -3,13 +3,7 @@ import "./Scan.css";
 import Navbar from "../Navbar/Navbar";
 import Header from "../Header/Header";
 import { Redirect } from "react-router-dom";
-import {
-	BarcodeFormat,
-	DecodeHintType,
-	BrowserBarcodeReader,
-	BrowserCodeReader,
-	MultiFormatReader,
-} from "@zxing/library";
+import QrReader from "react-qr-reader";
 
 class Scan extends React.Component {
 	state = { redirect: false, routeRedirect: undefined };
@@ -27,54 +21,28 @@ class Scan extends React.Component {
 		}
 	};
 
-	componentDidMount = () => {
-		// 	// Get the modal
-		// 	// var video = document.getElementById("video");
+	handleError = (err) => {};
 
-		// 	// Get the <span> element that closes the modal
-		// 	var span = document.getElementsByClassName("close")[0];
-
-		// 	// When the user clicks on <span> (x), close the modal
-		// 	span.onclick = () => {
-		// 		this.setState({
-		// 			redirect: true,
-		// 			routeRedirect: "/history",
-		// 		});
-		// 	};
-
-		const hints = new Map();
-		const formats = [BarcodeFormat.EAN_13];
-
-		hints.set(DecodeHintType.POSSIBLE_FORMATS, formats);
-
-		let codeReaderFormat = new MultiFormatReader();
-		codeReaderFormat.setHints(hints);
-
-		let multiFormatReader = new BrowserBarcodeReader();
-		multiFormatReader
-			.decodeFromInputVideoDevice(undefined, "video")
-			.then((result) => {
-				this.setRedirect(result.text);
-			})
-			.catch((err) => console.error(err));
+	handleScan = (res) => {
+		console.log(res);
 	};
 
 	render = () => {
 		return (
 			<React.Fragment>
 				{this.renderRedirect()}
-
-				<Header />
-				<Navbar />
-				<div className="App">
-					<span
-						class="close"
-						onClick={() => this.props.onCrossClicked(false)}
-					>
-						&times;
-					</span>
-					<video id="video"></video>
-				</div>
+				<span
+					class="close"
+					onClick={() => this.props.onCrossClicked(false)}
+				>
+					&times;
+				</span>
+				<QrReader
+					delay={1}
+					onError={this.handleError}
+					onScan={this.handleScan}
+					className="qrcode"
+				/>
 			</React.Fragment>
 		);
 	};
