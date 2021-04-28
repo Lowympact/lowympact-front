@@ -61,6 +61,7 @@ class Scan extends React.Component {
 					onUpdate={this.handleBarcode}
 					className="barcode-scanner"
 				/>
+				<div className="barcode-popup">{this.state.barcode}</div>
 			</React.Fragment>
 		);
 	};
