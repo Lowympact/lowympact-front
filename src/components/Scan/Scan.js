@@ -6,6 +6,7 @@ import { Redirect } from "react-router-dom";
 import {
 	BarcodeFormat,
 	DecodeHintType,
+	BrowserBarcodeReader,
 	BrowserCodeReader,
 	MultiFormatReader,
 } from "@zxing/library";
@@ -42,18 +43,14 @@ class Scan extends React.Component {
 		// 	};
 
 		const hints = new Map();
-		const formats = [
-			BarcodeFormat.QR_CODE,
-			BarcodeFormat.EAN_13,
-			BarcodeFormat.DATA_MATRIX /*, ...*/,
-		];
+		const formats = [BarcodeFormat.EAN_13];
 
 		hints.set(DecodeHintType.POSSIBLE_FORMATS, formats);
 
 		let codeReaderFormat = new MultiFormatReader();
 		codeReaderFormat.setHints(hints);
 
-		let multiFormatReader = new BrowserCodeReader(codeReaderFormat);
+		let multiFormatReader = new BrowserBarcodeReader();
 		multiFormatReader
 			.decodeFromInputVideoDevice(undefined, "video")
 			.then((result) => {
