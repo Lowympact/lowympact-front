@@ -1,3 +1,55 @@
+.forms {
+  display: flex;
+  position: fixed;
+  height: auto;
+  left: calc(50vw - 100px);
+  top: 50vw;
+  justify-content: space-between;
+  flex-direction: column;
+  font-family: "Comfortaa";
+  color: #1b3044;
+  font-size: 17px;
+  font-weight: bold;
+  margin-bottom: 0px;
+}
+label,
+input {
+  display: block;
+}
+input {
+  width: 208px;
+  margin-top: 5px;
+  color: #1b3044;
+  border-color: #1b3044;
+  border-radius: 5px;
+  font-family: "Comfortaa";
+  font-size: 14px;
+}
+label {
+  margin-bottom: 15%;
+}
+
+.errors-signup {
+  width: 210px;
+  position: fixed;
+  left: calc(50vw - 100px);
+  top: 58%;
+  font-family: "Comfortaa";
+  font-size: 10px;
+  color: red;
+  line-height: 90%;
+}
+.errors-signin {
+  width: 210px;
+  position: fixed;
+  left: calc(50vw - 100px);
+  top: 48%;
+  font-family: "Comfortaa";
+  font-size: 10px;
+  color: red;
+  line-height: 90%;
+}
+
 .login-logo {
   max-width: 250px;
   height: auto;
@@ -9,6 +61,7 @@
   vertical-align: middle;
   top: 20%;
 }
+
 .login-lowympact {
   width: 200px;
   height: 50px;
@@ -25,6 +78,7 @@
   font-weight: bold;
   letter-spacing: 2px;
 }
+
 .button-account {
   width: 160px;
   height: 45px;
@@ -42,6 +96,7 @@
   color: white;
   font-size: 14px;
 }
+
 .button-connect {
   width: 160px;
   height: 45px;
@@ -59,6 +114,44 @@
   color: white;
   font-size: 14px;
 }
+
+.button-signup {
+  width: 160px;
+  height: 45px;
+  border-radius: 10px;
+  position: fixed;
+  left: calc(50vw - 80px);
+  top: 600px;
+  /*text*/
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  vertical-align: middle;
+  background-color: #78be95;
+  top: 69%;
+  font-family: "Comfortaa";
+  color: white;
+  font-size: 14px;
+}
+
+.button-signin {
+  width: 160px;
+  height: 45px;
+  border-radius: 10px;
+  position: fixed;
+  left: calc(50vw - 80px);
+  top: 55%;
+  /*text*/
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  vertical-align: middle;
+  background-color: #78be95;
+  font-family: "Comfortaa";
+  color: white;
+  font-size: 14px;
+}
+
 .logo-fruits {
   width: 50vw;
   position: fixed;

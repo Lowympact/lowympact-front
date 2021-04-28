@@ -12,6 +12,8 @@ import Error404 from "./pages/Error404";
 import Login from "./pages/Login";
 import Product from "./pages/Product";
 import Profil from "./pages/Profil";
+import Signup from "./pages/Signup";
+import Signin from "./pages/Signin";
 
 class App extends Component {
 	render() {
@@ -33,7 +35,16 @@ class App extends Component {
 						component={Product}
 						exact
 					/>
-
+					<Route 
+						path="/signup"
+						component={Signup}
+						exact
+					/>
+					<Route 
+						path="/signin"
+						component={Signin}
+						exact
+					/>
 					{/* Errors Pages */}
 					<Route path="/error404" component={Error404} />
 					<Redirect to="/error404" />
