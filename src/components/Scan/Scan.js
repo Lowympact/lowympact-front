@@ -5,21 +5,7 @@ import Header from "../Header/Header";
 import { Redirect } from "react-router-dom";
 import QrReader from "react-qr-reader";
 
-class Scan extends React.Component {
-	state = { redirect: false, routeRedirect: undefined };
-
-	setRedirect = (resultText) => {
-		this.setState({
-			redirect: true,
-			routeRedirect: "/products/" + resultText,
-		});
-	};
-
-	renderRedirect = () => {
-		if (this.state.redirect) {
-			return <Redirect to={this.state.routeRedirect} />;
-		}
-	};
+import BarcodeScannerComponent from "react-webcam-barcode-scanner";
 
 	handleError = (err) => {};
 
@@ -43,6 +29,13 @@ class Scan extends React.Component {
 					onScan={this.handleScan}
 					className="qrcode"
 				/>
+        <BarcodeScannerComponent
+            width={500}
+            height={500}
+            onUpdate={(err, result) => {
+              if (result) console.log(result.text);
+            }}
+          />
 			</React.Fragment>
 		);
 	};
