@@ -41,9 +41,9 @@ video {
 }
 
 .qrcode section div {
-	width: 60vw !important;
-	height: 60vw !important;
-	margin: 30vh 20vw;
+	width: 80vw !important;
+	height: 35vw !important;
+	margin: 40vh 10vw;
 	border: 2px dashed #fff !important;
 	box-shadow: inset 0 0 0 0 transparent !important;
 	border-radius: 10px;
