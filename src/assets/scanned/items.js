@@ -35,4 +35,11 @@ export const ITEMS =
             brand:'Blablabla',
             label:'Bonne',        
         },
+        {
+            id: 5,
+            name:'Blublu',
+            image:'../assets/images/fruits-vegetables-basket-by-oblik-studio.svg',
+            brand:'Blablabla',
+            label:'Bonne',        
+        },
     ];

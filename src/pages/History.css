@@ -11,6 +11,7 @@
   max-width: 120px;
   height: auto;
   position: fixed;
+  z-index: -1;
   top: 150px;
   right: -60px;
 }
@@ -35,11 +36,21 @@
   overflow-y: auto;
 }
 
+.screen-title{
+  color:rgb(41,72,102);
+  text-decoration: underline ;
+  margin-left: 10vw;
+  margin-right: auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
 .history-item {
   height: 100px;
   width: 80vw;
   display: flex;
   align-items: center;
+  background-color: white;
   box-shadow: 0px 0px 8px grey;
   border-radius: 20px;
   margin-top: 5px;

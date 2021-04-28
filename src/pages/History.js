@@ -94,13 +94,17 @@ class History extends Component {
 					<div>
 						<img src={blob} className="blob-top" alt="Blob" />
 					</div>
+					<div className="screen">
+						<div className="screen-title">
+							Historique:
+						</div>
+						{itemList}</div>
 					<div>
 						<img src={blob} className="blob-left" alt="Blob" />
 					</div>
 					<div>
 						<img src={blob} className="blob-right" alt="Blob" />
 					</div>
-					<div className="screen">{itemList}</div>
 					<Header />
 					<Navbar />
 				</div>
