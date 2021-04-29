@@ -1,10 +1,7 @@
 import React from "react";
 import "./Scan.css";
-// import "./Toogle.css";
-import QrReader from "react-qr-reader";
-import BarcodeScannerComponent from "react-webcam-barcode-scanner";
-
 import * as ScanditSDK from "scandit-sdk";
+import { Redirect } from "react-router-dom";
 
 class Scan extends React.Component {
 	state = {
@@ -41,18 +38,18 @@ class Scan extends React.Component {
 			.then((barcodePicker) => {
 				// barcodePicker is ready here, show a message every time a barcode is scanned
 				barcodePicker.on("scan", (scanResult) => {
-					alert(scanResult.barcodes[0].data);
+					this.handleBarcode(scanResult.barcodes[0].data);
 				});
 			});
 	};
 
 	// check compatibility
 
-	handleBarcode = (err, res) => {
-		if (res && res.text) {
-			console.log("barcode", res.text);
+	handleBarcode = (res) => {
+		if (res) {
+			console.log("barcode", res);
 			//détecté par barcode scanner
-			let arr = res.text.split("/");
+			let arr = res.split("/");
 			console.log(arr);
 
 			this.setState({ barcode: arr[0] });
@@ -70,19 +67,9 @@ class Scan extends React.Component {
   */
 
 	render = () => {
-		/*if (this.state.QRcodeScan) {
-    return (
-      <React.Fragment>
-        <span class="close" onClick={() => this.props.onCrossClicked(false)}>
-          &times;
-        </span>
-        <QrReader delay={1} onScan={this.handleScan} className="qrcode" />
-
-        <div className="barcode-popup">{this.state.barcode}</div>
-      </React.Fragment>
-    );
-    } else {
-		*/
+		if (this.state.barcode) {
+			return <Redirect to={"/products/" + this.state.barcode} />;
+		}
 		return (
 			<React.Fragment>
 				<div id="background-scan">
