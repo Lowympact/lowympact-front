@@ -4,26 +4,42 @@ import "./Toogle.css";
 import QrReader from "react-qr-reader";
 import BarcodeScannerComponent from "react-webcam-barcode-scanner";
 
+import * as ScanditSDK from "scandit-sdk";
+
 class Scan extends React.Component {
   state = {
     barcode: undefined,
     bcProductId: undefined,
   };
 
-  /* handleScan = (res) => {
-    if (res) {
-      //détecté par qrcode scanner
-      let arr = res.split("/");
-      console.log("qrcode", arr);
-      if (arr.length === 6) {
-        this.setState({ barcode: arr[4], bcProductId: arr[5] });
+  componentDidMount = () => {
+    // inside an async function
+    ScanditSDK.configure(
+      "ASHf6Cx7DGz5BbkR5RWee94Ezm55DtkCAFB5HoNVQLhPf8gUhk8ypmZ72tbfAdIo33/I2gZR9pcXcdBwQGyYu69PkahqLA0dEEN5WFtpVEjMfQMiBhwmRWIJQgn+E54DiwJm/5CjsV1+Uy7AJWXnvrLiuwxG2D/b7b1QoPFJfkKp2OSreWJXnV/kJ+rtqFyNOu2wQb5Rq5IFXOU/tnjlTvJp8Kxl4jezOVoWlQZreaLKfxfBforPArJErC16cldrqFULYUdsPqb4Vn27hWUmPQTfaX/SbeDCl1h++IPmcvRpzwM9hY0ti7zzfhBKg3TgEYTMiPUipakmM21mU92xYjA9kmKO6bOjzY4XqyrWBUzv/C1TwJfK1aZDDLH8BOmqqJILi2Ty9fN84y09vBgv0dfXhQa3Q0/UW0Hnv0Xge2am3RY5dmE6pfWaxYyA3fDj920DpnlUNcAsfdErnvpZz8H1eftw6D2w3ps6q3jNFc/CTkALFZOk9Sy2u+lOfzvjKrcz5d1yoSo1sVhFsLWNUoaoHTP6NPnQaawC1YwPRp90T+2yNfx+iESAhn3qfn2pOEpBG0rHdZNLLj1yeNJU9Pjt7dznNeCJwG2SzSQvPZU5HzLuIu+siWjUPStB9WWMfVluWN3opv+ReRWBjBsaRFPBmit6LNbRk3QLT6To50yVZg8Zy1NuDFUoE+Ms2ytVn9fs30n1DeNYJLCWjQJ4ktQaz2mIFTOFvRVrJqPkTBwzOaAjWoPxOr097hga8bRhPAqV6ir7ojSffUeCjL/jmp1x1uSE4OaQe3Y32oC0XOVJqA==",
+      {
+        engineLocation: "/node_modules/scandit-sdk/build",
       }
-      if (arr.length === 5) {
-        this.setState({ barcode: arr[4] });
-      }
-    }
+    )
+      .then(() => {
+        return ScanditSDK.BarcodePicker.create(
+          document.getElementById("scandit-barcode-picker"),
+          {
+            // enable some common symbologies
+            scanSettings: new ScanditSDK.ScanSettings({
+              enabledSymbologies: ["ean8", "ean13", "upca", "upce"],
+            }),
+          }
+        );
+      })
+      .then((barcodePicker) => {
+        // barcodePicker is ready here, show a message every time a barcode is scanned
+        barcodePicker.on("scan", (scanResult) => {
+          alert(scanResult.barcodes[0].data);
+        });
+      });
   };
-  */
+
+  // check compatibility
 
   handleBarcode = (err, res) => {
     if (res && res.text) {
@@ -31,14 +47,6 @@ class Scan extends React.Component {
       //détecté par barcode scanner
       let arr = res.text.split("/");
       console.log(arr);
-
-      /*if (arr.length === 6) {
-        this.setState({ barcode: arr[4], bcProductId: arr[5] });
-      }
-      if (arr.length === 5) {
-        this.setState({ barcode: arr[4] });
-      }
-	  */
 
       this.setState({ barcode: arr[0] });
 
@@ -74,13 +82,7 @@ class Scan extends React.Component {
           <span class="close" onClick={() => this.props.onCrossClicked(false)}>
             &times;
           </span>
-          <BarcodeScannerComponent
-            width={500}
-            height={500}
-            onUpdate={this.handleBarcode}
-            className="barcode-scanner"
-          />
-          <div className="barcode-popup">{this.state.barcode}</div>
+          <div id="scandit-barcode-picker"></div>
         </div>
       </React.Fragment>
     );
