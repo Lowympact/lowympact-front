@@ -1,0 +1,13 @@
+.leaflet-tile-container img {
+	filter: invert(100%) contrast(10%) brightness(200%) !important;
+}
+
+.leaflet-container {
+	width: 100vw !important;
+	height: 400px !important;
+	background-color: white;
+}
+
+.leaflet-control-attribution {
+	display: none;
+}

@@ -1,5 +1,6 @@
 import React from "react";
 import Navbar from "../components/Navbar/Navbar";
+import Traceability from "../components/Traceability/Traceability";
 
 class Product extends React.Component {
 	state = {
@@ -121,7 +122,9 @@ class Product extends React.Component {
 						{ecoScore}
 					</div>
 				</div>
-				<div className="product-bottom-container"></div>
+				<div className="product-bottom-container">
+					<Traceability />
+				</div>
 				<Navbar />
 			</div>
 		);
