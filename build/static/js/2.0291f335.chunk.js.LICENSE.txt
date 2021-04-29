@@ -4,19 +4,10 @@ object-assign
 @license MIT
 */
 
-/*! exports provided: default */
-
-/*! no static exports found */
-
-/*! react */
-
-/*!******************************!*\
-        !*** ./src/react-webcam.tsx ***!
-        \******************************/
-
-/*!**************************************************************************************!*\
-        !*** external {"root":"React","commonjs2":"react","commonjs":"react","amd":"react"} ***!
-        \**************************************************************************************/
+/* @preserve
+ * Leaflet 1.7.1, a JS library for interactive maps. http://leafletjs.com
+ * (c) 2010-2019 Vladimir Agafonkin, (c) 2010-2011 CloudMade
+ */
 
 /** @license React v0.19.1
  * scheduler.production.min.js
