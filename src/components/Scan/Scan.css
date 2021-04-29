@@ -70,7 +70,7 @@ video {
   background-color: grey;
   min-height: 100%;
   min-width: 100%;
-  z-index: 100;
+  z-index: 1000000;
   position: fixed;
   right: 0;
   bottom: 0;
