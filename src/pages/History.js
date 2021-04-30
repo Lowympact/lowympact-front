@@ -7,42 +7,32 @@ import "./History.css";
 import { ITEMS } from "../assets/scanned/items";
 
 function RenderHistoryItem({ item }) {
-	var labelColor
-	if (item.label == "Mauvais"){
-		labelColor = "red"
-	}
-	else if (item.label == "Moyen"){
-		labelColor = "yellow"
-	}
-	else if (item.label == "Bonne"){
-		labelColor = "green"
+	var labelColor;
+	if (item.label == "Mauvais") {
+		labelColor = "red";
+	} else if (item.label == "Moyen") {
+		labelColor = "yellow";
+	} else if (item.label == "Bonne") {
+		labelColor = "green";
 	}
 
 	return (
-		<div className="history-item">
+		<a className="history-item" href="/products/7613035974685/idbc">
 			<div className="history-img-container">
-				<img src={fruits}/>
+				<img src={fruits} />
 			</div>
 			<div className="history-name-container">
-				<div className="history-name">
-				{item.name}
-				</div>
-				<div className="history-brand">
-					{item.brand}
-				</div>
+				<div className="history-name">{item.name}</div>
+				<div className="history-brand">{item.brand}</div>
 			</div>
 			<div className="history-label-container">
-				<div style={{color: labelColor}}>
-					●
-				</div>
-				<div className="history-label">
-					{item.label}
-				</div>
+				<div style={{ color: labelColor }}>●</div>
+				<div className="history-label">{item.label}</div>
 			</div>
-			<div style={{marginRight:"10px", color:"rgb(41,72,102)"}}>
-				>
+			<div style={{ marginRight: "10px", color: "rgb(41,72,102)" }}>
+				{">"}
 			</div>
-		</div>
+		</a>
 	);
 }
 
@@ -70,8 +60,8 @@ class History extends Component {
 					<div>
 						<img src={blob} className="blob-top" alt="Blob" />
 					</div>
-					<Header/>
-					<Navbar/>
+					<Header />
+					<Navbar />
 					<div className="App">
 						<div>
 							<img src={fruits} className="logo" alt="Fruits" />
@@ -95,10 +85,9 @@ class History extends Component {
 						<img src={blob} className="blob-top" alt="Blob" />
 					</div>
 					<div className="screen">
-						<div className="screen-title">
-							Historique:
-						</div>
-						{itemList}</div>
+						<div className="screen-title">Historique:</div>
+						{itemList}
+					</div>
 					<div>
 						<img src={blob} className="blob-left" alt="Blob" />
 					</div>
