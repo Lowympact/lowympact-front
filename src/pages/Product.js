@@ -34,9 +34,48 @@ class Product extends React.Component {
     );
     this.loadFromOpenFoodFacts(this.props.match.params.barcode);
   };
-
   loadProductInformations = (barcode, bcProductId) => {
-    fetch(`https://api.lowympact.fr/${barcode}/${bcProductId}`)
+    // var url = `https://api.lowympact.fr/api/v1/products/${this.state.barcode}?bcProductId=idbc`;
+    // // `http://localhost:8080/api/v1/products/${this.state.barcode}?bcProductId=idbc`;
+
+    // var xhr = new XMLHttpRequest();
+    // xhr.open("GET", url);
+
+    // xhr.setRequestHeader("Accept", "application/json");
+    // xhr.setRequestHeader(
+    // 	"Authorization",
+    // 	"Bearer 99d8fb95-abdd-4885-bf6c-3a81d8874043"
+    // );
+
+    // let setResponse = (res) => {
+    // 	this.setState({
+    // 		products: res.data.traceability,
+    // 		impact: res.data.impact,
+    // 	});
+    // };
+
+    // xhr.onreadystatechange = function () {
+    // 	if (xhr.readyState === 4) {
+    // 		console.log(xhr.status);
+    // 		let res = JSON.parse(xhr.responseText);
+    // 		console.log(res);
+    // 		setResponse(res);
+    // 	}
+    // };
+
+    // xhr.send();
+    fetch(
+      `https://api.lowympact.fr/api/v1/products/${barcode}?bcProductId=${bcProductId}`,
+      // `http://localhost:8080/api/v1/products/${this.state.barcode}?bcProductId=${this.state.bcProductId}`,
+      {
+        method: "get",
+        credentials: "include",
+        headers: new Headers({
+          Authorization: "Bearer 99d8fb95-abdd-4885-bf6c-3a81d8874043",
+          "Content-Type": "application/json",
+        }),
+      }
+    )
       .then((response) => response.json())
       .then((product) => {
         console.log(product);
@@ -77,8 +116,7 @@ class Product extends React.Component {
     }
   };
 
-  render = () => {
-    console.log("RAFRAICHISSEMENT");
+  displayImage = () => {
     this.handleBarCodeUpdate();
 
     let image = <React.Fragment />;
@@ -115,6 +153,19 @@ class Product extends React.Component {
       );
     }
     return (
+      <React.Fragment>
+        {image}
+        {productName}
+        <div className="product-bottom-image-div">
+          {genericName}
+          {ecoScore}
+        </div>
+      </React.Fragment>
+    );
+  };
+
+  render = () => {
+    return (
       <div className="product-page-container">
         <div className="product-header-container">
           <div className="product-history-link">
@@ -127,15 +178,10 @@ class Product extends React.Component {
           />
         </div>
         <div className="product-image-container" onClick={this.flip}>
-          {image}
-          {productName}
-          <div className="product-bottom-image-div">
-            {genericName}
-            {ecoScore}
-          </div>
+          {this.displayImage()}
         </div>
         <div className="product-bottom-container">
-          <Traceability />
+          <Traceability products={this.state.products} />
         </div>
         <Navbar barcode={this.props.match.params.barcode} />
       </div>
