@@ -24,14 +24,56 @@ class Navbar extends React.Component {
 			//détecté par barcode scanner
 			let arr = res.split("/");
 			console.log(arr);
-			this.setState({ barcode: arr[0], showScanner: false });
+			if (arr.length > 1) {
+				this.setState({
+					barcode: arr[4],
+					bcProductId: arr[5],
+					showScanner: false,
+				});
+			} else {
+				this.setState({
+					barcode: arr[0],
+					showScanner: false,
+					bcProductId: undefined,
+				});
+			}
 		}
 	};
 
 	render = () => {
+		console.log(this.state.barcode, this.state.bcProductId);
+		if (
+			this.state.barcode &&
+			this.state.bcProductId &&
+			(this.props.barcode != this.state.barcode ||
+				this.props.bcProductId != this.state.bcProductId)
+		) {
+			console.log(
+				"redirect to",
+				this.state.barcode,
+				this.state.bcProductId
+			);
+			return (
+				<Redirect
+					to={
+						"/products/" +
+						this.state.barcode +
+						"/" +
+						this.state.bcProductId
+					}
+				/>
+			);
+		}
+		console.log(this.props.barcode, this.state.barcode);
 		if (this.state.barcode && this.props.barcode != this.state.barcode) {
+			console.log(
+				"redirect to (barcode)",
+				this.state.barcode,
+				this.state.bcProductId
+			);
 			return <Redirect to={"/products/" + this.state.barcode} />;
 		}
+
 		if (!this.state.showScanner) {
 			return (
 				<React.Fragment>

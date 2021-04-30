@@ -8,13 +8,11 @@ class Profil extends React.Component {
 		return (
 			<React.Fragment>
 				<a href="/">
-				<Header />
+					<Header />
 				</a>
 				<div className="profil-screen">
 					<div className="profil-picture">
-						<div class="material-icons">
-							person
-						</div>
+						<div class="material-icons">person</div>
 					</div>
 					<h2 className="profil-title">Bienvenue sur ton profil!</h2>
 					<a href="/configuration" className="profil-button">

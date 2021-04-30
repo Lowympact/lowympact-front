@@ -195,7 +195,10 @@ class Product extends React.Component {
 				<div className="product-bottom-container">
 					<Traceability products={this.state.products} />
 				</div>
-				<Navbar barcode={this.props.match.params.barcode} />
+				<Navbar
+					barcode={this.props.match.params.barcode}
+					bcProductId={this.props.match.params.bcProductId}
+				/>
 			</div>
 		);
 	};
