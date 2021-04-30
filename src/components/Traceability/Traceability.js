@@ -105,16 +105,27 @@ class Traceability extends React.Component {
 					);
 				}
 
+				let animate = {
+					duration: 1000,
+					iterations: Infinity,
+					easing: "ease-in-out",
+					direction: "alternate",
+				};
+
 				return (
 					<React.Fragment>
 						<Curve
 							positions={this.getCurveOptions(
-								lat1,
-								long1,
 								lat2,
-								long2
+								long2,
+								lat1,
+								long1
 							)}
-							option={{ color: "#1b3044", fill: false }}
+							option={{
+								color: "#1b3044",
+								fill: false,
+								// animate: animate,
+							}}
 						/>
 						{marker1}
 						{marker2}
