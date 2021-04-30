@@ -57,14 +57,17 @@ class Product extends React.Component {
 				headers: new Headers({
 					Authorization:
 						"Bearer 99d8fb95-abdd-4885-bf6c-3a81d8874043",
-					"Content-Type": "application/json",
+					"Content-Type": "application/x-www-form-urlencoded",
 				}),
 			}
 		)
 			.then((response) => response.json())
-			.then((product) => {
-				console.log(product);
-				this.setState({ product: product });
+			.then((res) => {
+				console.log(res);
+				this.setState({
+					products: res.data.traceability,
+					impact: res.data.impact,
+				});
 			});
 	};
 

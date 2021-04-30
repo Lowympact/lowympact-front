@@ -3,6 +3,7 @@
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
+		"@turf/bezier-spline": "^6.3.0",
 		"leaflet": "^1.7.1",
 		"quagga": "^0.12.1",
 		"react": "^16.11.0",
