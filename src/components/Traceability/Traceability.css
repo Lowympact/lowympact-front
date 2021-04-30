@@ -11,3 +11,60 @@
 .leaflet-control-attribution {
 	display: none;
 }
+
+.slider-container {
+	margin-top: 50px;
+}
+
+.swiper-container {
+	margin-top: 60px;
+}
+
+.product-slide-container {
+	position: relative;
+	height: 120px;
+	width: 80vw;
+	margin-top: 10px;
+	margin-left: 10vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 30px;
+	-webkit-box-shadow: 0px 0px 17px -10px rgba(0, 0, 0, 0.8);
+	-moz-box-shadow: 0px 0px 17px -10px rgba(0, 0, 0, 0.8);
+	box-shadow: 0px 0px 17px -10px rgba(0, 0, 0, 0.8);
+}
+
+.swiper-wrapper {
+	height: 140px !important;
+}
+
+.product-slide-icon {
+	width: 60px;
+	height: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	left: 30px;
+}
+
+.product-slide-icon .material-icons {
+	font-size: 40px;
+}
+
+.product-slide-wrapper {
+	position: absolute;
+	left: 120px;
+}
+
+.product-slide-name {
+	font-size: 20px;
+}
+
+.product-slide-lowername {
+	font-size: 12px;
+	color: grey;
+	margin-left: 5px;
+	margin-top: 5px;
+}
