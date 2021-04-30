@@ -1,10 +1,10 @@
 /*sign up and sign in forms and buttons*/
-.forms {
+form {
   display: flex;
   position: fixed;
   height: auto;
   left: calc(50vw - 100px);
-  top: 50vw;
+  top: 30%;
   justify-content: space-between;
   flex-direction: column;
   font-family: "Comfortaa";
@@ -47,7 +47,7 @@ label {
   width: 210px;
   position: fixed;
   left: calc(50vw - 100px);
-  top: 54%;
+  top: 50%;
   font-family: "Comfortaa";
   font-size: 10px;
   color: red;
@@ -60,14 +60,13 @@ label {
   border-radius: 10px;
   position: fixed;
   left: calc(50vw - 80px);
-  top: 600px;
+  top: 70%;
   /*text*/
   align-items: center;
   display: flex;
   justify-content: center;
   vertical-align: middle;
   background-color: #78be95;
-  top: 69%;
   font-family: "Comfortaa";
   color: white;
   font-size: 14px;

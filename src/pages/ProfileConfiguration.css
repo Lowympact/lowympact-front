@@ -3,7 +3,7 @@
   position: fixed;
   height: auto;
   left: calc(50vw - 100px);
-  top: 40vw;
+  top: 30%;
   justify-content: space-between;
   flex-direction: column;
   font-family: "Comfortaa";
@@ -14,7 +14,7 @@
 }
 .user-email {
   position: fixed;
-  top: 45vw;
+  top: 33%;
   left: calc(50vw - 100px);
   font-family: "Comfortaa";
   color: #1b3044;
@@ -28,7 +28,7 @@
   position: fixed;
   height: auto;
   left: calc(50vw - 100px);
-  top: 60vw;
+  top: 40%;
   justify-content: space-between;
   flex-direction: column;
   font-family: "Comfortaa";

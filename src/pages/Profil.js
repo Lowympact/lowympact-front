@@ -18,6 +18,9 @@ class Profil extends React.Component {
 					<a href="/configuration" className="profil-button">
 						Configuration
 					</a>
+					<a href="/login" className="profil-button">
+						Deconnecter
+					</a>
 				</div>
 				<Navbar />
 			</React.Fragment>

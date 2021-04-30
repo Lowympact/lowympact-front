@@ -59,7 +59,7 @@ class Signin extends Component {
             </div>
     
           // Signup Forms
-            <form className="forms">
+            <form>
               <label>
                 email
                 <input
