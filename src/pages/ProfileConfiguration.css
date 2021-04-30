@@ -3,7 +3,7 @@
   position: fixed;
   height: auto;
   left: calc(50vw - 100px);
-  top: 30%;
+  top: 27%;
   justify-content: space-between;
   flex-direction: column;
   font-family: "Comfortaa";
@@ -14,7 +14,7 @@
 }
 .user-email {
   position: fixed;
-  top: 33%;
+  top: 30%;
   left: calc(50vw - 100px);
   font-family: "Comfortaa";
   color: #1b3044;
@@ -28,7 +28,7 @@
   position: fixed;
   height: auto;
   left: calc(50vw - 100px);
-  top: 40%;
+  top: 36%;
   justify-content: space-between;
   flex-direction: column;
   font-family: "Comfortaa";
@@ -46,7 +46,7 @@
   margin-top: 5px;
   margin-bottom: 5px;
   position: fixed;
-  top: 25vw;
+  top: 20%;
   left: calc(50vw - 150px);
 }
 
@@ -75,7 +75,7 @@
   width: 218px;
   position: fixed;
   left: calc(50vw - 100px);
-  top: 65%;
+  top: 63%;
   font-family: "Comfortaa";
   font-size: 10px;
   color: red;

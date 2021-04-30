@@ -56,14 +56,14 @@ class ProfileConfiguration extends Component {
     return(
       <React.Fragment>
         // Background style
-        <a href="/login">
+        <a href="/">
           <Header />
         </a>
           <Navbar />
         <div className="logo-fruits">
           <img src={fruits} className="logo" alt="Fruits" />
         </div>
-        <div className="screen-title">Configurations:</div>
+        <div className="configuration-screen-title">Configurations:</div>
         <label>
            <div className="email">
                email

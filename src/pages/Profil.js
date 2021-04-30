@@ -7,7 +7,9 @@ class Profil extends React.Component {
 	render() {
 		return (
 			<React.Fragment>
+				<a href="/">
 				<Header />
+				</a>
 				<div className="profil-screen">
 					<div className="profil-picture">
 						<div class="material-icons">
@@ -19,7 +21,7 @@ class Profil extends React.Component {
 						Configuration
 					</a>
 					<a href="/login" className="profil-button">
-						Deconnecter
+						Déconnecter
 					</a>
 				</div>
 				<Navbar />
