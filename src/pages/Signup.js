@@ -58,12 +58,6 @@ class Signup extends Component {
         <div className="logo-fruits">
           <img src={fruits} className="logo" alt="Fruits" />
         </div>
-        <div>
-          <img src={blob} className="blob-left" alt="Blob"/>
-        </div>
-        <div>
-          <img src={blob} className="blob-right" alt="Blob"/>
-        </div>
 
       // Signup Forms
         <form className="forms">

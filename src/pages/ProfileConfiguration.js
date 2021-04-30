@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import ButtonChangePassword from "../components/Button/ButtonChangePassword";
 import fruits from "../assets/images/fruits-vegetables-basket-by-oblik-studio.svg";
 import Header from "../components/Header/Header";
@@ -7,7 +8,6 @@ import blob from "../assets/images/bitmap.png";
 import './ProfileConfiguration.css';
 import { USERS } from "../assets/users/users";
 
-export const validEmail = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$');
 
 function validate(password, currentPassword, newPassword, confirmPassword) {
   const errors = [];
@@ -24,6 +24,7 @@ function validate(password, currentPassword, newPassword, confirmPassword) {
   return errors;
 }
 
+
 class ProfileConfiguration extends Component {
   constructor(props) {
     super(props);
@@ -32,18 +33,30 @@ class ProfileConfiguration extends Component {
       currentPassword: "",
       newPassword: "",
       confirmPassword:"",
-      errors: []
+      errors: [],
+      redirect:false
     };
   }
+
   handleChange = e => {
     e.preventDefault();
     const { currentPassword, newPassword, confirmPassword } = this.state;
     const errors = validate(this.state.user.password, currentPassword, newPassword, confirmPassword);
     console.log(this.state.user.mail, this.state.user.password, currentPassword, newPassword, confirmPassword, errors);
     this.setState({ errors });
+    console.log("nb"+ errors.length);
+    if(errors.length===0){
+        console.log("aaa");
+        this.setState({redirect:true});
+    }
   };
+
+
   render(){
-    
+      if(this.state.redirect){
+        return <Redirect to='/profil' />;
+      }
+    console.log(this.state.redirect);
     return(
       <React.Fragment>
         // Background style
@@ -56,12 +69,6 @@ class ProfileConfiguration extends Component {
           <Navbar />
         <div className="logo-fruits">
           <img src={fruits} className="logo" alt="Fruits" />
-        </div>
-        <div>
-          <img src={blob} className="blob-left" alt="Blob"/>
-        </div>
-        <div>
-          <img src={blob} className="blob-right" alt="Blob"/>
         </div>
         <div className="screen-title">Configurations:</div>
         <label>
@@ -101,9 +108,9 @@ class ProfileConfiguration extends Component {
         <label className="errors-change-password">
           {this.state.errors}
         </label>
-      <div className="button-change-password" onClick={this.handleChange}>
+      <a className="button-change-password" onClick={this.handleChange}>
         <ButtonChangePassword />
-      </div>
+      </a>
 		</React.Fragment>
     );
   }
