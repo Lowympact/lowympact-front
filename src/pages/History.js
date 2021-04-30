@@ -2,7 +2,6 @@ import { React, Component } from "react";
 import fruits from "../assets/images/fruits-vegetables-basket-by-oblik-studio.svg";
 import Navbar from "../components/Navbar/Navbar";
 import Header from "../components/Header/Header";
-import blob from "../assets/images/bitmap.png";
 import "./History.css";
 import { ITEMS } from "../assets/scanned/items";
 
@@ -57,9 +56,6 @@ class History extends Component {
 		if (Object.keys(this.state.items).length === 0)
 			return (
 				<div>
-					<div>
-						<img src={blob} className="blob-top" alt="Blob" />
-					</div>
 					<Header />
 					<Navbar />
 					<div className="App">
@@ -70,29 +66,14 @@ class History extends Component {
 							</p>
 						</div>
 					</div>
-					<div>
-						<img src={blob} className="blob-left" alt="Blob" />
-					</div>
-					<div>
-						<img src={blob} className="blob-right" alt="Blob" />
-					</div>
 				</div>
 			);
 		else
 			return (
 				<div>
-					<div>
-						<img src={blob} className="blob-top" alt="Blob" />
-					</div>
 					<div className="screen">
 						<div className="screen-title">Historique:</div>
 						{itemList}
-					</div>
-					<div>
-						<img src={blob} className="blob-left" alt="Blob" />
-					</div>
-					<div>
-						<img src={blob} className="blob-right" alt="Blob" />
 					</div>
 					<Header />
 					<Navbar />
