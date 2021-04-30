@@ -16,15 +16,15 @@ class Login extends React.Component{
                 <div className="login-lowympact">
                     Lowympact
                 </div>
-                <div className="button-account">
+                <a href="/signup" className="button-account">
                     <ButtonCreateAccount />
-                </div>
-                <div className="button-connect">
+                </a>
+                <a href="/signin" className="button-connect">
                     <ButtonLogin />
-                </div>
-                <div className="button-no-account">
+                </a>
+                <a href="/history" className="button-no-account">
                     <ButtonNoAccount />
-                </div>
+                </a>
                 <div className="logo-fruits">
                     <img src={fruits} className="logo" alt="Fruits"/>
                 </div>

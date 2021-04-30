@@ -1,0 +1,82 @@
+.email {
+  display: flex;
+  position: fixed;
+  height: auto;
+  left: calc(50vw - 100px);
+  top: 40vw;
+  justify-content: space-between;
+  flex-direction: column;
+  font-family: "Comfortaa";
+  color: #1b3044;
+  font-size: 17px;
+  font-weight: bold;
+  margin-bottom: 0px;
+}
+.user-email {
+  position: fixed;
+  top: 45vw;
+  left: calc(50vw - 100px);
+  font-family: "Comfortaa";
+  color: #1b3044;
+  font-size: 17px;
+  font-style: italic;
+  margin-bottom: 0px;
+}
+
+.forms {
+  display: flex;
+  position: fixed;
+  height: auto;
+  left: calc(50vw - 100px);
+  top: 60vw;
+  justify-content: space-between;
+  flex-direction: column;
+  font-family: "Comfortaa";
+  color: #1b3044;
+  font-size: 17px;
+  font-weight: bold;
+  margin-bottom: 0px;
+}
+
+.screen-title {
+  color: rgb(41, 72, 102);
+  text-decoration: underline;
+  margin-left: 10vw;
+  margin-right: auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  position: fixed;
+  top: 25vw;
+  left: calc(50vw - 150px);
+}
+
+/*button*/
+.button-change-password {
+  width: 175px;
+  height: 45px;
+  border-radius: 10px;
+  position: fixed;
+  left: calc(50vw - 80px);
+  top: 75%;
+  /*text*/
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  vertical-align: middle;
+  background-color: #78be95;
+  font-family: "Comfortaa";
+  color: white;
+  font-size: 14px;
+}
+
+/*errors*/
+.errors-change-password {
+  width: 215px;
+  position: fixed;
+  left: calc(50vw - 100px);
+  top: 65%;
+  font-family: "Comfortaa";
+  font-size: 10px;
+  color: red;
+  line-height: 90%;
+}
