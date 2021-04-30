@@ -14,6 +14,7 @@ import Product from "./pages/Product";
 import Profil from "./pages/Profil";
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
+import ProfileConfiguration from "./pages/ProfileConfiguration";
 
 class App extends Component {
 	render() {
@@ -35,16 +36,9 @@ class App extends Component {
 						component={Product}
 						exact
 					/>
-					<Route 
-						path="/signup"
-						component={Signup}
-						exact
-					/>
-					<Route 
-						path="/signin"
-						component={Signin}
-						exact
-					/>
+					<Route path="/signup" component={Signup} exact />
+					<Route path="/signin" component={Signin} exact />
+					<Route path="/configuration" component={ProfileConfiguration} exact />
 					{/* Errors Pages */}
 					<Route path="/error404" component={Error404} />
 					<Redirect to="/error404" />
