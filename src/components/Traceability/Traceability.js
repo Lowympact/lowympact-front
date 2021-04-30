@@ -1,5 +1,5 @@
 import React from "react";
-import { Map, TileLayer, Marker, Popup } from "react-leaflet";
+import { Map, TileLayer, Marker, Popup, Polyline } from "react-leaflet";
 import "./Traceability.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -74,8 +74,18 @@ class Traceability extends React.Component {
 						</Marker>
 					);
 				}
+				let line = (
+					<Polyline
+						positions={[
+							[lat1, long1],
+							[lat2, long2],
+						]}
+						color={"red"}
+					/>
+				);
 				return (
 					<React.Fragment>
+						{line}
 						{marker1}
 						{marker2}
 					</React.Fragment>
@@ -103,7 +113,19 @@ class Traceability extends React.Component {
 						attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
 						url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}{r}.png" //'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png' //'https://{s}.tile.osm.org/{z}/{x}/{y}.png'
 					/>
-
+					<Marker position={[10, 50]}>
+						<Popup>YOO</Popup>
+					</Marker>
+					<Marker position={[50, 10]}>
+						<Popup>YOO</Popup>
+					</Marker>
+					<Polyline
+						positions={[
+							[10, 50],
+							[50, 10],
+						]}
+						color={"red"}
+					/>
 					{this.displayMarker()}
 				</Map>
 				<Swiper

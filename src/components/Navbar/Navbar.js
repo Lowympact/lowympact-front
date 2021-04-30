@@ -24,15 +24,34 @@ class Navbar extends React.Component {
       //détecté par barcode scanner
       let arr = res.split("/");
       console.log(arr);
-      this.setState({ barcode: arr[0] });
+      this.setState({ barcode: arr[0], showScanner: false });
     }
   };
 
   render = () => {
-    if (this.state.barcode) {
+    if (this.state.barcode && this.props.barcode != this.state.barcode) {
       return <Redirect to={"/products/" + this.state.barcode} />;
     }
-    if (this.state.showScanner) {
+    if (!this.state.showScanner) {
+      return (
+        <React.Fragment>
+          <div className="navbar-container">
+            <a href="/history" className="navbar-link navbar-text-left">
+              <ButtonHistory />
+            </a>
+            <div onClick={() => this.handleScannerButton(true)}>
+              <div className="navbar-circle">
+                <ButtonScan />
+              </div>
+            </div>
+            <span className="navbar-scan-text">scan</span>
+            <a href="/profil" className="navbar-link navbar-text-right">
+              <ButtonProfil />
+            </a>
+          </div>
+        </React.Fragment>
+      );
+    } else {
       return (
         <Scan
           onCrossClicked={this.handleScannerButton}
@@ -41,6 +60,7 @@ class Navbar extends React.Component {
           enableTorchToggle={true}
           enablePinchToZoom={true}
           enableCameraSwitcher={true}
+          guiStyle={"viewfinder"}
           scanSettings={
             new ScanSettings({
               enabledSymbologies: [
@@ -65,25 +85,6 @@ class Navbar extends React.Component {
             console.error(error.message);
           }}
         />
-      );
-    } else {
-      return (
-        <React.Fragment>
-          <div className="navbar-container">
-            <a href="/history" className="navbar-link navbar-text-left">
-              <ButtonHistory />
-            </a>
-            <div onClick={() => this.handleScannerButton(true)}>
-              <div className="navbar-circle">
-                <ButtonScan />
-              </div>
-            </div>
-            <span className="navbar-scan-text">scan</span>
-            <a href="/profil" className="navbar-link navbar-text-right">
-              <ButtonProfil />
-            </a>
-          </div>
-        </React.Fragment>
       );
     }
   };
