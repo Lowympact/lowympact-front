@@ -63,7 +63,7 @@ class ProfileConfiguration extends Component {
         <div>
           <img src={blob} className="blob-right" alt="Blob"/>
         </div>
-        <div className="screen-title">Configurations:</div>
+        <div className="configuration-screen-title">Configurations:</div>
         <label>
            <div className="email">
                email
