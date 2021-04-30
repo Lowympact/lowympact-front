@@ -6,19 +6,35 @@ class Product extends React.Component {
 	state = {
 		barcode: this.props.match.params.barcode,
 		bcProductId: this.props.match.params.bcProductId,
-		products: undefined,
+		product: undefined,
 		productImageUrl: undefined,
 		productName: undefined,
 		genericName: undefined,
 		ecoScore: undefined,
 	};
 
-	componentDidMount = () => {
-		this.loadProductInformations();
-		this.loadFromOpenFoodFacts();
+	handleBarCodeUpdate = () => {
+		if (this.state.barcode != this.props.match.params.barcode) {
+			this.setState({
+				barcode: this.props.match.params.barcode,
+				bcProductId: this.props.match.params.bcProductId,
+			});
+			this.loadProductInformations(
+				this.props.match.params.barcode,
+				this.props.match.params.bcProductId
+			);
+			this.loadFromOpenFoodFacts(this.props.match.params.barcode);
+		}
 	};
 
-	loadProductInformations = () => {
+	componentDidMount = () => {
+		this.loadProductInformations(
+			this.props.match.params.barcode,
+			this.props.match.params.bcProductId
+		);
+		this.loadFromOpenFoodFacts(this.props.match.params.barcode);
+	};
+	loadProductInformations = (barcode, bcProductId) => {
 		// var url = `https://api.lowympact.fr/api/v1/products/${this.state.barcode}?bcProductId=idbc`;
 		// // `http://localhost:8080/api/v1/products/${this.state.barcode}?bcProductId=idbc`;
 
@@ -49,7 +65,7 @@ class Product extends React.Component {
 
 		// xhr.send();
 		fetch(
-			`https://api.lowympact.fr/api/v1/products/${this.state.barcode}?bcProductId=${this.state.bcProductId}`,
+			`https://api.lowympact.fr/api/v1/products/${barcode}?bcProductId=${bcProductId}`,
 			// `http://localhost:8080/api/v1/products/${this.state.barcode}?bcProductId=${this.state.bcProductId}`,
 			{
 				method: "get",
@@ -62,16 +78,17 @@ class Product extends React.Component {
 			}
 		)
 			.then((response) => response.json())
-			.then((product) => {
-				console.log(product);
-				this.setState({ product: product });
+			.then((res) => {
+				console.log(res);
+				this.setState({
+					products: res.data.traceability,
+					impact: res.data.impact,
+				});
 			});
 	};
 
-	loadFromOpenFoodFacts = () => {
-		fetch(
-			`https://world.openfoodfacts.org/api/v0/product/${this.state.barcode}.json/`
-		)
+	loadFromOpenFoodFacts = (barcode) => {
+		fetch(`https://world.openfoodfacts.org/api/v0/product/${barcode}.json/`)
 			.then((response) => response.json())
 			.then((res) => {
 				console.log(res);
@@ -104,6 +121,8 @@ class Product extends React.Component {
 	};
 
 	displayImage = () => {
+		this.handleBarCodeUpdate();
+
 		let image = <React.Fragment />;
 		let productName = <React.Fragment />;
 		let genericName = <React.Fragment />;
@@ -172,7 +191,7 @@ class Product extends React.Component {
 				<div className="product-bottom-container">
 					<Traceability products={this.state.products} />
 				</div>
-				<Navbar />
+				<Navbar barcode={this.props.match.params.barcode} />
 			</div>
 		);
 	};
