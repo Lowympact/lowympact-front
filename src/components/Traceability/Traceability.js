@@ -1,8 +1,15 @@
 import React from "react";
-import { Map, TileLayer, Marker, Popup, Polyline } from "react-leaflet";
+import {
+	Map,
+	TileLayer,
+	Marker,
+	Popup,
+	Polyline,
+	GeoJSON,
+} from "react-leaflet";
 import "./Traceability.css";
 import { Swiper, SwiperSlide } from "swiper/react";
-
+import { Curve } from "./leaflet-curve";
 // Import Swiper styles
 import "swiper/swiper-bundle.css";
 
@@ -48,6 +55,29 @@ class Traceability extends React.Component {
 		return slides;
 	};
 
+	getCurveOptions = (lat1, long1, lat2, long2) => {
+		var latlng1 = [lat1, long1],
+			latlng2 = [lat2, long2];
+
+		var offsetX = latlng2[1] - latlng1[1],
+			offsetY = latlng2[0] - latlng1[0];
+
+		var r = Math.sqrt(Math.pow(offsetX, 2) + Math.pow(offsetY, 2)),
+			theta = Math.atan2(offsetY, offsetX);
+
+		var thetaOffset = 3.14 / 10;
+
+		var r2 = r / 2 / Math.cos(thetaOffset),
+			theta2 = theta + thetaOffset;
+
+		var midpointX = r2 * Math.cos(theta2) + latlng1[1],
+			midpointY = r2 * Math.sin(theta2) + latlng1[0];
+
+		var midpointLatLng = [midpointY, midpointX];
+
+		return ["M", latlng1, "Q", midpointLatLng, latlng2];
+	};
+
 	displayMarker = () => {
 		let markers = <React.Fragment />;
 		if (this.props.products) {
@@ -74,18 +104,18 @@ class Traceability extends React.Component {
 						</Marker>
 					);
 				}
-				let line = (
-					<Polyline
-						positions={[
-							[lat1, long1],
-							[lat2, long2],
-						]}
-						color={"red"}
-					/>
-				);
+
 				return (
 					<React.Fragment>
-						{line}
+						<Curve
+							positions={this.getCurveOptions(
+								lat1,
+								long1,
+								lat2,
+								long2
+							)}
+							option={{ color: "#1b3044", fill: false }}
+						/>
 						{marker1}
 						{marker2}
 					</React.Fragment>
@@ -103,29 +133,21 @@ class Traceability extends React.Component {
 					zoom={1}
 					minZoom={1}
 					scrollWheelZoom={true}
+					whenReady={(r) => console.log(r)}
 					maxBounds={[
 						[-90, -180],
 						[90, 180],
 					]}
 					maxBoundsViscosity={1}
+					ref={(ref) => {
+						this.map = ref;
+					}}
 				>
 					<TileLayer
 						attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
 						url="https://stamen-tiles-{s}.a.ssl.fastly.net/toner-background/{z}/{x}/{y}{r}.png" //'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png' //'https://{s}.tile.osm.org/{z}/{x}/{y}.png'
 					/>
-					<Marker position={[10, 50]}>
-						<Popup>YOO</Popup>
-					</Marker>
-					<Marker position={[50, 10]}>
-						<Popup>YOO</Popup>
-					</Marker>
-					<Polyline
-						positions={[
-							[10, 50],
-							[50, 10],
-						]}
-						color={"red"}
-					/>
+
 					{this.displayMarker()}
 				</Map>
 				<Swiper
