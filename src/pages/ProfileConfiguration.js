@@ -70,9 +70,6 @@ class ProfileConfiguration extends Component {
         <div className="logo-fruits">
           <img src={fruits} className="logo" alt="Fruits" />
         </div>
-<<<<<<< HEAD
-        <div className="screen-title">Configurations:</div>
-=======
         <div>
           <img src={blob} className="blob-left" alt="Blob"/>
         </div>
@@ -80,7 +77,6 @@ class ProfileConfiguration extends Component {
           <img src={blob} className="blob-right" alt="Blob"/>
         </div>
         <div className="configuration-screen-title">Configurations:</div>
->>>>>>> 631017065db8272274440c0587757ffe3935721d
         <label>
            <div className="email">
                email
