@@ -51,7 +51,10 @@ class Signup extends Component {
         <div>
           <img src={blob} className="blob-top" alt="Blob"/>
         </div>
-        <Header />
+        <a href="/login">
+          <Header />
+        </a>
+        
         <div className="logo-fruits">
           <img src={fruits} className="logo" alt="Fruits" />
         </div>

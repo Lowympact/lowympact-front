@@ -1,28 +1,3 @@
-.blob-left {
-	max-width: 110px;
-	height: auto;
-	position: fixed;
-	top: 60%;
-	transform: rotate(180deg);
-	left: -60px;
-	transform: scaleX(-1);
-}
-.blob-right {
-	max-width: 120px;
-	height: auto;
-	position: fixed;
-	z-index: -1;
-	top: 150px;
-	right: -60px;
-}
-.blob-top {
-	max-width: 185px;
-	height: auto;
-	position: fixed;
-	top: -15%;
-	left: -20px;
-	transform: rotate(250deg);
-}
 .screen {
 	text-align: center;
 	height: calc(100vh - 170px);
@@ -31,6 +6,8 @@
 	text-align: center;
 	display: flex;
 	justify-content: top;
+	padding-top: 100px;
+	padding-bottom: auto;
 	align-items: center;
 	flex-direction: column;
 	overflow-y: auto;
@@ -56,7 +33,7 @@
 	margin-top: 5px;
 	margin-bottom: 5px;
 	text-decoration: none;
-	text-color: black;
+	color: black;
 }
 
 .history-img-container {
