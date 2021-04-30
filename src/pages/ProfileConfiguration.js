@@ -4,7 +4,6 @@ import ButtonChangePassword from "../components/Button/ButtonChangePassword";
 import fruits from "../assets/images/fruits-vegetables-basket-by-oblik-studio.svg";
 import Header from "../components/Header/Header";
 import Navbar from "../components/Navbar/Navbar";
-import blob from "../assets/images/bitmap.png";
 import './ProfileConfiguration.css';
 import { USERS } from "../assets/users/users";
 
@@ -23,7 +22,6 @@ function validate(password, currentPassword, newPassword, confirmPassword) {
   }
   return errors;
 }
-
 
 class ProfileConfiguration extends Component {
   constructor(props) {
@@ -44,9 +42,7 @@ class ProfileConfiguration extends Component {
     const errors = validate(this.state.user.password, currentPassword, newPassword, confirmPassword);
     console.log(this.state.user.mail, this.state.user.password, currentPassword, newPassword, confirmPassword, errors);
     this.setState({ errors });
-    console.log("nb"+ errors.length);
     if(errors.length===0){
-        console.log("aaa");
         this.setState({redirect:true});
     }
   };
@@ -60,9 +56,6 @@ class ProfileConfiguration extends Component {
     return(
       <React.Fragment>
         // Background style
-        <div>
-          <img src={blob} className="blob-top" alt="Blob"/>
-        </div>
         <a href="/login">
           <Header />
         </a>
@@ -70,17 +63,7 @@ class ProfileConfiguration extends Component {
         <div className="logo-fruits">
           <img src={fruits} className="logo" alt="Fruits" />
         </div>
-<<<<<<< HEAD
         <div className="screen-title">Configurations:</div>
-=======
-        <div>
-          <img src={blob} className="blob-left" alt="Blob"/>
-        </div>
-        <div>
-          <img src={blob} className="blob-right" alt="Blob"/>
-        </div>
-        <div className="configuration-screen-title">Configurations:</div>
->>>>>>> 631017065db8272274440c0587757ffe3935721d
         <label>
            <div className="email">
                email

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import ButtonSignup from "../components/Button/ButtonSignup";
 import fruits from "../assets/images/fruits-vegetables-basket-by-oblik-studio.svg";
 import Header from "../components/Header/Header";
-import blob from "../assets/images/bitmap.png";
 import './Login.css';
 
 export const validEmail = new RegExp('^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$');
@@ -32,7 +32,8 @@ class Signup extends Component {
       email: "", 
       password:"", 
       confirmPassword:"",
-      errors: []
+      errors: [],
+      redirect:false
     };
   }
   handleSubmit = e => {
@@ -41,20 +42,20 @@ class Signup extends Component {
     const errors = validate(email, password, confirmPassword);
     console.log(email, password, confirmPassword, errors);
     this.setState({ errors });
-
+    if(errors.length===0){
+      this.setState({redirect:true});
+    }
   };
   render(){
-    
+    if(this.state.redirect){
+      return <Redirect to='/history' />;
+    }
     return(
       <React.Fragment>
         //Background style
-        <div>
-          <img src={blob} className="blob-top" alt="Blob"/>
-        </div>
         <a href="/login">
           <Header />
         </a>
-        
         <div className="logo-fruits">
           <img src={fruits} className="logo" alt="Fruits" />
         </div>

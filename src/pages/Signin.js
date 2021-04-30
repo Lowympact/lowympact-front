@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import ButtonSignin from "../components/Button/ButtonSignin";
 import fruits from "../assets/images/fruits-vegetables-basket-by-oblik-studio.svg";
 import Header from "../components/Header/Header";
@@ -23,7 +24,8 @@ class Signin extends Component {
       this.state = { 
         email: "", 
         password:"", 
-        errors: []
+        errors: [],
+        redirect:false
       };
     }
 
@@ -33,9 +35,15 @@ class Signin extends Component {
         const errors = validate(email, password);
         console.log(email, password, errors);
         this.setState({ errors });
+        if(errors.length===0){
+          this.setState({redirect:true});
+      }
     };
 
     render(){
+      if(this.state.redirect){
+        return <Redirect to='/history' />;
+      }
         return(
           <React.Fragment>
     

@@ -47,7 +47,7 @@ label {
   width: 210px;
   position: fixed;
   left: calc(50vw - 100px);
-  top: 48%;
+  top: 54%;
   font-family: "Comfortaa";
   font-size: 10px;
   color: red;
@@ -79,7 +79,7 @@ label {
   border-radius: 10px;
   position: fixed;
   left: calc(50vw - 80px);
-  top: 55%;
+  top: 60%;
   /*text*/
   align-items: center;
   display: flex;
