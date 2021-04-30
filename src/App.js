@@ -22,7 +22,7 @@ class App extends Component {
 			<Router>
 				<Switch>
 					{/* Front Pages */}
-					<Route path="/" component={History} exact />
+					<Route path="/" component={Login} exact />
 					<Route path="/history" component={History} exact />
 					<Route path="/login" component={Login} exact />
 					<Route path="/profil" component={Profil} exact />
@@ -38,7 +38,11 @@ class App extends Component {
 					/>
 					<Route path="/signup" component={Signup} exact />
 					<Route path="/signin" component={Signin} exact />
-					<Route path="/configuration" component={ProfileConfiguration} exact />
+					<Route
+						path="/configuration"
+						component={ProfileConfiguration}
+						exact
+					/>
 					{/* Errors Pages */}
 					<Route path="/error404" component={Error404} />
 					<Redirect to="/error404" />

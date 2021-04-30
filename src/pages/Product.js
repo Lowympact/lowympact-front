@@ -19,20 +19,24 @@ class Product extends React.Component {
 				barcode: this.props.match.params.barcode,
 				bcProductId: this.props.match.params.bcProductId,
 			});
-			this.loadProductInformations(
-				this.props.match.params.barcode,
-				this.props.match.params.bcProductId
-			);
 			this.loadFromOpenFoodFacts(this.props.match.params.barcode);
+			if (this.props.match.params.bcProductId) {
+				this.loadProductInformations(
+					this.props.match.params.barcode,
+					this.props.match.params.bcProductId
+				);
+			}
 		}
 	};
 
 	componentDidMount = () => {
-		this.loadProductInformations(
-			this.props.match.params.barcode,
-			this.props.match.params.bcProductId
-		);
 		this.loadFromOpenFoodFacts(this.props.match.params.barcode);
+		if (this.props.match.params.bcProductId) {
+			this.loadProductInformations(
+				this.props.match.params.barcode,
+				this.props.match.params.bcProductId
+			);
+		}
 	};
 	loadProductInformations = (barcode, bcProductId) => {
 		// var url = `https://api.lowympact.fr/api/v1/products/${this.state.barcode}?bcProductId=idbc`;
