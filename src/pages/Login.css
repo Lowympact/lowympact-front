@@ -115,6 +115,24 @@ label {
   font-size: 14px;
 }
 
+.button-no-account {
+  width: 160px;
+  height: 45px;
+  border-radius: 10px;
+  position: fixed;
+  left: calc(50vw - 80px);
+  /*text*/
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  vertical-align: middle;
+  background-color: #78be95;
+  top: 75%;
+  font-family: "Comfortaa";
+  color: white;
+  font-size: 14px;
+}
+
 .button-signup {
   width: 160px;
   height: 45px;

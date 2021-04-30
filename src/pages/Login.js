@@ -4,6 +4,7 @@ import fruits from "../assets/images/fruits-vegetables-basket-by-oblik-studio.sv
 import './Login.css';
 import ButtonCreateAccount from '../components/Button/ButtonCreateAccount';
 import ButtonLogin from '../components/Button/ButtonLogin';
+import ButtonNoAccount from '../components/Button/ButtonNoAccount';
 
 class Login extends React.Component{
     render = () =>{
@@ -20,6 +21,9 @@ class Login extends React.Component{
                 </div>
                 <div className="button-connect">
                     <ButtonLogin />
+                </div>
+                <div className="button-no-account">
+                    <ButtonNoAccount />
                 </div>
                 <div className="logo-fruits">
                     <img src={fruits} className="logo" alt="Fruits"/>
