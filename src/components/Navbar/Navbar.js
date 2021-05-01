@@ -5,7 +5,7 @@ import ButtonProfil from "../Button/ButtonProfil";
 import ButtonScan from "../Button/ButtonScan";
 import Scan from "../Scan/Scan";
 import { ScanSettings, Barcode } from "scandit-sdk";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 class Navbar extends React.Component {
 	state = {
@@ -78,24 +78,24 @@ class Navbar extends React.Component {
 			return (
 				<React.Fragment>
 					<div className="navbar-container">
-						<a
-							href="/history"
+						<Link
+							to="/history"
 							className="navbar-link navbar-text-left"
 						>
 							<ButtonHistory />
-						</a>
+						</Link>
 						<div onClick={() => this.handleScannerButton(true)}>
 							<div className="navbar-circle">
 								<ButtonScan />
 							</div>
 						</div>
 						<span className="navbar-scan-text">Scan</span>
-						<a
-							href="/profil"
+						<Link
+							to="/profil"
 							className="navbar-link navbar-text-right"
 						>
 							<ButtonProfil />
-						</a>
+						</Link>
 					</div>
 				</React.Fragment>
 			);

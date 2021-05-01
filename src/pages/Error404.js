@@ -1,4 +1,5 @@
 import logo from "../assets/images/logo.svg";
+import { Link } from "react-router-dom";
 
 function Error404() {
 	return (
@@ -6,7 +7,7 @@ function Error404() {
 			<header className="App-header">
 				<img src={logo} className="logo" alt="logo" />
 				<h1>Erreur 404</h1>
-				<a href="/">Retourner à l'accueil</a>
+				<Link href="/">Retourner à l'accueil</Link>
 			</header>
 		</div>
 	);

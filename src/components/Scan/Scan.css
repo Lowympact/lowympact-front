@@ -102,6 +102,7 @@ video {
 .scandit .scandit-camera-switcher {
 	right: 6% !important;
 	top: 20% !important;
+	left: unset !important;
 }
 
 .scandit-video:after {

@@ -2,25 +2,26 @@ import React from "react";
 import Navbar from "../components/Navbar/Navbar";
 import Header from "../components/Header/Header";
 import "./Profil.css";
+import { Link } from "react-router-dom";
 
 class Profil extends React.Component {
 	render() {
 		return (
 			<React.Fragment>
-				<a href="/">
+				<Link href="/">
 					<Header />
-				</a>
+				</Link>
 				<div className="profil-screen">
 					<div className="profil-picture">
 						<div class="material-icons">person</div>
 					</div>
 					<h2 className="profil-title">Bienvenue sur ton profil!</h2>
-					<a href="/configuration" className="profil-button">
+					<Link href="/configuration" className="profil-button">
 						Configuration
-					</a>
-					<a href="/login" className="profil-button">
+					</Link>
+					<Link href="/login" className="profil-button">
 						Déconnecter
-					</a>
+					</Link>
 				</div>
 				<Navbar />
 			</React.Fragment>

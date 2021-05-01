@@ -6,6 +6,7 @@ import Header from "../components/Header/Header";
 import Navbar from "../components/Navbar/Navbar";
 import "./ProfileConfiguration.css";
 import { USERS } from "../assets/users/users";
+import { Link } from "react-router-dom";
 
 function validate(password, currentPassword, newPassword, confirmPassword) {
 	const errors = [];
@@ -66,9 +67,9 @@ class ProfileConfiguration extends Component {
 		return (
 			<React.Fragment>
 				// Background style
-				<a href="/">
+				<Link href="/">
 					<Header />
-				</a>
+				</Link>
 				<Navbar />
 				<div className="logo-fruits">
 					<img src={fruits} className="logo" alt="Fruits" />

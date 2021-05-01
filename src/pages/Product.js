@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar/Navbar";
 import Traceability from "../components/Traceability/Traceability";
 import Environnement from "../components/Environnement/Environnement";
 import "./Product.css";
-
+import { Link } from "react-router-dom";
 // import AppBar from "@material-ui/core/AppBar";
 // import Tabs from "@material-ui/core/Tabs";
 // import Tab from "@material-ui/core/Tab";
@@ -206,7 +206,7 @@ class Product extends React.Component {
 				<div className="product-page-container">
 					<div className="product-header-container">
 						<div className="product-history-link">
-							<a href="/history"> {"<"} Historique</a>
+							<Link href="/history"> {"<"} Historique</Link>
 						</div>
 						<img
 							className="product-bitmap-image"
