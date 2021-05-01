@@ -51,7 +51,7 @@ class Product extends React.Component {
 	};
 
 	handleBarCodeUpdate = () => {
-		if (this.state.barcode != this.props.match.params.barcode) {
+		if (this.state.barcode !== this.props.match.params.barcode) {
 			this.setState({
 				barcode: this.props.match.params.barcode,
 				bcProductId: this.props.match.params.bcProductId,
@@ -122,11 +122,11 @@ class Product extends React.Component {
 				}
 				if (
 					ecoScore &&
-					(ecoScore == "a" ||
-						ecoScore == "b" ||
-						ecoScore == "c" ||
-						ecoScore == "d" ||
-						ecoScore == "e")
+					(ecoScore === "a" ||
+						ecoScore === "b" ||
+						ecoScore === "c" ||
+						ecoScore === "d" ||
+						ecoScore === "e")
 				) {
 					this.setState({ ecoScore: ecoScore });
 				}
@@ -206,7 +206,7 @@ class Product extends React.Component {
 				<div className="product-page-container">
 					<div className="product-header-container">
 						<div className="product-history-link">
-							<Link href="/history"> {"<"} Historique</Link>
+							<Link to="/history"> {"<"} Historique</Link>
 						</div>
 						<img
 							className="product-bitmap-image"
@@ -224,7 +224,7 @@ class Product extends React.Component {
 					<div className="product-navbar-container">
 						<button
 							className={
-								this.state.value == 0
+								this.state.value === 0
 									? "product-navbar-button selected"
 									: "product-navbar-button"
 							}
@@ -235,7 +235,7 @@ class Product extends React.Component {
 						</button>
 						<button
 							className={
-								this.state.value == 1
+								this.state.value === 1
 									? "product-navbar-button selected"
 									: "product-navbar-button"
 							}
@@ -259,7 +259,7 @@ class Product extends React.Component {
 					<TabPanel value={this.state.value} index={0}></TabPanel>
 					<TabPanel value={this.state.value} index={1}>
 				</TabPanel> */}
-					{this.state.value == 1 ? (
+					{this.state.value === 1 ? (
 						<Environnement
 							dataEcoScore={this.state.dataEcoScore}
 						></Environnement>

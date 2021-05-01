@@ -1,12 +1,5 @@
 import React from "react";
-import {
-	Map,
-	TileLayer,
-	Marker,
-	Popup,
-	Polyline,
-	GeoJSON,
-} from "react-leaflet";
+import { Map, TileLayer, Marker } from "react-leaflet";
 import "./Traceability.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Curve } from "./leaflet-curve";
@@ -219,12 +212,12 @@ class Traceability extends React.Component {
 					);
 				}
 
-				let animate = {
-					duration: 1000,
-					iterations: Infinity,
-					easing: "ease-in-out",
-					direction: "alternate-reverse",
-				};
+				// let animate = {
+				// 	duration: 1000,
+				// 	iterations: Infinity,
+				// 	easing: "ease-in-out",
+				// 	direction: "alternate-reverse",
+				// };
 
 				return (
 					<React.Fragment>

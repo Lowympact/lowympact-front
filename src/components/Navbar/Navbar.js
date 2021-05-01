@@ -4,7 +4,7 @@ import ButtonHistory from "../Button/ButtonHistory";
 import ButtonProfil from "../Button/ButtonProfil";
 import ButtonScan from "../Button/ButtonScan";
 import Scan from "../Scan/Scan";
-import { ScanSettings, Barcode } from "scandit-sdk";
+import { ScanSettings } from "scandit-sdk";
 import { Redirect, Link } from "react-router-dom";
 
 class Navbar extends React.Component {
@@ -45,8 +45,8 @@ class Navbar extends React.Component {
 		if (
 			this.state.barcode &&
 			this.state.bcProductId &&
-			(this.props.barcode != this.state.barcode ||
-				this.props.bcProductId != this.state.bcProductId)
+			(this.props.barcode !== this.state.barcode ||
+				this.props.bcProductId !== this.state.bcProductId)
 		) {
 			console.log(
 				"redirect to",
@@ -65,7 +65,7 @@ class Navbar extends React.Component {
 			);
 		}
 		console.log(this.props.barcode, this.state.barcode);
-		if (this.state.barcode && this.props.barcode != this.state.barcode) {
+		if (this.state.barcode && this.props.barcode !== this.state.barcode) {
 			console.log(
 				"redirect to (barcode)",
 				this.state.barcode,

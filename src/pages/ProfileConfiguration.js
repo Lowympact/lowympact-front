@@ -66,8 +66,7 @@ class ProfileConfiguration extends Component {
 		console.log(this.state.redirect);
 		return (
 			<React.Fragment>
-				// Background style
-				<Link href="/">
+				<Link to="/">
 					<Header />
 				</Link>
 				<Navbar />
@@ -120,12 +119,13 @@ class ProfileConfiguration extends Component {
 				<label className="errors-change-password">
 					{this.state.errors}
 				</label>
-				<a
+				<Link
 					className="button-change-password"
 					onClick={this.handleChange}
+					to=""
 				>
 					<ButtonChangePassword />
-				</a>
+				</Link>
 			</React.Fragment>
 		);
 	}

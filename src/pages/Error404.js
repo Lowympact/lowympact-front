@@ -7,7 +7,7 @@ function Error404() {
 			<header className="App-header">
 				<img src={logo} className="logo" alt="logo" />
 				<h1>Erreur 404</h1>
-				<Link href="/">Retourner à l'accueil</Link>
+				<Link to="/">Retourner à l'accueil</Link>
 			</header>
 		</div>
 	);

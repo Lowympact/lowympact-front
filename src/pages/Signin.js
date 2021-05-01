@@ -47,17 +47,16 @@ class Signin extends Component {
 		}
 		return (
 			<React.Fragment>
-				//Background style
 				<div>
 					<img src={blob} className="blob-top" alt="Blob" />
 				</div>
-				<Link href="/login">
+				<Link to="/login">
 					<Header />
 				</Link>
 				<div className="logo-fruits">
 					<img src={fruits} className="logo" alt="Fruits" />
 				</div>
-				// Signup Forms
+
 				<form>
 					<label>
 						email

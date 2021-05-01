@@ -55,14 +55,13 @@ class Signup extends Component {
 		}
 		return (
 			<React.Fragment>
-				//Background style
-				<Link href="/login">
+				<Link to="/login">
 					<Header />
 				</Link>
 				<div className="logo-fruits">
 					<img src={fruits} className="logo" alt="Fruits" />
 				</div>
-				// Signup Forms
+
 				<form>
 					<label>
 						email

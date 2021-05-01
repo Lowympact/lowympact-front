@@ -8,7 +8,7 @@ class Profil extends React.Component {
 	render() {
 		return (
 			<React.Fragment>
-				<Link href="/">
+				<Link to="/">
 					<Header />
 				</Link>
 				<div className="profil-screen">
@@ -16,10 +16,10 @@ class Profil extends React.Component {
 						<div class="material-icons">person</div>
 					</div>
 					<h2 className="profil-title">Bienvenue sur ton profil!</h2>
-					<Link href="/configuration" className="profil-button">
+					<Link to="/configuration" className="profil-button">
 						Configuration
 					</Link>
-					<Link href="/login" className="profil-button">
+					<Link to="/login" className="profil-button">
 						Déconnecter
 					</Link>
 				</div>

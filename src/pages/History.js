@@ -3,25 +3,25 @@ import fruits from "../assets/images/fruits-vegetables-basket-by-oblik-studio.sv
 import Navbar from "../components/Navbar/Navbar";
 import Header from "../components/Header/Header";
 import "./History.css";
-import { ITEMS } from "../assets/scanned/items";
+// import { ITEMS } from "../assets/scanned/items";
 import { Link } from "react-router-dom";
 
 function RenderHistoryItem({ item }) {
 	var labelColor;
-	if (item.label == "Mauvais") {
+	if (item.label === "Mauvais") {
 		labelColor = "red";
-	} else if (item.label == "Moyen") {
+	} else if (item.label === "Moyen") {
 		labelColor = "yellow";
-	} else if (item.label == "Bonne") {
+	} else if (item.label === "Bonne") {
 		labelColor = "green";
 	}
 
 	var pathProduct = "/products/" + item.id + "/idbc";
 
 	return (
-		<Link className="history-item" href={pathProduct}>
+		<Link className="history-item" to={pathProduct}>
 			<div className="history-img-container">
-				<img src={item.image} />
+				<img src={item.image} alt="" />
 			</div>
 			<div className="history-name-container">
 				<div className="history-name">{item.name}</div>
