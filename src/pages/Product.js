@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar/Navbar";
 import Traceability from "../components/Traceability/Traceability";
+import Environnement from "../components/Environnement/Environnement";
 import "./Product.css";
 
 import AppBar from "@material-ui/core/AppBar";
@@ -45,6 +46,7 @@ class Product extends React.Component {
     productName: undefined,
     genericName: undefined,
     ecoScore: undefined,
+    dataEcoScore: undefined,
     value: 0,
   };
 
@@ -135,6 +137,8 @@ class Product extends React.Component {
         let genericName = res?.product?.generic_name;
         let ecoScore = res?.product?.ecoscore_grade;
 
+        let dataEcoScore = res?.product?.ecoscore_data;
+
         if (productImageUrl) {
           this.setState({ productImageUrl: productImageUrl });
         }
@@ -146,6 +150,9 @@ class Product extends React.Component {
         }
         if (ecoScore && ecoScore !== "not-applicable") {
           this.setState({ ecoScore: ecoScore });
+        }
+        if (dataEcoScore) {
+          this.setState({ dataEcoScore: dataEcoScore });
         }
       });
   };
@@ -234,8 +241,7 @@ class Product extends React.Component {
               onChange={this.handleChange}
               aria-label="simple tabs example"
             >
-              <Tab label="Traçabilité"></Tab>
-
+              <Tab label="Traçabilité" />
               <Tab label="Environnement" />
             </Tabs>
           </AppBar>
@@ -245,7 +251,9 @@ class Product extends React.Component {
             </div>
           </TabPanel>
           <TabPanel value={this.state.value} index={1}>
-            Item Two
+            <Environnement
+              dataEcoScore={this.state.dataEcoScore}
+            ></Environnement>
           </TabPanel>
           <Navbar
             barcode={this.props.match.params.barcode}
