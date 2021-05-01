@@ -82,7 +82,7 @@ class ProfileConfiguration extends Component {
 				</label>
 				<form className="forms">
 					<label>
-						mot de passe actueil
+						Mot de passe actuel
 						<input
 							value={this.state.currentPassword}
 							onChange={(evt) =>
@@ -94,7 +94,7 @@ class ProfileConfiguration extends Component {
 						/>
 					</label>
 					<label>
-						nouveau mot de passe
+						Nouveau mot de passe
 						<input
 							value={this.state.newPassword}
 							onChange={(evt) =>
@@ -104,7 +104,7 @@ class ProfileConfiguration extends Component {
 						/>
 					</label>
 					<label>
-						confirmer mot de passe
+						Confirmation de mot de passe
 						<input
 							value={this.state.passwordConfirm}
 							onChange={(evt) =>

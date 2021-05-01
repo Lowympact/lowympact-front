@@ -1,4 +1,4 @@
 function ButtonNoAccount() {
-	return <div>Scanner sans compte</div>;
+	return <div>Continuer sans compte {">"}</div>;
 }
 export default ButtonNoAccount;

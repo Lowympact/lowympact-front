@@ -89,7 +89,7 @@ class Navbar extends React.Component {
 								<ButtonScan />
 							</div>
 						</div>
-						<span className="navbar-scan-text">scan</span>
+						<span className="navbar-scan-text">Scan</span>
 						<a
 							href="/profil"
 							className="navbar-link navbar-text-right"
