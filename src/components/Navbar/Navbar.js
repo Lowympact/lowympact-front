@@ -12,6 +12,20 @@ class Navbar extends React.Component {
 		showScanner: false,
 		barcode: undefined,
 		bcProductId: undefined,
+		height: 0,
+	};
+
+	componentDidMount() {
+		this.updateWindowDimensions();
+		window.addEventListener("resize", this.updateWindowDimensions);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener("resize", this.updateWindowDimensions);
+	}
+
+	updateWindowDimensions = () => {
+		this.setState({ height: window.innerHeight });
 	};
 
 	handleScannerButton = (bool) => {
@@ -39,9 +53,9 @@ class Navbar extends React.Component {
 	};
 
 	render = () => {
-		// if (window.innerHeight < 550) {
-		// 	return <React.Fragment />;
-		// }
+		if (this.state.height < 550) {
+			return <React.Fragment />;
+		}
 		if (
 			this.state.barcode &&
 			this.state.bcProductId &&

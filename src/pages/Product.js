@@ -4,38 +4,7 @@ import Traceability from "../components/Traceability/Traceability";
 import Environnement from "../components/Environnement/Environnement";
 import "./Product.css";
 import { Link } from "react-router-dom";
-// import AppBar from "@material-ui/core/AppBar";
-// import Tabs from "@material-ui/core/Tabs";
-// import Tab from "@material-ui/core/Tab";
-// import Typography from "@material-ui/core/Typography";
-// import Box from "@material-ui/core/Box";
-// import PropTypes from "prop-types";
-
-// function TabPanel(props) {
-// 	const { children, value, index, ...other } = props;
-
-// 	return (
-// 		<div
-// 			role="tabpanel"
-// 			hidden={value !== index}
-// 			id={`simple-tabpanel-${index}`}
-// 			aria-labelledby={`simple-tab-${index}`}
-// 			{...other}
-// 		>
-// 			{value === index && (
-// 				<Box p={3}>
-// 					<Typography>{children}</Typography>
-// 				</Box>
-// 			)}
-// 		</div>
-// 	);
-// }
-
-// TabPanel.propTypes = {
-// 	children: PropTypes.node,
-// 	index: PropTypes.any.isRequired,
-// 	value: PropTypes.any.isRequired,
-// };
+import jwt from "jsonwebtoken";
 
 class Product extends React.Component {
 	state = {
@@ -48,6 +17,8 @@ class Product extends React.Component {
 		ecoScore: undefined,
 		dataEcoScore: undefined,
 		value: 0,
+		connected: false,
+		productData: undefined,
 	};
 
 	handleBarCodeUpdate = () => {
@@ -64,6 +35,25 @@ class Product extends React.Component {
 				);
 			}
 		}
+	};
+
+	Verify = () => {
+		let isExpired = true;
+		const token = localStorage.getItem("token");
+		if (token) {
+			var decodedToken = jwt.decode(token, { complete: true });
+			var dateNow = new Date();
+			if (decodedToken.payload.exp >= dateNow.getTime() / 1000) {
+				isExpired = false;
+			}
+		}
+		if (isExpired === false) {
+			this.setState({ connected: true });
+		}
+	};
+
+	componentDidMount = () => {
+		this.Verify();
 	};
 
 	componentDidMount = () => {
@@ -111,6 +101,10 @@ class Product extends React.Component {
 
 				let dataEcoScore = res?.product?.ecoscore_data;
 
+				if (res?.product) {
+					this.setState({ productData: res.product });
+				}
+
 				if (productImageUrl) {
 					this.setState({ productImageUrl: productImageUrl });
 				}
@@ -133,7 +127,40 @@ class Product extends React.Component {
 				if (dataEcoScore) {
 					this.setState({ dataEcoScore: dataEcoScore });
 				}
+				if (res.status === 1) {
+					this.saveHistory();
+				}
 			});
+	};
+
+	saveHistory = async () => {
+		await delay(2000);
+
+		if (!this.state.connected) {
+			let history = JSON.parse(localStorage.getItem("local_history"));
+			let exist = null;
+			if (history) {
+				exist = history?.find(
+					(element) =>
+						element.barcode === this.state.barcode &&
+						element.bcProductId == this.state.bcProductId
+				);
+			} else {
+				history = [];
+			}
+
+			if (!exist || exist?.length === 0) {
+				history.push({
+					barcode: this.state.barcode,
+					bcProductId: this.state.bcProductId,
+					brand: this.state.productData.brands,
+					image: this.state.productImageUrl,
+					label: this.state.ecoScore,
+					name: this.state.productName,
+				});
+				localStorage.setItem("local_history", JSON.stringify(history));
+			}
+		}
 	};
 
 	flip = (event) => {
@@ -289,3 +316,5 @@ class Product extends React.Component {
 }
 
 export default Product;
+
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));

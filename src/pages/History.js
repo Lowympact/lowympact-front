@@ -16,7 +16,10 @@ function RenderHistoryItem({ item }) {
 		labelColor = "green";
 	}
 
-	var pathProduct = "/products/" + item.barcode + "/idbc";
+	var pathProduct = "/products/" + item.barcode;
+	if (item.bcProductId) {
+		pathProduct += "/" + item.bcProductId;
+	}
 
 	return (
 		<Link className="history-item" to={pathProduct}>
@@ -54,6 +57,8 @@ class History extends Component {
 		if (userId && token) {
 			this.setState({ userId: userId });
 			this.loadHistoryInformations(userId);
+		} else {
+			this.loadLocalStorageHistory(userId);
 		}
 	};
 
@@ -80,6 +85,13 @@ class History extends Component {
 					items: res?.data,
 				});
 			});
+	};
+
+	loadLocalStorageHistory = () => {
+		let history = JSON.parse(localStorage.getItem("local_history"));
+		this.setState({
+			items: history,
+		});
 	};
 
 	render() {
