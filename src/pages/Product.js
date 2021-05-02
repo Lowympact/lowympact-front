@@ -200,6 +200,39 @@ class Product extends React.Component {
 		this.setState({ value: newValue });
 	};
 
+	displayNavbar = () => {
+		let retour = <React.Fragment />;
+		if (this.state.bcProductId) {
+			retour = (
+				<div className="product-navbar-container">
+					<button
+						className={
+							this.state.value === 0
+								? "product-navbar-button selected"
+								: "product-navbar-button"
+						}
+						onClick={() => this.handleChange("", 0)}
+					>
+						<span class="material-icons">nature_people</span>
+						Environnement
+					</button>
+					<button
+						className={
+							this.state.value === 1
+								? "product-navbar-button selected"
+								: "product-navbar-button"
+						}
+						onClick={() => this.handleChange("", 1)}
+					>
+						<span class="material-icons">travel_explore</span>
+						Traçabilité
+					</button>
+				</div>
+			);
+		}
+		return retour;
+	};
+
 	render = () => {
 		return (
 			<React.Fragment>
@@ -221,30 +254,7 @@ class Product extends React.Component {
 						{this.displayImage()}
 					</div>
 
-					<div className="product-navbar-container">
-						<button
-							className={
-								this.state.value === 0
-									? "product-navbar-button selected"
-									: "product-navbar-button"
-							}
-							onClick={() => this.handleChange("", 0)}
-						>
-							<span class="material-icons">travel_explore</span>
-							Traçabilité
-						</button>
-						<button
-							className={
-								this.state.value === 1
-									? "product-navbar-button selected"
-									: "product-navbar-button"
-							}
-							onClick={() => this.handleChange("", 1)}
-						>
-							<span class="material-icons">nature_people</span>
-							Environnement
-						</button>
-					</div>
+					{this.displayNavbar()}
 
 					{/* <AppBar position="static">
 						<Tabs
@@ -259,7 +269,7 @@ class Product extends React.Component {
 					<TabPanel value={this.state.value} index={0}></TabPanel>
 					<TabPanel value={this.state.value} index={1}>
 				</TabPanel> */}
-					{this.state.value === 1 ? (
+					{this.state.value === 0 ? (
 						<Environnement
 							dataEcoScore={this.state.dataEcoScore}
 						></Environnement>
