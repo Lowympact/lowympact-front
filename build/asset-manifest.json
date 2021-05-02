@@ -1,29 +1,29 @@
 {
   "files": {
-    "main.css": "/static/css/main.e3fddf8b.chunk.css",
-    "main.js": "/static/js/main.eb45d370.chunk.js",
-    "main.js.map": "/static/js/main.eb45d370.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.22f77820.js",
-    "runtime-main.js.map": "/static/js/runtime-main.22f77820.js.map",
+    "main.css": "/static/css/main.fb2407a8.chunk.css",
+    "main.js": "/static/js/main.f680ba36.chunk.js",
+    "main.js.map": "/static/js/main.f680ba36.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.49150549.js",
+    "runtime-main.js.map": "/static/js/runtime-main.49150549.js.map",
     "static/css/2.e5d6fab3.chunk.css": "/static/css/2.e5d6fab3.chunk.css",
-    "static/js/2.b224dd32.chunk.js": "/static/js/2.b224dd32.chunk.js",
-    "static/js/2.b224dd32.chunk.js.map": "/static/js/2.b224dd32.chunk.js.map",
-    "static/js/3.a808dcc2.chunk.js": "/static/js/3.a808dcc2.chunk.js",
-    "static/js/3.a808dcc2.chunk.js.map": "/static/js/3.a808dcc2.chunk.js.map",
+    "static/js/2.ae2a2c2b.chunk.js": "/static/js/2.ae2a2c2b.chunk.js",
+    "static/js/2.ae2a2c2b.chunk.js.map": "/static/js/2.ae2a2c2b.chunk.js.map",
+    "static/js/3.4c6cda08.chunk.js": "/static/js/3.4c6cda08.chunk.js",
+    "static/js/3.4c6cda08.chunk.js.map": "/static/js/3.4c6cda08.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.e5d6fab3.chunk.css.map": "/static/css/2.e5d6fab3.chunk.css.map",
-    "static/css/main.e3fddf8b.chunk.css.map": "/static/css/main.e3fddf8b.chunk.css.map",
-    "static/js/2.b224dd32.chunk.js.LICENSE.txt": "/static/js/2.b224dd32.chunk.js.LICENSE.txt",
+    "static/css/main.fb2407a8.chunk.css.map": "/static/css/main.fb2407a8.chunk.css.map",
+    "static/js/2.ae2a2c2b.chunk.js.LICENSE.txt": "/static/js/2.ae2a2c2b.chunk.js.LICENSE.txt",
     "static/media/index.css": "/static/media/Comfortaa-Medium.7897f745.ttf",
     "static/media/bitmap.6f490d5b.png": "/static/media/bitmap.6f490d5b.png",
     "static/media/fruits-vegetables-basket-by-oblik-studio.7d5e1c64.svg": "/static/media/fruits-vegetables-basket-by-oblik-studio.7d5e1c64.svg",
     "static/media/logo.b235ef42.svg": "/static/media/logo.b235ef42.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.22f77820.js",
+    "static/js/runtime-main.49150549.js",
     "static/css/2.e5d6fab3.chunk.css",
-    "static/js/2.b224dd32.chunk.js",
-    "static/css/main.e3fddf8b.chunk.css",
-    "static/js/main.eb45d370.chunk.js"
+    "static/js/2.ae2a2c2b.chunk.js",
+    "static/css/main.fb2407a8.chunk.css",
+    "static/js/main.f680ba36.chunk.js"
   ]
 }
