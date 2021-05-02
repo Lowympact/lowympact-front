@@ -44,21 +44,29 @@ class History extends Component {
 
 		this.state = {
 			items: undefined,
-			userId: "608e78f22893d35e90376d62", //TO DO : récupérer le vrai user ID qui est connecté, puis le token dans Auhtorization ? (voir avec les cookies)
+			userId: undefined, //TO DO : récupérer le vrai user ID qui est connecté, puis le token dans Auhtorization ? (voir avec les cookies)
 		};
 	}
 
-	loadHistoryInformations = () => {
+	componentDidMount = () => {
+		let userId = localStorage.getItem("userId");
+		let token = localStorage.getItem("token");
+		if (userId && token) {
+			this.setState({ userId: userId });
+			this.loadHistoryInformations(userId);
+		}
+	};
+
+	loadHistoryInformations = (userId) => {
 		fetch(
-			`https://api.lowympact.fr/api/v1/users/history/${this.state.userId}`,
-			// `http://localhost:8080/api/v1/users/history/${this.state.userId}`,
+			`https://api.lowympact.fr/api/v1/users/history/${userId}`,
+			// `http://localhost:8080/api/v1/users/history/${userId}`,
 
 			{
 				method: "get",
 				credentials: "include",
 				headers: new Headers({
-					authorization:
-						"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGMyOGEwMWNhYWQ1MWEyOGI2NTMxYiIsImlhdCI6MTYxOTg3MjUyNiwiZXhwIjoxNjIyNDY0NTI2fQ.AdOqff6fR1Ewjtfqe65mGwl_EbhEfIoVDmQSJj2HWA4",
+					authorization: localStorage.getItem("token"),
 					"Content-Type": "application/json",
 					"api-key": "99d8fb95-abdd-4885-bf6c-3a81d8874043",
 				}),
@@ -72,10 +80,6 @@ class History extends Component {
 					items: res?.data,
 				});
 			});
-	};
-
-	componentDidMount = () => {
-		this.loadHistoryInformations();
 	};
 
 	render() {
