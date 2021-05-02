@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/static/css/main.e0617525.chunk.css",
-    "main.js": "/static/js/main.c5b8d73f.chunk.js",
-    "main.js.map": "/static/js/main.c5b8d73f.chunk.js.map",
+    "main.js": "/static/js/main.8aa9b6bc.chunk.js",
+    "main.js.map": "/static/js/main.8aa9b6bc.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.d260d808.js",
     "runtime-main.js.map": "/static/js/runtime-main.d260d808.js.map",
     "static/css/2.e5d6fab3.chunk.css": "/static/css/2.e5d6fab3.chunk.css",
-    "static/js/2.0de91d04.chunk.js": "/static/js/2.0de91d04.chunk.js",
-    "static/js/2.0de91d04.chunk.js.map": "/static/js/2.0de91d04.chunk.js.map",
+    "static/js/2.74eb7652.chunk.js": "/static/js/2.74eb7652.chunk.js",
+    "static/js/2.74eb7652.chunk.js.map": "/static/js/2.74eb7652.chunk.js.map",
     "static/js/3.73234df8.chunk.js": "/static/js/3.73234df8.chunk.js",
     "static/js/3.73234df8.chunk.js.map": "/static/js/3.73234df8.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.e5d6fab3.chunk.css.map": "/static/css/2.e5d6fab3.chunk.css.map",
     "static/css/main.e0617525.chunk.css.map": "/static/css/main.e0617525.chunk.css.map",
-    "static/js/2.0de91d04.chunk.js.LICENSE.txt": "/static/js/2.0de91d04.chunk.js.LICENSE.txt",
+    "static/js/2.74eb7652.chunk.js.LICENSE.txt": "/static/js/2.74eb7652.chunk.js.LICENSE.txt",
     "static/media/index.css": "/static/media/Comfortaa-Medium.7897f745.ttf",
     "static/media/bitmap.6f490d5b.png": "/static/media/bitmap.6f490d5b.png",
     "static/media/fruits-vegetables-basket-by-oblik-studio.7d5e1c64.svg": "/static/media/fruits-vegetables-basket-by-oblik-studio.7d5e1c64.svg",
@@ -22,8 +22,8 @@
   "entrypoints": [
     "static/js/runtime-main.d260d808.js",
     "static/css/2.e5d6fab3.chunk.css",
-    "static/js/2.0de91d04.chunk.js",
+    "static/js/2.74eb7652.chunk.js",
     "static/css/main.e0617525.chunk.css",
-    "static/js/main.c5b8d73f.chunk.js"
+    "static/js/main.8aa9b6bc.chunk.js"
   ]
 }
