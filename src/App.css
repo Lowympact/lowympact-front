@@ -61,6 +61,12 @@
 	margin: 0 auto;
 }
 
+.back-button {
+	position: absolute;
+	top: 150px;
+	left: 50px;
+}
+
 /***** Page Product *****/
 
 .product-page-container {

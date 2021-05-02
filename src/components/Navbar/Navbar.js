@@ -39,6 +39,9 @@ class Navbar extends React.Component {
 	};
 
 	render = () => {
+		// if (window.innerHeight < 550) {
+		// 	return <React.Fragment />;
+		// }
 		if (
 			this.state.barcode &&
 			this.state.bcProductId &&
