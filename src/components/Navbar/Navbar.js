@@ -84,7 +84,11 @@ class Navbar extends React.Component {
 					<div className="navbar-container">
 						<Link
 							to="/history"
-							className="navbar-link navbar-text-left"
+							className={
+								window.location.pathname == "/history"
+									? "navbar-link navbar-text-left navbar-selected"
+									: "navbar-link navbar-text-left "
+							}
 						>
 							<ButtonHistory />
 						</Link>
@@ -96,7 +100,11 @@ class Navbar extends React.Component {
 						<span className="navbar-scan-text">Scan</span>
 						<Link
 							to="/profil"
-							className="navbar-link navbar-text-right"
+							className={
+								window.location.pathname == "/profil"
+									? "navbar-link navbar-text-right navbar-selected"
+									: "navbar-link navbar-text-right "
+							}
 						>
 							<ButtonProfil />
 						</Link>

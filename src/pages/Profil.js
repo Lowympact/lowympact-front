@@ -4,6 +4,7 @@ import Header from "../components/Header/Header";
 import "./Profil.css";
 import { Link } from "react-router-dom";
 import jwt from "jsonwebtoken";
+import { motion } from "framer-motion";
 
 class Profil extends React.Component {
 	state = {
@@ -62,20 +63,25 @@ class Profil extends React.Component {
 
 	render() {
 		return (
-			<React.Fragment>
+			<div>
 				<Link to="/">
 					<Header />
 				</Link>
-				<div className="profil-screen">
+				<motion.div
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0 }}
+					className="profil-screen"
+				>
 					<div className="profil-picture">
 						<div class="material-icons">person</div>
 					</div>
 					{this.state.connected
 						? this.displayConnectedProfil()
 						: this.displayUnconnectedProfil()}
-				</div>
+				</motion.div>
 				<Navbar />
-			</React.Fragment>
+			</div>
 		);
 	}
 }

@@ -54,9 +54,6 @@ class Product extends React.Component {
 
 	componentDidMount = () => {
 		this.Verify();
-	};
-
-	componentDidMount = () => {
 		this.loadFromOpenFoodFacts(this.props.match.params.barcode);
 		if (this.props.match.params.bcProductId) {
 			this.loadProductInformations(

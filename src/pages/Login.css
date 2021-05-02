@@ -1,7 +1,8 @@
 /*sign up and sign in forms and buttons*/
 form {
 	display: flex;
-	position: fixed;
+	position: relative;
+	margin-top: 200px;
 	height: auto;
 	left: calc(50vw - 100px);
 	top: 30%;
@@ -59,7 +60,7 @@ label {
 	width: 160px;
 	height: 45px;
 	border-radius: 10px;
-	position: fixed;
+	position: relative;
 	left: calc(50vw - 80px);
 	top: 70%;
 	/*text*/
@@ -70,6 +71,7 @@ label {
 	background-color: #78be95;
 	font-family: "Comfortaa";
 	color: white;
+	margin-bottom: 100px;
 	font-size: 14px;
 }
 
@@ -77,7 +79,7 @@ label {
 	width: 160px;
 	height: 45px;
 	border-radius: 10px;
-	position: fixed;
+	position: relative;
 	left: calc(50vw - 80px);
 	top: 60%;
 	/*text*/

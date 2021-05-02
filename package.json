@@ -3,6 +3,7 @@
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
+		"framer-motion": "^4.1.11",
 		"jsonwebtoken": "^8.5.1",
 		"leaflet": "^1.7.1",
 		"quagga": "^0.12.1",

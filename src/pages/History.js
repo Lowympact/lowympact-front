@@ -5,6 +5,7 @@ import Header from "../components/Header/Header";
 import "./History.css";
 // import { ITEMS } from "../assets/scanned/items";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 function RenderHistoryItem({ item }) {
 	var labelColor;
@@ -22,22 +23,28 @@ function RenderHistoryItem({ item }) {
 	}
 
 	return (
-		<Link className="history-item" to={pathProduct}>
-			<div className="history-img-container">
-				<img src={item.image} alt="" />
-			</div>
-			<div className="history-name-container">
-				<div className="history-name">{item.name}</div>
-				<div className="history-brand">{item.brand}</div>
-			</div>
-			<div className="history-label-container">
-				<div style={{ color: labelColor }}>●</div>
-				<div className="history-label">{item.label}</div>
-			</div>
-			<div style={{ marginRight: "10px", color: "rgb(41,72,102)" }}>
-				{">"}
-			</div>
-		</Link>
+		<motion.div
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
+		>
+			<Link className="history-item" to={pathProduct}>
+				<div className="history-img-container">
+					<img src={item.image} alt="" />
+				</div>
+				<div className="history-name-container">
+					<div className="history-name">{item.name}</div>
+					<div className="history-brand">{item.brand}</div>
+				</div>
+				<div className="history-label-container">
+					<div style={{ color: labelColor }}>●</div>
+					<div className="history-label">{item.label}</div>
+				</div>
+				<div style={{ marginRight: "10px", color: "rgb(41,72,102)" }}>
+					{">"}
+				</div>
+			</Link>
+		</motion.div>
 	);
 }
 
@@ -106,7 +113,11 @@ class History extends Component {
 
 			if (Object.keys(this.state.items).length === 0)
 				return (
-					<div>
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+					>
 						<Header />
 						<Navbar />
 						<div className="App">
@@ -121,13 +132,20 @@ class History extends Component {
 								</p>
 							</div>
 						</div>
-					</div>
+					</motion.div>
 				);
 			else
 				return (
 					<div>
 						<div className="screen">
-							<div className="screen-title">Historique:</div>
+							<motion.div
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								exit={{ opacity: 0 }}
+								className="screen-title"
+							>
+								Historique:
+							</motion.div>
 							{itemList}
 						</div>
 						<Header />
@@ -136,7 +154,11 @@ class History extends Component {
 				);
 		} else {
 			return (
-				<div>
+				<motion.div
+					initial={{ opacity: 0 }}
+					animate={{ opacity: 1 }}
+					exit={{ opacity: 0 }}
+				>
 					<Header />
 					<Navbar />
 					<div className="App">
@@ -147,7 +169,7 @@ class History extends Component {
 							</p>
 						</div>
 					</div>
-				</div>
+				</motion.div>
 			);
 		}
 	}

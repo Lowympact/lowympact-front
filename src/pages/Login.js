@@ -7,6 +7,7 @@ import ButtonLogin from "../components/Button/ButtonLogin";
 import { Link } from "react-router-dom";
 import ButtonNoAccount from "../components/Button/ButtonNoAccount";
 import jwt from "jsonwebtoken";
+import { motion } from "framer-motion";
 
 class Login extends React.Component {
 	componentDidMount = () => {
@@ -31,7 +32,7 @@ class Login extends React.Component {
 	};
 	render = () => {
 		return (
-			<React.Fragment>
+			<motion.div exit={{ opacity: 0 }}>
 				<div className="login-logo">
 					<img src={logo} className="logo" alt="Logo" />
 				</div>
@@ -48,7 +49,7 @@ class Login extends React.Component {
 				<div className="logo-fruits">
 					<img src={fruits} className="logo" alt="Fruits" />
 				</div>
-			</React.Fragment>
+			</motion.div>
 		);
 	};
 }
