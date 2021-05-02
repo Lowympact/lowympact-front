@@ -28,6 +28,7 @@ class Signin extends Component {
 			password: "",
 			errors: [],
 			redirect: false,
+			loginSuccessful: null,
 		};
 	}
 
@@ -63,8 +64,8 @@ class Signin extends Component {
 
 	Connect = () => {
 		fetch(
-			`https://api.lowympact.fr/v1/api/users/login`,
-			// `http://localhost:8080/v1/api/users/login`,
+			`https://api.lowympact.fr/api/v1/users/login`,
+			// `http://localhost:8080/api/v1/users/login`,
 			{
 				method: "POST",
 				headers: {
@@ -82,13 +83,23 @@ class Signin extends Component {
 			.then((response) => response.json())
 			.then((data) => {
 				console.log(data);
-				if (data.error || data.message) {
+				if (data.error === "No user found") {
 					this.setState({ loginSuccessful: false });
-					console.log("Erreur de connection");
+					let err = this.state.errors;
+					err.push(<p>Utilisateur Inconnu</p>);
+					this.setState({ errors: err });
+				} else if (
+					data.error === "Incorrect password" ||
+					!data.success
+				) {
+					this.setState({ loginSuccessful: false });
+					let err = this.state.errors;
+					err.push(<p>Mot de passe Incorrect</p>);
+					this.setState({ errors: err });
 				} else {
 					// console.log(data);
 					localStorage.setItem("token", data.token);
-					localStorage.setItem("userId", data.userId);
+					localStorage.setItem("userId", data._id);
 					this.setState({ loginSuccessful: true, redirect: true });
 					//this.props.history.goBack();	// a ajouter pour être redirigé vers la page initialement
 					// demandée. On doit cependant rediriger si la page demandée
