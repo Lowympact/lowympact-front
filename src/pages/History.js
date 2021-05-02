@@ -61,8 +61,9 @@ class History extends Component {
 			.then((response) => response.json())
 			.then((res) => {
 				console.log(res);
+
 				this.setState({
-					items: res.data.history,
+					items: res?.data?.history,
 				});
 			});
 	};
