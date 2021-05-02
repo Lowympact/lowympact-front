@@ -20,10 +20,8 @@ class Navbar extends React.Component {
 
 	handleBarcode = (res) => {
 		if (res) {
-			console.log("barcode", res);
 			//détecté par barcode scanner
 			let arr = res.split("/");
-			console.log(arr);
 			if (arr.length > 1) {
 				this.setState({
 					barcode: arr[4],
@@ -41,18 +39,12 @@ class Navbar extends React.Component {
 	};
 
 	render = () => {
-		console.log(this.state.barcode, this.state.bcProductId);
 		if (
 			this.state.barcode &&
 			this.state.bcProductId &&
 			(this.props.barcode !== this.state.barcode ||
 				this.props.bcProductId !== this.state.bcProductId)
 		) {
-			console.log(
-				"redirect to",
-				this.state.barcode,
-				this.state.bcProductId
-			);
 			return (
 				<Redirect
 					to={
@@ -64,13 +56,8 @@ class Navbar extends React.Component {
 				/>
 			);
 		}
-		console.log(this.props.barcode, this.state.barcode);
+
 		if (this.state.barcode && this.props.barcode !== this.state.barcode) {
-			console.log(
-				"redirect to (barcode)",
-				this.state.barcode,
-				this.state.bcProductId
-			);
 			return <Redirect to={"/products/" + this.state.barcode} />;
 		}
 

@@ -8,15 +8,15 @@ import { Link } from "react-router-dom";
 
 function RenderHistoryItem({ item }) {
 	var labelColor;
-	if (item.label === "Mauvais") {
+	if (item.label === "d" || item.label === "e") {
 		labelColor = "red";
-	} else if (item.label === "Moyen") {
+	} else if (item.label === "c") {
 		labelColor = "yellow";
-	} else if (item.label === "Bonne") {
+	} else if (item.label === "a" || item.label === "b") {
 		labelColor = "green";
 	}
 
-	var pathProduct = "/products/" + item.id + "/idbc";
+	var pathProduct = "/products/" + item.barcode + "/idbc";
 
 	return (
 		<Link className="history-item" to={pathProduct}>
@@ -44,26 +44,32 @@ class History extends Component {
 
 		this.state = {
 			items: undefined,
-			userId: "608c28a01caad51a28b6531b", //TO DO : récupérer le vrai user ID qui est connecté, puis le token dans Auhtorization ? (voir avec les cookies)
+			userId: "608e78f22893d35e90376d62", //TO DO : récupérer le vrai user ID qui est connecté, puis le token dans Auhtorization ? (voir avec les cookies)
 		};
 	}
 
 	loadHistoryInformations = () => {
-		fetch(`https://api.lowympact.fr/api/v1/users/${this.state.userId}`, {
-			method: "get",
-			credentials: "include",
-			headers: new Headers({
-				Authorization:
-					"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGMyOGEwMWNhYWQ1MWEyOGI2NTMxYiIsImlhdCI6MTYxOTg3MjUyNiwiZXhwIjoxNjIyNDY0NTI2fQ.AdOqff6fR1Ewjtfqe65mGwl_EbhEfIoVDmQSJj2HWA4",
-				"Content-Type": "application/json",
-			}),
-		})
+		fetch(
+			`https://api.lowympact.fr/api/v1/users/history/${this.state.userId}`,
+			// `http://localhost:8080/api/v1/users/history/${this.state.userId}`,
+
+			{
+				method: "get",
+				credentials: "include",
+				headers: new Headers({
+					authorization:
+						"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwOGMyOGEwMWNhYWQ1MWEyOGI2NTMxYiIsImlhdCI6MTYxOTg3MjUyNiwiZXhwIjoxNjIyNDY0NTI2fQ.AdOqff6fR1Ewjtfqe65mGwl_EbhEfIoVDmQSJj2HWA4",
+					"Content-Type": "application/json",
+					"api-key": "99d8fb95-abdd-4885-bf6c-3a81d8874043",
+				}),
+			}
+		)
 			.then((response) => response.json())
 			.then((res) => {
 				console.log(res);
 
 				this.setState({
-					items: res?.data?.history,
+					items: res?.data,
 				});
 			});
 	};
