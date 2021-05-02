@@ -5,6 +5,11 @@ import "./Profil.css";
 import { Link } from "react-router-dom";
 
 class Profil extends React.Component {
+	disconnect = () => {
+		localStorage.clear();
+		this.props.history.push("/login");
+	};
+
 	render() {
 		return (
 			<React.Fragment>
@@ -19,9 +24,9 @@ class Profil extends React.Component {
 					<Link to="/configuration" className="profil-button">
 						Configuration
 					</Link>
-					<Link to="/login" className="profil-button">
+					<div onClick={this.disconnect} className="profil-button">
 						Déconnecter
-					</Link>
+					</div>
 				</div>
 				<Navbar />
 			</React.Fragment>

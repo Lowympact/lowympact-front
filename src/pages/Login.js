@@ -6,8 +6,29 @@ import ButtonCreateAccount from "../components/Button/ButtonCreateAccount";
 import ButtonLogin from "../components/Button/ButtonLogin";
 import { Link } from "react-router-dom";
 import ButtonNoAccount from "../components/Button/ButtonNoAccount";
+import jwt from "jsonwebtoken";
 
 class Login extends React.Component {
+	componentDidMount = () => {
+		this.Verify();
+	};
+
+	Verify = () => {
+		let isExpired = true;
+		const token = localStorage.getItem("token");
+		if (token) {
+			var decodedToken = jwt.decode(token, { complete: true });
+			var dateNow = new Date();
+			console.log(decodedToken, dateNow.getTime() / 1000);
+			if (decodedToken.payload.exp >= dateNow.getTime() / 1000) {
+				isExpired = false;
+			}
+		}
+		if (isExpired === false) {
+			console.log("here");
+			this.props.history.push(`/history`); // redirection vers la page login
+		}
+	};
 	render = () => {
 		return (
 			<React.Fragment>
