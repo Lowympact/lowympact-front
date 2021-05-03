@@ -71,13 +71,12 @@ class Product extends React.Component {
 	loadProductInformations = (barcode, bcProductId) => {
 		fetch(
 			`https://api.lowympact.fr/api/v1/products/${barcode}?bcProductId=${bcProductId}`,
-			// `http://localhost:8080/api/v1/products/${this.state.barcode}?bcProductId=${this.state.bcProductId}`,
+			// `http://localhost:8080/api/v1/products/${barcode}?bcProductId=${bcProductId}`,
 			{
 				method: "get",
 				credentials: "include",
 				headers: new Headers({
-					Authorization:
-						"Bearer 99d8fb95-abdd-4885-bf6c-3a81d8874043",
+					"api-key": "99d8fb95-abdd-4885-bf6c-3a81d8874043",
 					"Content-Type": "application/json",
 				}),
 			}
@@ -166,8 +165,8 @@ class Product extends React.Component {
 		} else if (this.state.userId) {
 			console.log(this.state.barcode, this.state.bcProductId);
 			fetch(
-				`https://api.lowympact.fr/api/v1/users/history/${this.state.userId}`,
-				// `http://localhost:8080/api/v1/users/history/${this.state.userId}`,
+				`https://api.lowympact.fr/api/v1/users/${this.state.userId}/history`,
+				// `http://localhost:8080/api/v1/users/${this.state.userId}/history`,
 				{
 					method: "put",
 					credentials: "include",
