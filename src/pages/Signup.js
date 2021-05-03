@@ -10,49 +10,97 @@ export const validEmail = new RegExp(
 	"^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$"
 );
 
-function validate(email, password, confirmPassword) {
-	const errors = [];
-
-	if (email.length === 0) {
-		errors.push(<p>Saissez votre adresse e-mail</p>);
-	}
-	if (validEmail.test(email) === false) {
-		errors.push(<p>Saissez une adresse e-mail valide</p>);
-	}
-	if (password.length < 6) {
-		errors.push(<p>Entre un mot de passe. 6 caràcteres minimum requis</p>);
-	}
-	if (password !== confirmPassword) {
-		errors.push(<p>Les mots de passe ne correspondent pas</p>);
-	}
-	return errors;
-}
 
 class Signup extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			email: "",
-			password: "",
-			confirmPassword: "",
-			errors: [],
-			redirect: false,
-		};
-	}
+
+
+	state={
+		userName: "",
+		email: "",
+		password: "",
+		confirmPassword: "",
+		errors: [],
+		redirect: false,
+		userPostSuccess: false,
+		submit: false
+	};
+
+	validate() {
+		var errors= [];
+		if (this.state.userName.length === 0) {
+			errors.push("Saissez votre nom");
+		}
+		if (this.state.email.length === 0) {
+			errors.push("Saissez votre adresse e-mail");
+		}
+		if (validEmail.test(this.state.email) === false) {
+			errors.push("Saissez une adresse e-mail valide");
+		}
+		if (this.state.password.length < 6) {
+			errors.push("Entre un mot de passe. 6 caràcteres minimum requis");
+		}
+		if (this.state.password !== this.state.confirmPassword) {
+			errors.push("Les mots de passe ne correspondent pas");
+		}
+		this.setState({errors:errors});
+		return errors;
+	};
+
+	signUser = () => {
+		var errors = [];
+		fetch(
+			`https://api.lowympact.fr/api/v1/users/${this.state.userName}/${this.state.email}/${this.state.password}`,
+			{
+				method: "post",
+				credentials: "include",
+				headers: new Headers({
+					Authorization:
+					"Bearer 99d8fb95-abdd-4885-bf6c-3a81d8874043",
+					"Content-Type": "application/json",
+				}),
+			}
+		)
+			.then((response) => response.json())
+			.then((res) => {
+				console.log(res);
+				this.setState({
+					userPostSuccess: res.data.success
+				});
+			});
+			if(this.state.userPostSuccess === false || this.state.userPostSuccess === undefined) {
+				errors.push("Il y a déjà un compte avec ce mail ou une erreur réseau.");
+			}
+		this.setState({errors:errors});	
+		return errors
+	};
+
 	handleSubmit = (e) => {
 		e.preventDefault();
-		const { email, password, confirmPassword } = this.state;
-		const errors = validate(email, password, confirmPassword);
-		console.log(email, password, confirmPassword, errors);
-		this.setState({ errors });
+		let errors = this.validate();
+		console.log("errors: " + errors);
+		if(errors.length === 0) {
+			errors = this.signUser ();
+		}
 		if (errors.length === 0) {
 			this.setState({ redirect: true });
 		}
 	};
+
+	displayErrors = () => {
+		let errors = <React.Fragment></React.Fragment>
+		errors = this.state.errors.map(
+			(error) => {
+				return(<p>{error}</p>);
+			});
+		return errors;
+	};
+
 	render() {
+		
 		if (this.state.redirect) {
 			return <Redirect to="/history" />;
 		}
+		console.log("render");
 		return (
 			<React.Fragment>
 				<Link to="/login">
@@ -66,6 +114,16 @@ class Signup extends Component {
 				</Link>
 
 				<form>
+				<label>
+						nom
+						<input
+							value={this.state.userName}
+							onChange={(evt) =>
+								this.setState({ userName: evt.target.value })
+							}
+							type="text"
+						/>
+					</label>
 					<label>
 						email
 						<input
@@ -99,7 +157,7 @@ class Signup extends Component {
 						/>
 					</label>
 				</form>
-				<label className="errors-signup">{this.state.errors}</label>
+				<label className="errors-signup">{this.displayErrors()}</label>
 				<div className="button-signup" onClick={this.handleSubmit}>
 					<ButtonSignup />
 				</div>
