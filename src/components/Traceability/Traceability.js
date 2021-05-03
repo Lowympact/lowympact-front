@@ -49,11 +49,31 @@ class Traceability extends React.Component {
 				return mode;
 		}
 	};
+	getTranslation = (mode) => {
+		switch (mode) {
+			case "maker":
+				return "Fabricant";
+			case "productor":
+				return "Producteur";
+			case "shop":
+				return "Revendeur";
+			default:
+				return mode;
+		}
+	};
 
 	displaySlides = () => {
 		let slides = <React.Fragment />;
 		if (this.props.products) {
 			slides = this.props.products.map((product) => {
+				let pastille = "product-slide-pastille past-green";
+				if (product.TransportCO2Impact?.value > 10) {
+					pastille = "product-slide-pastille past-orange";
+				}
+				if (product.TransportCO2Impact?.value > 100) {
+					pastille = "product-slide-pastille past-red";
+				}
+
 				return (
 					<SwiperSlide>
 						<div className="product-slide-container">
@@ -61,17 +81,70 @@ class Traceability extends React.Component {
 								<span class="material-icons">
 									{this.getMaterialIcon(product.transport)}
 								</span>
-							</div>
-							<div className="product-slide-wrapper">
+
 								<div className="product-slide-name">
-									Transport en{" "}
-									{this.getTransportMode(product.transport)}
+									<span className="product-slide-name-product">
+										{product.productsOutput[0].productName}
+									</span>
+									<span className="product-slide-name-transport">
+										Transport en{" "}
+										{this.getTransportMode(
+											product.transport
+										)}
+									</span>
 								</div>
-								<div className="product-slide-lowername">
-									De {product.seller?.name}
+							</div>
+							<div className="product-slide-origin-wrapper">
+								<div className="product-transport-ui">
+									<div className="transport-ui-circle"></div>
+									<div className="transport-ui-tiret"></div>
+									<div className="transport-ui-circle circle-bis"></div>
 								</div>
-								<div className="product-slide-lowername">
-									À {product.buyer?.name}
+								<div className="product-slide-transport-container">
+									<div className="product-slide-bigname">
+										<span>
+											{product.seller.localisation.city},{" "}
+											{
+												product.seller.localisation
+													.country
+											}
+										</span>
+									</div>
+									<div className="product-slide-lowername2">
+										{this.getTranslation(
+											product.seller?.type
+										)}
+										{": "}
+										{product.seller?.name}
+									</div>
+
+									<div className="product-slide-bigname bigname-lower">
+										<span>
+											{product.buyer.localisation.city},{" "}
+											{product.buyer.localisation.country}
+										</span>
+									</div>
+									<div className="product-slide-lowername2">
+										{this.getTranslation(
+											product.buyer?.type
+										)}
+										{": "}
+										{product.buyer?.name}
+									</div>
+								</div>
+							</div>
+							<div className="product-slide-arrow">{">"}</div>
+							<div className="product-slide-consumption">
+								<div className={pastille}></div>
+								<div>{Math.round(product.dist.value)} km </div>
+								<div>
+									{product.TransportCO2Impact?.value > 1
+										? Math.round(
+												product.TransportCO2Impact
+													?.value
+										  )
+										: "< 1"}{" "}
+									kg CO2{" "}
 								</div>
 							</div>
 						</div>
@@ -83,7 +156,11 @@ class Traceability extends React.Component {
 	};
 
 	handleMarkerClick = (latlng, index) => {
-		window.scroll({ top: 2000, behavior: "smooth" });
+		// window.scrollTo({ top: "8000px", behavior: "smooth" });
+		let elem = document.getElementsByClassName("swiper-container");
+		if (elem[0]) {
+			elem[0].scrollIntoView({ behavior: "smooth" });
+		}
 		console.log(index);
 		if (index >= this.props.products?.length) {
 			this.state.swiper.slideTo(index - 1, 500);
@@ -152,15 +229,30 @@ class Traceability extends React.Component {
 					product?.seller?.localisation?.longitude
 				);
 				let icon;
+				let icon2;
+				let zIndex = 0;
 				if (i === this.state.currentIndex) {
 					icon = new L.Icon({
 						iconUrl: "/images/utils/map.png", //require('../../images/logo/logo.svg'),
 						iconRetinaUrl: "/images/utils/map.png", //"/images/images_volume/1-l.png", //require('../../images/logo/logo.svg'),
-						iconSize: new L.Point(30, 30),
+						iconSize: new L.Point(32, 32),
 						className: "leaflet-mark-icon",
 					});
+					icon2 = new L.Icon({
+						iconUrl: "/images/utils/map.png", //require('../../images/logo/logo.svg'),
+						iconRetinaUrl: "/images/utils/map3.png", //"/images/images_volume/1-l.png", //require('../../images/logo/logo.svg'),
+						iconSize: new L.Point(32, 32),
+						className: "leaflet-mark-icon",
+					});
+					zIndex = 5;
 				} else {
 					icon = new L.Icon({
+						iconUrl: "/images/utils/map2.png", //require('../../images/logo/logo.svg'),
+						iconRetinaUrl: "/images/utils/map2.png", //"/images/images_volume/1-l.png", //require('../../images/logo/logo.svg'),
+						iconSize: new L.Point(25, 25),
+						className: "leaflet-mark-icon",
+					});
+					icon2 = new L.Icon({
 						iconUrl: "/images/utils/map2.png", //require('../../images/logo/logo.svg'),
 						iconRetinaUrl: "/images/utils/map2.png", //"/images/images_volume/1-l.png", //require('../../images/logo/logo.svg'),
 						iconSize: new L.Point(25, 25),
@@ -171,6 +263,7 @@ class Traceability extends React.Component {
 				if (lat1 && long1) {
 					marker1 = (
 						<Marker
+							zIndexOffset={zIndex}
 							icon={icon}
 							position={[lat1, long1]}
 							onClick={() =>
@@ -194,7 +287,8 @@ class Traceability extends React.Component {
 				if (lat2 && long2) {
 					marker2 = (
 						<Marker
-							icon={icon}
+							zIndexOffset={zIndex}
+							icon={icon2}
 							position={[lat2, long2]}
 							onClick={() =>
 								this.handleMarkerClick(
@@ -216,16 +310,16 @@ class Traceability extends React.Component {
 					);
 				}
 
-				// let animate = {
-				// 	duration: 1000,
-				// 	iterations: Infinity,
-				// 	easing: "ease-in-out",
-				// 	direction: "alternate-reverse",
-				// };
 				let color = "#1b3044";
-				// if (i === this.state.currentIndex) {
-				// 	color = "#78be95";
-				// }
+				let curves = document.getElementsByClassName(
+					"leaflet-interactive"
+				);
+
+				if (curves && curves[i] && i === this.state.currentIndex) {
+					curves[i].setAttribute("stroke", "#78be95");
+				} else if (curves && curves[i]) {
+					curves[i].setAttribute("stroke", "#1b3044");
+				}
 
 				return (
 					<React.Fragment>
@@ -344,4 +438,8 @@ function getCurveOptions(lat1, long1, lat2, long2) {
 	var midpointLatLng = [midpointY, midpointX];
 
 	return ["M", latlng1, "Q", midpointLatLng, latlng2];
+}
+
+function getChildElementIndex(node) {
+	return Array.prototype.indexOf.call(node.parentNode.children, node);
 }

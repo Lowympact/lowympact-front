@@ -121,6 +121,13 @@
   color: black;
   bottom: 0px;
 }
+.env-product-ecoscore {
+  position: relative;
+  font-size: 20px;
+  font-weight: 900;
+  color: black;
+  bottom: 0px;
+}
 .swiper-slide {
   /* margin-left: 50px; */
 }
