@@ -90,7 +90,7 @@ class Traceability extends React.Component {
 		} else {
 			this.state.swiper.slideTo(index, 500);
 		}
-		let zoom = 6;
+		let zoom = 5;
 		if (this.props.products && this.props.products[index]) {
 			let p = this.props.products[index];
 			console.log(
@@ -108,12 +108,13 @@ class Traceability extends React.Component {
 				]
 			);
 		}
+		console.log(zoom);
 		this.map.leafletElement.flyTo(latlng, zoom, { duration: 0.5 });
 	};
 
 	onSlideChange = (index) => {
 		this.setState({ currentIndex: index });
-		let zoom = 6;
+		let zoom = 5;
 		if (this.props.products && this.props.products[index]) {
 			let p = this.props.products[index];
 
@@ -124,14 +125,17 @@ class Traceability extends React.Component {
 					p.seller.localisation.longitude,
 				]
 			);
-			this.map.leafletElement.flyTo(
-				[
-					p.seller.localisation.latitude,
-					p.seller.localisation.longitude,
-				],
-				zoom,
-				{ duration: 0.5 }
-			);
+
+			let lat =
+				(parseFloat(p.seller.localisation.latitude) +
+					parseFloat(p.buyer.localisation.latitude)) /
+				2;
+			let long =
+				(parseFloat(p.seller.localisation.longitude) +
+					parseFloat(p.buyer.localisation.longitude)) /
+				2;
+			console.log(zoom);
+			this.map.leafletElement.flyTo([lat, long], zoom, { duration: 0.5 });
 		}
 	};
 
@@ -218,23 +222,29 @@ class Traceability extends React.Component {
 				// 	easing: "ease-in-out",
 				// 	direction: "alternate-reverse",
 				// };
+				let color = "#1b3044";
+				// if (i === this.state.currentIndex) {
+				// 	color = "#78be95";
+				// }
 
 				return (
 					<React.Fragment>
-						<Curve
-							positions={getCurveOptions(
-								lat2,
-								long2,
-								lat1,
-								long1
-							)}
-							option={{
-								color: "#1b3044",
-								fill: false,
-								// animate: animate,
-								delay: 5000,
-							}}
-						/>
+						<div className="test">
+							<Curve
+								positions={getCurveOptions(
+									lat2,
+									long2,
+									lat1,
+									long1
+								)}
+								option={{
+									color: color,
+									fill: false,
+									// animate: animate,
+									delay: 5000,
+								}}
+							/>
+						</div>
 						{marker1}
 						{marker2}
 					</React.Fragment>
@@ -300,7 +310,7 @@ function getDistance(origin, destination) {
 		Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(deltaLon / 2), 2);
 	var c = 2 * Math.asin(Math.sqrt(a));
 	var EARTH_RADIUS = 6371;
-	return c * EARTH_RADIUS * 1000;
+	return c; //* EARTH_RADIUS * 1000;
 }
 
 function toRadian(degree) {
@@ -309,7 +319,8 @@ function toRadian(degree) {
 
 function getZoomRatio(origin, destination) {
 	var distance = getDistance(origin, destination);
-	return 10 - (distance * 10) / 1915087;
+	console.log(distance);
+	return 9 - Math.sqrt(distance * 150);
 }
 
 function getCurveOptions(lat1, long1, lat2, long2) {

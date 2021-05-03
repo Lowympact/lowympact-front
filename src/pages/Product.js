@@ -85,8 +85,8 @@ class Product extends React.Component {
 			.then((res) => {
 				console.log(res);
 				this.setState({
-					products: res.data.traceability,
-					impact: res.data.impact,
+					products: res?.data?.traceability,
+					impact: res?.data?.impact,
 				});
 			});
 	};
@@ -286,6 +286,13 @@ class Product extends React.Component {
 	};
 
 	render = () => {
+		//tri des produits
+		let products = this.state.products?.sort((a, b) => {
+			console.log(a, b);
+			if (a.depth > b.depth) return -1;
+			else return 1;
+		});
+		console.log(products);
 		return (
 			<React.Fragment>
 				<div className="product-page-container">
@@ -327,7 +334,7 @@ class Product extends React.Component {
 						></Environnement>
 					) : (
 						<div className="product-bottom-container">
-							<Traceability products={this.state.products} />
+							<Traceability products={products} />
 						</div>
 					)}
 					<Navbar
