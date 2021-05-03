@@ -20,6 +20,7 @@ class Product extends React.Component {
 		connected: false,
 		productData: undefined,
 		userId: undefined,
+		cart: 0,
 	};
 
 	handleBarCodeUpdate = () => {
@@ -188,11 +189,26 @@ class Product extends React.Component {
 		}
 	};
 
+	addToCart = () => {
+		this.setState({ cart: this.state.cart + 1 });
+		this.flip();
+	};
+
+	removeFromCart = () => {
+		if (this.state.cart > 0) {
+			this.setState({ cart: this.state.cart - 1 });
+		}
+		this.flip();
+	};
+
 	flip = (event) => {
-		if (event.target.style.transform === "rotateY(360deg)") {
-			event.target.style.transform = "rotateY(0deg)";
-		} else {
-			event.target.style.transform = "rotateY(360deg)";
+		console.log(this.imageFlip.style.transform);
+		if (this.imageFlip) {
+			if (this.imageFlip.style.transform === "rotateY(360deg)") {
+				this.imageFlip.style.transform = "rotateY(0deg)";
+			} else {
+				this.imageFlip.style.transform = "rotateY(360deg)";
+			}
 		}
 	};
 
@@ -238,6 +254,29 @@ class Product extends React.Component {
 		}
 		return (
 			<React.Fragment>
+				<div
+					className={
+						this.state.cart > 0
+							? "add-to-cart green"
+							: "add-to-cart"
+					}
+					onClick={this.addToCart}
+				>
+					<span className="cart-count">
+						{this.state.cart > 0 ? this.state.cart : ""}
+					</span>
+					<span class="material-icons">add_shopping_cart</span>
+				</div>
+				{this.state.cart > 0 ? (
+					<div
+						className="remove-from-cart"
+						onClick={this.removeFromCart}
+					>
+						<span class="material-icons">remove_shopping_cart</span>
+					</div>
+				) : (
+					<React.Fragment />
+				)}
 				{image}
 				{productName}
 				<div className="product-bottom-image-div">
@@ -265,7 +304,6 @@ class Product extends React.Component {
 						}
 						onClick={() => this.handleChange("", 0)}
 					>
-						<span class="material-icons">nature_people</span>
 						Environnement
 					</button>
 					<button
@@ -276,9 +314,15 @@ class Product extends React.Component {
 						}
 						onClick={() => this.handleChange("", 1)}
 					>
-						<span class="material-icons">travel_explore</span>
 						Traçabilité
 					</button>
+					<div
+						className={
+							this.state.value === 0
+								? "navbar-under nav-left"
+								: "navbar-under nav-right"
+						}
+					></div>
 				</div>
 			);
 		}
@@ -288,11 +332,9 @@ class Product extends React.Component {
 	render = () => {
 		//tri des produits
 		let products = this.state.products?.sort((a, b) => {
-			console.log(a, b);
 			if (a.depth > b.depth) return -1;
 			else return 1;
 		});
-		console.log(products);
 		return (
 			<React.Fragment>
 				<div className="product-page-container">
@@ -308,7 +350,8 @@ class Product extends React.Component {
 					</div>
 					<div
 						className="product-image-container"
-						onClick={this.flip}
+						// onClick={this.flip}
+						ref={(ref) => (this.imageFlip = ref)}
 					>
 						{this.displayImage()}
 					</div>

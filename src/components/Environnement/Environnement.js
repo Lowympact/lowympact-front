@@ -75,7 +75,7 @@ class Environnement extends React.Component {
 									<div className="product-slide-name">
 										{data?.material.split(":")[1]}
 									</div>
-									<div className="product-ecoscore">
+									<div className="env-product-ecoscore">
 										Ecoscore :{" "}
 										{data?.ecoscore_material_score}
 									</div>
