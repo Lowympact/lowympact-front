@@ -4,38 +4,7 @@ import Traceability from "../components/Traceability/Traceability";
 import Environnement from "../components/Environnement/Environnement";
 import "./Product.css";
 import { Link } from "react-router-dom";
-// import AppBar from "@material-ui/core/AppBar";
-// import Tabs from "@material-ui/core/Tabs";
-// import Tab from "@material-ui/core/Tab";
-// import Typography from "@material-ui/core/Typography";
-// import Box from "@material-ui/core/Box";
-// import PropTypes from "prop-types";
-
-// function TabPanel(props) {
-// 	const { children, value, index, ...other } = props;
-
-// 	return (
-// 		<div
-// 			role="tabpanel"
-// 			hidden={value !== index}
-// 			id={`simple-tabpanel-${index}`}
-// 			aria-labelledby={`simple-tab-${index}`}
-// 			{...other}
-// 		>
-// 			{value === index && (
-// 				<Box p={3}>
-// 					<Typography>{children}</Typography>
-// 				</Box>
-// 			)}
-// 		</div>
-// 	);
-// }
-
-// TabPanel.propTypes = {
-// 	children: PropTypes.node,
-// 	index: PropTypes.any.isRequired,
-// 	value: PropTypes.any.isRequired,
-// };
+import jwt from "jsonwebtoken";
 
 class Product extends React.Component {
   state = {
@@ -48,6 +17,8 @@ class Product extends React.Component {
     ecoScore: undefined,
     dataEcoScore: undefined,
     value: 0,
+    connected: false,
+    productData: undefined,
   };
 
   handleBarCodeUpdate = () => {
@@ -66,7 +37,23 @@ class Product extends React.Component {
     }
   };
 
+  Verify = () => {
+    let isExpired = true;
+    const token = localStorage.getItem("token");
+    if (token) {
+      var decodedToken = jwt.decode(token, { complete: true });
+      var dateNow = new Date();
+      if (decodedToken.payload.exp >= dateNow.getTime() / 1000) {
+        isExpired = false;
+      }
+    }
+    if (isExpired === false) {
+      this.setState({ connected: true });
+    }
+  };
+
   componentDidMount = () => {
+    this.Verify();
     this.loadFromOpenFoodFacts(this.props.match.params.barcode);
     if (this.props.match.params.bcProductId) {
       this.loadProductInformations(
@@ -110,6 +97,10 @@ class Product extends React.Component {
 
         let dataEcoScore = res?.product?.ecoscore_data;
 
+        if (res?.product) {
+          this.setState({ productData: res.product });
+        }
+
         if (productImageUrl) {
           this.setState({ productImageUrl: productImageUrl });
         }
@@ -132,7 +123,40 @@ class Product extends React.Component {
         if (dataEcoScore) {
           this.setState({ dataEcoScore: dataEcoScore });
         }
+        if (res.status === 1) {
+          this.saveHistory();
+        }
       });
+  };
+
+  saveHistory = async () => {
+    await delay(2000);
+
+    if (!this.state.connected) {
+      let history = JSON.parse(localStorage.getItem("local_history"));
+      let exist = null;
+      if (history) {
+        exist = history?.find(
+          (element) =>
+            element.barcode === this.state.barcode &&
+            element.bcProductId == this.state.bcProductId
+        );
+      } else {
+        history = [];
+      }
+
+      if (!exist || exist?.length === 0) {
+        history.push({
+          barcode: this.state.barcode,
+          bcProductId: this.state.bcProductId,
+          brand: this.state.productData.brands,
+          image: this.state.productImageUrl,
+          label: this.state.ecoScore,
+          name: this.state.productName,
+        });
+        localStorage.setItem("local_history", JSON.stringify(history));
+      }
+    }
   };
 
   flip = (event) => {
@@ -195,48 +219,58 @@ class Product extends React.Component {
     this.setState({ value: newValue });
   };
 
+  displayNavbar = () => {
+    let retour = <React.Fragment />;
+    if (this.state.bcProductId) {
+      retour = (
+        <div className="product-navbar-container">
+          <button
+            className={
+              this.state.value === 0
+                ? "product-navbar-button selected"
+                : "product-navbar-button"
+            }
+            onClick={() => this.handleChange("", 0)}
+          >
+            <span class="material-icons">nature_people</span>
+            Environnement
+          </button>
+          <button
+            className={
+              this.state.value === 1
+                ? "product-navbar-button selected"
+                : "product-navbar-button"
+            }
+            onClick={() => this.handleChange("", 1)}
+          >
+            <span class="material-icons">travel_explore</span>
+            Traçabilité
+          </button>
+        </div>
+      );
+    }
+    return retour;
+  };
+
   render = () => {
     return (
       <React.Fragment>
         <div className="product-page-container">
-          <img
-            className="product-bitmap-image"
-            src="/images/utils/bitmap.png"
-            alt=""
-          />
           <div className="product-header-container">
             <div className="product-history-link">
               <Link to="/history"> {"<"} Historique</Link>
             </div>
+            <img
+              className="product-bitmap-image"
+              src="/images/utils/bitmap.png"
+              alt=""
+            />
           </div>
           <div className="product-image-container" onClick={this.flip}>
             {this.displayImage()}
           </div>
 
-          <div className="product-navbar-container">
-            <button
-              className={
-                this.state.value === 0
-                  ? "product-navbar-button selected"
-                  : "product-navbar-button"
-              }
-              onClick={() => this.handleChange("", 0)}
-            >
-              <span class="material-icons">travel_explore</span>
-              Traçabilité
-            </button>
-            <button
-              className={
-                this.state.value === 1
-                  ? "product-navbar-button selected"
-                  : "product-navbar-button"
-              }
-              onClick={() => this.handleChange("", 1)}
-            >
-              <span class="material-icons">nature_people</span>
-              Environnement
-            </button>
-          </div>
+          {this.displayNavbar()}
 
           {/* <AppBar position="static">
 						<Tabs
@@ -251,7 +285,7 @@ class Product extends React.Component {
 					<TabPanel value={this.state.value} index={0}></TabPanel>
 					<TabPanel value={this.state.value} index={1}>
 				</TabPanel> */}
-          {this.state.value === 1 ? (
+          {this.state.value === 0 ? (
             <Environnement
               dataEcoScore={this.state.dataEcoScore}
             ></Environnement>
@@ -271,3 +305,5 @@ class Product extends React.Component {
 }
 
 export default Product;
+
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));

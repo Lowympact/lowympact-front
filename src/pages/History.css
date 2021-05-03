@@ -43,6 +43,12 @@
 	margin-left: 20px;
 }
 
+.history-img-container img {
+	height: 60px;
+	width: 60px;
+	object-fit: contain;
+}
+
 .history-name-container {
 	height: 100px;
 	width: auto;
@@ -74,4 +80,5 @@
 .history-label {
 	color: grey;
 	font-size: smaller;
+	text-transform: capitalize;
 }

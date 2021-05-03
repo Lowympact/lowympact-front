@@ -32,6 +32,10 @@
 	text-decoration: none;
 }
 
+.navbar-selected {
+	color: #78be95 !important;
+}
+
 .navbar-circle {
 	width: 80px;
 	position: relative;

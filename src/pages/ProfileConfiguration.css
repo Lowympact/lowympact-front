@@ -1,83 +1,100 @@
 .email {
-  display: flex;
-  position: fixed;
-  height: auto;
-  left: calc(50vw - 100px);
-  top: 27%;
-  justify-content: space-between;
-  flex-direction: column;
-  font-family: "Comfortaa";
-  color: #1b3044;
-  font-size: 17px;
-  font-weight: bold;
-  margin-bottom: 0px;
+	display: flex;
+	position: relative;
+	height: auto;
+	left: calc(50vw - 100px);
+	top: 27%;
+	justify-content: space-between;
+	flex-direction: column;
+	font-family: "Comfortaa";
+	color: #1b3044;
+	font-size: 17px;
+	font-weight: bold;
+	margin-bottom: 0px;
 }
 .user-email {
-  position: fixed;
-  top: 30%;
-  left: calc(50vw - 100px);
-  font-family: "Comfortaa";
-  color: #1b3044;
-  font-size: 17px;
-  font-style: italic;
-  margin-bottom: 0px;
+	position: relative;
+	top: 30%;
+	left: calc(50vw - 100px);
+	font-family: "Comfortaa";
+	color: #1b3044;
+	font-size: 17px;
+	font-style: italic;
+	margin-bottom: 0px;
 }
 
 .forms {
-  display: flex;
-  position: fixed;
-  height: auto;
-  left: calc(50vw - 100px);
-  top: 36%;
-  justify-content: space-between;
-  flex-direction: column;
-  font-family: "Comfortaa";
-  color: #1b3044;
-  font-size: 17px;
-  font-weight: bold;
-  margin-bottom: 0px;
+	display: flex;
+	align-items: center;
+	width: 250px;
+	height: auto;
+	left: calc(50vw - 125px);
+	top: 36%;
+	justify-content: space-between;
+	flex-direction: column;
+	font-family: "Comfortaa";
+	color: #1b3044;
+	font-size: 17px;
+	font-weight: bold;
+	position: relative;
+	margin-bottom: 0px;
+}
+
+.forms label {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+
+.email {
+	margin-top: 180px;
+}
+
+.user-email {
+	margin-bottom: 50px;
 }
 
 .configuration-screen-title {
-  color: rgb(41, 72, 102);
-  text-decoration: underline;
-  margin-left: 10vw;
-  margin-right: auto;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  position: fixed;
-  top: 20%;
-  left: calc(50vw - 150px);
+	color: rgb(41, 72, 102);
+	margin-top: 130px;
+	text-decoration: underline;
+	margin-left: 10vw;
+	margin-right: auto;
+	margin-bottom: 5px;
+	position: relative;
+	top: 20%;
+	left: calc(50vw - 150px);
 }
 
 /*button*/
 .button-change-password {
-  width: 175px;
-  height: 45px;
-  border-radius: 10px;
-  position: fixed;
-  left: calc(50vw - 80px);
-  top: 75%;
-  /*text*/
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  vertical-align: middle;
-  background-color: #78be95;
-  font-family: "Comfortaa";
-  color: white;
-  font-size: 14px;
-  text-decoration: none;
+	width: 204px;
+	height: 45px;
+	border-radius: 10px;
+	/* position: relative; */
+	left: calc(50vw - 80px);
+	top: 75%;
+	/*text*/
+	align-items: center;
+	display: flex;
+	justify-content: center;
+	vertical-align: middle;
+	background-color: #78be95;
+	font-family: "Comfortaa";
+	color: white;
+	font-size: 14px;
+	text-decoration: none;
 }
 
 /*errors*/
 .errors-change-password {
-  width: 218px;
-  position: fixed;
-  left: calc(50vw - 100px);
-  top: 63%;
-  font-family: "Comfortaa";
-  font-size: 10px;
-  color: red;
-  line-height: 90%;
+	width: 218px;
+	position: relative;
+	left: calc(50vw - 100px);
+	top: 63%;
+	font-family: "Comfortaa";
+	font-size: 10px;
+	color: red;
+	line-height: 90%;
 }

@@ -12,6 +12,20 @@ class Navbar extends React.Component {
 		showScanner: false,
 		barcode: undefined,
 		bcProductId: undefined,
+		height: 0,
+	};
+
+	componentDidMount() {
+		this.updateWindowDimensions();
+		window.addEventListener("resize", this.updateWindowDimensions);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener("resize", this.updateWindowDimensions);
+	}
+
+	updateWindowDimensions = () => {
+		this.setState({ height: window.innerHeight });
 	};
 
 	handleScannerButton = (bool) => {
@@ -20,10 +34,8 @@ class Navbar extends React.Component {
 
 	handleBarcode = (res) => {
 		if (res) {
-			console.log("barcode", res);
 			//détecté par barcode scanner
 			let arr = res.split("/");
-			console.log(arr);
 			if (arr.length > 1) {
 				this.setState({
 					barcode: arr[4],
@@ -41,18 +53,15 @@ class Navbar extends React.Component {
 	};
 
 	render = () => {
-		console.log(this.state.barcode, this.state.bcProductId);
+		if (this.state.height < 550) {
+			return <React.Fragment />;
+		}
 		if (
 			this.state.barcode &&
 			this.state.bcProductId &&
 			(this.props.barcode !== this.state.barcode ||
 				this.props.bcProductId !== this.state.bcProductId)
 		) {
-			console.log(
-				"redirect to",
-				this.state.barcode,
-				this.state.bcProductId
-			);
 			return (
 				<Redirect
 					to={
@@ -64,13 +73,8 @@ class Navbar extends React.Component {
 				/>
 			);
 		}
-		console.log(this.props.barcode, this.state.barcode);
+
 		if (this.state.barcode && this.props.barcode !== this.state.barcode) {
-			console.log(
-				"redirect to (barcode)",
-				this.state.barcode,
-				this.state.bcProductId
-			);
 			return <Redirect to={"/products/" + this.state.barcode} />;
 		}
 
@@ -80,7 +84,11 @@ class Navbar extends React.Component {
 					<div className="navbar-container">
 						<Link
 							to="/history"
-							className="navbar-link navbar-text-left"
+							className={
+								window.location.pathname == "/history"
+									? "navbar-link navbar-text-left navbar-selected"
+									: "navbar-link navbar-text-left "
+							}
 						>
 							<ButtonHistory />
 						</Link>
@@ -92,7 +100,11 @@ class Navbar extends React.Component {
 						<span className="navbar-scan-text">Scan</span>
 						<Link
 							to="/profil"
-							className="navbar-link navbar-text-right"
+							className={
+								window.location.pathname == "/profil"
+									? "navbar-link navbar-text-right navbar-selected"
+									: "navbar-link navbar-text-right "
+							}
 						>
 							<ButtonProfil />
 						</Link>

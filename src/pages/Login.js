@@ -6,11 +6,33 @@ import ButtonCreateAccount from "../components/Button/ButtonCreateAccount";
 import ButtonLogin from "../components/Button/ButtonLogin";
 import { Link } from "react-router-dom";
 import ButtonNoAccount from "../components/Button/ButtonNoAccount";
+import jwt from "jsonwebtoken";
+import { motion } from "framer-motion";
 
 class Login extends React.Component {
+	componentDidMount = () => {
+		this.Verify();
+	};
+
+	Verify = () => {
+		let isExpired = true;
+		const token = localStorage.getItem("token");
+		if (token) {
+			var decodedToken = jwt.decode(token, { complete: true });
+			var dateNow = new Date();
+			console.log(decodedToken, dateNow.getTime() / 1000);
+			if (decodedToken.payload.exp >= dateNow.getTime() / 1000) {
+				isExpired = false;
+			}
+		}
+		if (isExpired === false) {
+			console.log("here");
+			this.props.history.push(`/history`); // redirection vers la page login
+		}
+	};
 	render = () => {
 		return (
-			<React.Fragment>
+			<motion.div exit={{ opacity: 0 }}>
 				<div className="login-logo">
 					<img src={logo} className="logo" alt="Logo" />
 				</div>
@@ -27,7 +49,7 @@ class Login extends React.Component {
 				<div className="logo-fruits">
 					<img src={fruits} className="logo" alt="Fruits" />
 				</div>
-			</React.Fragment>
+			</motion.div>
 		);
 	};
 }
