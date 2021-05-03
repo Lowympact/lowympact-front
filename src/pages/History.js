@@ -113,14 +113,15 @@ class History extends Component {
 
 			if (Object.keys(this.state.items).length === 0)
 				return (
-					<motion.div
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						exit={{ opacity: 0 }}
-					>
+					<div>
 						<Header />
 						<Navbar />
-						<div className="App">
+						<motion.div
+							className="App"
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							exit={{ opacity: 0 }}
+						>
 							<div>
 								<img
 									src={fruits}
@@ -131,21 +132,14 @@ class History extends Component {
 									Commencer à scanner des produits!
 								</p>
 							</div>
-						</div>
-					</motion.div>
+						</motion.div>
+					</div>
 				);
 			else
 				return (
 					<div>
 						<div className="screen">
-							<motion.div
-								initial={{ opacity: 0 }}
-								animate={{ opacity: 1 }}
-								exit={{ opacity: 0 }}
-								className="screen-title"
-							>
-								Historique:
-							</motion.div>
+							<div className="screen-title"></div>
 							{itemList}
 						</div>
 						<Header />
@@ -154,22 +148,23 @@ class History extends Component {
 				);
 		} else {
 			return (
-				<motion.div
-					initial={{ opacity: 0 }}
-					animate={{ opacity: 1 }}
-					exit={{ opacity: 0 }}
-				>
+				<div>
 					<Header />
 					<Navbar />
-					<div className="App">
+					<motion.div
+						className="App"
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+					>
 						<div>
 							<img src={fruits} className="logo" alt="Fruits" />
 							<p className="logo-text">
 								Commencer à scanner des produits!
 							</p>
 						</div>
-					</div>
-				</motion.div>
+					</motion.div>
+				</div>
 			);
 		}
 	}

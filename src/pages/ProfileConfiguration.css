@@ -26,10 +26,10 @@
 .forms {
 	display: flex;
 	align-items: center;
-	width: 250px;
+	width: 200px;
 	height: auto;
-	left: calc(50vw - 125px);
-	top: 36%;
+	left: calc(50vw - 100px);
+	/* top: 36%; */
 	justify-content: space-between;
 	flex-direction: column;
 	font-family: "Comfortaa";
@@ -37,7 +37,8 @@
 	font-size: 17px;
 	font-weight: bold;
 	position: relative;
-	margin-bottom: 0px;
+	margin-bottom: 100px;
+	margin-top: 0px;
 }
 
 .forms label {
@@ -52,7 +53,7 @@
 }
 
 .user-email {
-	margin-bottom: 50px;
+	margin-bottom: 0px;
 }
 
 .configuration-screen-title {
