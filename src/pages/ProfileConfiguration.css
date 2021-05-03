@@ -23,48 +23,19 @@
 	margin-bottom: 0px;
 }
 
-.forms {
+.configuration-email-block{
 	display: flex;
 	align-items: center;
-	width: 250px;
-	height: auto;
-	left: calc(50vw - 125px);
-	top: 36%;
-	justify-content: space-between;
 	flex-direction: column;
-	font-family: "Comfortaa";
-	color: #1b3044;
-	font-size: 17px;
-	font-weight: bold;
-	position: relative;
-	margin-bottom: 0px;
-}
-
-.forms label {
-	align-items: center;
-	display: flex;
-	flex-direction: column;
-	text-align: center;
-}
-
-.email {
-	margin-top: 180px;
-}
-
-.user-email {
-	margin-bottom: 50px;
 }
 
 .configuration-screen-title {
 	color: rgb(41, 72, 102);
-	margin-top: 130px;
 	text-decoration: underline;
-	margin-left: 10vw;
-	margin-right: auto;
+	margin-top: 130px;
 	margin-bottom: 5px;
-	position: relative;
-	top: 20%;
-	left: calc(50vw - 150px);
+	display: flex;
+	justify-content: center;
 }
 
 /*button*/
