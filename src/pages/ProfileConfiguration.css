@@ -26,7 +26,34 @@
 .configuration-email-block{
 	display: flex;
 	align-items: center;
+	width: 200px;
+	height: auto;
+	left: calc(50vw - 100px);
+	/* top: 36%; */
+	justify-content: space-between;
 	flex-direction: column;
+	font-family: "Comfortaa";
+	color: #1b3044;
+	font-size: 17px;
+	font-weight: bold;
+	position: relative;
+	margin-bottom: 100px;
+	margin-top: 0px;
+}
+
+.forms label {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+
+.email {
+	margin-top: 180px;
+}
+
+.user-email {
+	margin-bottom: 0px;
 }
 
 .configuration-screen-title {

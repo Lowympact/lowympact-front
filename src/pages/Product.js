@@ -19,6 +19,7 @@ class Product extends React.Component {
 		value: 0,
 		connected: false,
 		productData: undefined,
+		userId: undefined,
 	};
 
 	handleBarCodeUpdate = () => {
@@ -54,6 +55,10 @@ class Product extends React.Component {
 
 	componentDidMount = () => {
 		this.Verify();
+		let userId = localStorage.getItem("userId");
+		if (userId) {
+			this.setState({ userId: userId });
+		}
 		this.loadFromOpenFoodFacts(this.props.match.params.barcode);
 		if (this.props.match.params.bcProductId) {
 			this.loadProductInformations(
@@ -157,6 +162,29 @@ class Product extends React.Component {
 				});
 				localStorage.setItem("local_history", JSON.stringify(history));
 			}
+		} else if (this.state.userId) {
+			console.log(this.state.barcode, this.state.bcProductId);
+			fetch(
+				`https://api.lowympact.fr/api/v1/users/history/${this.state.userId}`,
+				// `http://localhost:8080/api/v1/users/history/${this.state.userId}`,
+				{
+					method: "put",
+					credentials: "include",
+					headers: new Headers({
+						Authorization: localStorage.getItem("token"),
+						"api-key": "99d8fb95-abdd-4885-bf6c-3a81d8874043",
+						"Content-Type": "application/json",
+					}),
+					body: JSON.stringify({
+						barcode: this.state.barcode,
+						bcProductId: this.state.bcProductId,
+					}),
+				}
+			)
+				.then((response) => response.json())
+				.then((res) => {
+					console.log(res);
+				});
 		}
 	};
 
