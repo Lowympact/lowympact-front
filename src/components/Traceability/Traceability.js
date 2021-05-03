@@ -66,7 +66,6 @@ class Traceability extends React.Component {
 		let slides = <React.Fragment />;
 		if (this.props.products) {
 			slides = this.props.products.map((product) => {
-				console.log(product);
 				let pastille = "product-slide-pastille past-green";
 				if (product.TransportCO2Impact?.value > 10) {
 					pastille = "product-slide-pastille past-orange";
@@ -157,7 +156,11 @@ class Traceability extends React.Component {
 	};
 
 	handleMarkerClick = (latlng, index) => {
-		window.scroll({ top: 2000, behavior: "smooth" });
+		// window.scrollTo({ top: "8000px", behavior: "smooth" });
+		let elem = document.getElementsByClassName("swiper-container");
+		if (elem[0]) {
+			elem[0].scrollIntoView({ behavior: "smooth" });
+		}
 		console.log(index);
 		if (index >= this.props.products?.length) {
 			this.state.swiper.slideTo(index - 1, 500);
@@ -226,6 +229,7 @@ class Traceability extends React.Component {
 					product?.seller?.localisation?.longitude
 				);
 				let icon;
+				let icon2;
 				let zIndex = 0;
 				if (i === this.state.currentIndex) {
 					icon = new L.Icon({
@@ -234,9 +238,21 @@ class Traceability extends React.Component {
 						iconSize: new L.Point(32, 32),
 						className: "leaflet-mark-icon",
 					});
+					icon2 = new L.Icon({
+						iconUrl: "/images/utils/map.png", //require('../../images/logo/logo.svg'),
+						iconRetinaUrl: "/images/utils/map3.png", //"/images/images_volume/1-l.png", //require('../../images/logo/logo.svg'),
+						iconSize: new L.Point(32, 32),
+						className: "leaflet-mark-icon",
+					});
 					zIndex = 5;
 				} else {
 					icon = new L.Icon({
+						iconUrl: "/images/utils/map2.png", //require('../../images/logo/logo.svg'),
+						iconRetinaUrl: "/images/utils/map2.png", //"/images/images_volume/1-l.png", //require('../../images/logo/logo.svg'),
+						iconSize: new L.Point(25, 25),
+						className: "leaflet-mark-icon",
+					});
+					icon2 = new L.Icon({
 						iconUrl: "/images/utils/map2.png", //require('../../images/logo/logo.svg'),
 						iconRetinaUrl: "/images/utils/map2.png", //"/images/images_volume/1-l.png", //require('../../images/logo/logo.svg'),
 						iconSize: new L.Point(25, 25),
@@ -272,7 +288,7 @@ class Traceability extends React.Component {
 					marker2 = (
 						<Marker
 							zIndexOffset={zIndex}
-							icon={icon}
+							icon={icon2}
 							position={[lat2, long2]}
 							onClick={() =>
 								this.handleMarkerClick(
@@ -294,16 +310,16 @@ class Traceability extends React.Component {
 					);
 				}
 
-				// let animate = {
-				// 	duration: 1000,
-				// 	iterations: Infinity,
-				// 	easing: "ease-in-out",
-				// 	direction: "alternate-reverse",
-				// };
 				let color = "#1b3044";
-				// if (i === this.state.currentIndex) {
-				// 	color = "#78be95";
-				// }
+				let curves = document.getElementsByClassName(
+					"leaflet-interactive"
+				);
+
+				if (curves && curves[i] && i === this.state.currentIndex) {
+					curves[i].setAttribute("stroke", "#78be95");
+				} else if (curves && curves[i]) {
+					curves[i].setAttribute("stroke", "#1b3044");
+				}
 
 				return (
 					<React.Fragment>
@@ -422,4 +438,8 @@ function getCurveOptions(lat1, long1, lat2, long2) {
 	var midpointLatLng = [midpointY, midpointX];
 
 	return ["M", latlng1, "Q", midpointLatLng, latlng2];
+}
+
+function getChildElementIndex(node) {
+	return Array.prototype.indexOf.call(node.parentNode.children, node);
 }
