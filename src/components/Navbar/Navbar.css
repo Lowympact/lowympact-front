@@ -52,7 +52,7 @@
 
 .navbar-scan-text {
 	position: absolute;
-	bottom: 20px;
+	bottom: 15px;
 	width: 50px;
 	left: calc(50vw - 25px);
 }

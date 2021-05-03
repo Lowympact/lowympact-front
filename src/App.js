@@ -60,8 +60,8 @@ class App extends Component {
 						<Redirect to="/error404" />
 						{/* <Route path="/MAINTENANCE" component={ Maintenance } /> */}
 					</Switch>
-					{/* </Suspense> */}
 				</AnimatePresence>
+				{/* </Suspense> */}
 			</Router>
 		);
 	}
