@@ -65,7 +65,6 @@ class Signin extends Component {
 	Connect = () => {
 		fetch(
 			`https://api.lowympact.fr/api/v1/users/login`,
-			// `http://localhost:8080/api/v1/users/login`,
 			{
 				method: "POST",
 				headers: {
@@ -114,9 +113,6 @@ class Signin extends Component {
 		}
 		return (
 			<React.Fragment>
-				<div>
-					<img src={blob} className="blob-top" alt="Blob" />
-				</div>
 				<Link to="/login">
 					<Header />
 				</Link>

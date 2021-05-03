@@ -9,12 +9,8 @@ import { USERS } from "../assets/users/users";
 import jwt from "jsonwebtoken";
 import { Link } from "react-router-dom";
 
-function validate(password, currentPassword, newPassword, confirmPassword) {
+function validate(newPassword, confirmPassword) {
 	const errors = [];
-
-	if (password !== currentPassword) {
-		errors.push(<p>Le mot de passe actueil n'est pas correct</p>);
-	}
 	if (newPassword.length < 6) {
 		errors.push(<p>Entre un mot de passe. 6 caràcteres minimum requis</p>);
 	}
@@ -41,14 +37,11 @@ class ProfileConfiguration extends Component {
 		e.preventDefault();
 		const { currentPassword, newPassword, confirmPassword } = this.state;
 		const errors = validate(
-			this.state.user.password,
-			currentPassword,
 			newPassword,
 			confirmPassword
 		);
 		console.log(
-			this.state.user.mail,
-			this.state.user.password,
+			this.state.user.email,
 			currentPassword,
 			newPassword,
 			confirmPassword,
@@ -56,8 +49,38 @@ class ProfileConfiguration extends Component {
 		);
 		this.setState({ errors });
 		if (errors.length === 0) {
-			this.setState({ redirect: true });
+			this.changeUserInfo(this.state.user._id, currentPassword, newPassword);
 		}
+	};
+
+	changeUserInfo = (userId, currentPassword, newPassword) => {
+		console.log('hey')
+		fetch(
+			`https://api.lowympact.fr/api/v1/users/${userId}`,
+			// `http://localhost:8080/api/v1/users/login`,
+			{
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+					"api-key": "99d8fb95-abdd-4885-bf6c-3a81d8874043",
+					authorization: localStorage.getItem("token"),
+				},
+				body: JSON.stringify({
+					currentPassword: currentPassword,
+					newPassword: newPassword
+				})
+			}
+		)
+			.then((response) => response.json())
+			.then((res) => {
+				console.log(res);
+				if(res.success === false){
+					this.setState({ errors: [...this.state.errors, res.error]})
+				}
+				else{
+					this.setState({ redirect: true });
+				}
+			});
 	};
 
 	Verify = () => {
@@ -71,7 +94,6 @@ class ProfileConfiguration extends Component {
 			}
 		}
 		if (isExpired === true) {
-			// this.props.history.push("/");
 			this.setState({ redirect: true }); // redirection vers la page login
 		}
 	};
@@ -94,7 +116,6 @@ class ProfileConfiguration extends Component {
 					"Content-Type": "application/json",
 					"api-key": "99d8fb95-abdd-4885-bf6c-3a81d8874043",
 					authorization: localStorage.getItem("token"),
-					//'x-access-token': localStorage.getItem('token'),
 				},
 			}
 		)
@@ -112,7 +133,7 @@ class ProfileConfiguration extends Component {
 		}
 		console.log(this.state.redirect);
 		return (
-			<React.Fragment>
+			<div className="screen">
 				<Link to="/">
 					<Header />
 				</Link>
@@ -123,17 +144,17 @@ class ProfileConfiguration extends Component {
 				<Link className="back-button" to="/profil">
 					{"< retour"}
 				</Link>
-				{/* <div className="configuration-screen-title">
+				<div className="configuration-screen-title">
 					Configurations:
-				</div> */}
+				</div>
 				<div className="errors-change-password">
 					{this.state.errors}
 				</div>
-				<div>
-					<div className="email">email</div>
-					<div className="user-email">{this.state.user.email}</div>
+				<div className="configuration-email-block">
+					<div>email</div>
+					<div>{this.state.user.email}</div>
 				</div>
-				<form className="forms">
+				<form>
 					<label>
 						{/* Mot de passe actuel */}
 						<input
@@ -162,7 +183,7 @@ class ProfileConfiguration extends Component {
 						{/* Confirmation de mot de passe */}
 						<input
 							placeholder="confirmation de mdp"
-							value={this.state.passwordConfirm}
+							value={this.state.confirmPassword}
 							onChange={(evt) =>
 								this.setState({
 									confirmPassword: evt.target.value,
@@ -179,7 +200,7 @@ class ProfileConfiguration extends Component {
 						<ButtonChangePassword />
 					</Link>
 				</form>
-			</React.Fragment>
+			</div>
 		);
 	}
 }

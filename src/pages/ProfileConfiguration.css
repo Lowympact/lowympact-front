@@ -23,7 +23,7 @@
 	margin-bottom: 0px;
 }
 
-.forms {
+.configuration-email-block{
 	display: flex;
 	align-items: center;
 	width: 200px;
@@ -58,14 +58,11 @@
 
 .configuration-screen-title {
 	color: rgb(41, 72, 102);
-	margin-top: 130px;
 	text-decoration: underline;
-	margin-left: 10vw;
-	margin-right: auto;
+	margin-top: 130px;
 	margin-bottom: 5px;
-	position: relative;
-	top: 20%;
-	left: calc(50vw - 150px);
+	display: flex;
+	justify-content: center;
 }
 
 /*button*/
