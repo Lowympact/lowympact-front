@@ -20,6 +20,8 @@ class Environnement extends React.Component {
         return "highlight_off";
       case "Truck":
         return "local_shipping";
+      case "Packaging":
+        return "inventory_2";
       default:
         return "view_in_ar";
     }
@@ -47,7 +49,7 @@ class Environnement extends React.Component {
 
   getLabel = (note) => {
     if (note > 67) {
-      return "Bonne";
+      return "Bon";
     }
     if (note <= 33) {
       return "Mauvais";
@@ -63,6 +65,26 @@ class Environnement extends React.Component {
       return "Impact faible";
     }
     return "Impact moyen";
+  };
+
+  getLabelImpactPackaging = (note) => {
+    if (note > 2) {
+      return "Bon";
+    }
+    if (note < -2) {
+      return "Mauvais";
+    }
+    return "Moyen";
+  };
+
+  getColorImpactPackaging = (note) => {
+    if (note > 2) {
+      return "green";
+    }
+    if (note < -2) {
+      return "red";
+    }
+    return "yellow";
   };
 
   displaySlides = () => {
@@ -187,6 +209,33 @@ class Environnement extends React.Component {
       }
     }
 
+    let co2_impact_html = <React.Fragment></React.Fragment>;
+    let transportation_score_html = <React.Fragment></React.Fragment>;
+
+    if (agribalyse_CO2 > 0) {
+      co2_impact_html = (
+        <div className="product-transport-impact-content-details-text">
+          {agribalyse_CO2.toFixed(3)}kg C02 eq/kg produit
+        </div>
+      );
+    }
+
+    if (transportation_score > 0) {
+      transportation_score_html = (
+        <div className="product-transport-impact-content-details-score">
+          Impact du transport des ingrédients en France :
+          <span
+            style={{
+              color: this.getColorImpact(100 - transportation_score * 100),
+            }}
+          >
+            {Math.round(transportation_score * 100)}
+          </span>
+          /100
+        </div>
+      );
+    }
+
     if (transport_final_indicator) {
       transport_final_indicator = Math.round(transport_final_indicator * 100);
       return (
@@ -216,7 +265,7 @@ class Environnement extends React.Component {
           </div>
           <div className="product-transport-impact-content">
             <div className="product-transport-impact-content-text">
-              Impact en % :
+              Impact total transport en % :
             </div>
             <div className="product-transport-impact-content-progress">
               <CircleProgress
@@ -228,11 +277,51 @@ class Environnement extends React.Component {
               />
             </div>
           </div>
+          <div className="product-transport-impact-content-details">
+            {co2_impact_html}
+            {transportation_score_html}
+          </div>
         </div>
       );
     }
 
     return res;
+  };
+
+  displayPackagingImpact = () => {
+    let res = <React.Fragment></React.Fragment>;
+
+    if (this.props.dataEcoScore?.adjustments?.packaging?.value) {
+      return (
+        <div className="product-packaging-impact-container">
+          <div className="product-packaging-impact-logo">
+            <div className="material-icons icon-label-transport-impact">
+              {this.getMaterialIcon("")}
+            </div>
+          </div>
+          <div className="product-packaging-impact-title">
+            <div className="product-packaging-impact-title-text">
+              Impact du packaging
+            </div>
+            <div className="product-packaging-impact-title-label">
+              {this.getLabelImpactPackaging(
+                this.props.dataEcoScore?.adjustments?.packaging?.value
+              )}
+            </div>
+          </div>
+          <div
+            className="product-packaging-impact-color-label"
+            style={{
+              color: this.getColorImpactPackaging(
+                this.props.dataEcoScore?.adjustments?.packaging?.value
+              ),
+            }}
+          >
+            ●
+          </div>
+        </div>
+      );
+    }
   };
 
   onSlideChange = (index) => {
@@ -242,68 +331,67 @@ class Environnement extends React.Component {
   displayAlternatives = () => {
     let slides = <React.Fragment></React.Fragment>;
     return (
-        <SwiperSlide>
-            <div className="env-product-slide-container ">
-                <div className="env-product-slide-icon">
-                    <span class="material-icons env-icon-label">
-                        {this.getMaterialIcon("")}
-                    </span>
-                </div>
-                <div className="env-product-slide-wrapper">
-                    <div className="product-slide-name">
-                        Nom
-                    </div>
-                    <div className="product-ecoscore">
-                        Ecoscore :{" "}
-                        1
-                    </div>
+      <SwiperSlide>
+        <div className="env-product-slide-container ">
+          <div className="env-product-slide-icon">
+            <span class="material-icons env-icon-label">
+              {this.getMaterialIcon("")}
+            </span>
+          </div>
+          <div className="env-product-slide-wrapper">
+            <div className="product-slide-name">Nom</div>
+            <div className="product-ecoscore">Ecoscore : 1</div>
 
-                    <div className="env-history-label-container">
-                        <span
-                            className="packaging-label-color"
-                            style={{
-                                color: this.getColor(
-                                    0
-                                ),
-                            }}
-                        >
-                        </span>
-                    </div>
-                </div>
+            <div className="env-history-label-container">
+              <span
+                className="packaging-label-color"
+                style={{
+                  color: this.getColor(0),
+                }}
+              ></span>
             </div>
-        </SwiperSlide>
+          </div>
+        </div>
+      </SwiperSlide>
     );
-};
+  };
 
   render = () => {
-    return (
-      <React.Fragment>
-        <span className="title-part-environnement">Impact de l'emballage</span>
-        <Swiper
-          spaceBetween={10}
-          slidesPerView={1}
-          centeredSlides={true}
-          onSlideChange={(i) => this.onSlideChange(i.activeIndex)}
-          onSwiper={(swiper) => this.setState({ swiper: swiper })}
-        >
-          {this.displaySlides()}
-        </Swiper>
-        {this.displayTransportImpact()}
+    if (
+      this.props.dataEcoScore &&
+      this.props.dataEcoScore?.adjustments?.packaging?.packagings.length >= 1
+    ) {
+      return (
+        <React.Fragment>
+          <span className="title-part-environnement">
+            Impact de l'emballage
+          </span>
+          {this.displayPackagingImpact()}
 
-        {/* <span className="title-part-environnement">
-                    Alternatives
-        </span>
-        <Swiper
+          <Swiper
             spaceBetween={10}
             slidesPerView={1}
             centeredSlides={true}
             onSlideChange={(i) => this.onSlideChange(i.activeIndex)}
             onSwiper={(swiper) => this.setState({ swiper: swiper })}
-        >
-          {this.displayAlternatives()}
-        </Swiper> */}
-      </React.Fragment>
-    );
+          >
+            {this.displaySlides()}
+          </Swiper>
+          {this.displayTransportImpact()}
+
+          <span className="title-part-environnement">Alternatives</span>
+          <Swiper
+            spaceBetween={10}
+            slidesPerView={1}
+            centeredSlides={true}
+            onSlideChange={(i) => this.onSlideChange(i.activeIndex)}
+            onSwiper={(swiper) => this.setState({ swiper: swiper })}
+          ></Swiper>
+        </React.Fragment>
+      );
+    } else {
+      return <React.Fragment></React.Fragment>;
+    }
   };
 }
 

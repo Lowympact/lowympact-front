@@ -62,7 +62,7 @@ class Signup extends Component {
 		)
 			.then((response) => response.json())
 			.then((res) => {
-				console.log(res);
+				//console.log(res);
 				this.setState({
 					userPostSuccess: res.data.success
 				});
@@ -77,7 +77,7 @@ class Signup extends Component {
 	handleSubmit = (e) => {
 		e.preventDefault();
 		let errors = this.validate();
-		console.log("errors: " + errors);
+		//console.log("errors: " + errors);
 		if(errors.length === 0) {
 			errors = this.signUser ();
 		}
@@ -100,7 +100,7 @@ class Signup extends Component {
 		if (this.state.redirect) {
 			return <Redirect to="/history" />;
 		}
-		console.log("render");
+		//console.log("render");
 		return (
 			<React.Fragment>
 				<Link to="/login">
@@ -112,11 +112,10 @@ class Signup extends Component {
 				<Link className="back-button" to="/login">
 					{"< retour"}
 				</Link>
-
-				<form>
-				<label>
+				<form className="forms">
+					<label>
 						nom
-						<input
+						<input className="input-forms"
 							value={this.state.userName}
 							onChange={(evt) =>
 								this.setState({ userName: evt.target.value })
@@ -126,7 +125,7 @@ class Signup extends Component {
 					</label>
 					<label>
 						email
-						<input
+						<input className="input-forms"
 							value={this.state.email}
 							onChange={(evt) =>
 								this.setState({ email: evt.target.value })
@@ -136,7 +135,7 @@ class Signup extends Component {
 					</label>
 					<label>
 						mot de passe
-						<input
+						<input className="input-forms"
 							value={this.state.password}
 							onChange={(evt) =>
 								this.setState({ password: evt.target.value })
@@ -146,7 +145,7 @@ class Signup extends Component {
 					</label>
 					<label>
 						confirmer mot de passe
-						<input
+						<input className="input-forms"
 							value={this.state.passwordConfirm}
 							onChange={(evt) =>
 								this.setState({

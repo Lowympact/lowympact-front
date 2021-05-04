@@ -36,7 +36,7 @@ class Signin extends Component {
 		e.preventDefault();
 		const { email, password } = this.state;
 		const errors = validate(email, password);
-		console.log(email, password, errors);
+		//console.log(email, password, errors);
 		this.setState({ errors });
 		if (errors.length === 0) {
 			this.Connect();
@@ -81,7 +81,7 @@ class Signin extends Component {
 		)
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(data);
+				//console.log(data);
 				if (data.error === "No user found") {
 					this.setState({ loginSuccessful: false });
 					let err = this.state.errors;
@@ -124,10 +124,10 @@ class Signin extends Component {
 					{"< retour"}
 				</Link>
 
-				<form>
+				<form className="forms">
 					<label>
 						email
-						<input
+						<input className="input-forms"
 							value={this.state.email}
 							onChange={(evt) =>
 								this.setState({ email: evt.target.value })
@@ -137,7 +137,7 @@ class Signin extends Component {
 					</label>
 					<label>
 						mot de passe
-						<input
+						<input className="input-forms"
 							value={this.state.password}
 							onChange={(evt) =>
 								this.setState({ password: evt.target.value })
