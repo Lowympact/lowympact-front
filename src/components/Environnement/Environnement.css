@@ -384,7 +384,92 @@
   height: 70%;
   display: flex;
 }
-.product-transport-impact-content-details-item {
+
+.product-co2-impact-container {
+  width: 80vw;
+  height: 30vw;
+  border-radius: 30px;
+  border: 2px solid grey;
+  margin-bottom: 15vw;
+}
+.product-co2-impact-header {
+  position: relative;
+  width: 100%;
+  height: 30%;
+  display: flex;
+}
+.product-co2-impact-logo {
+  margin-left: 28%;
+  margin-top: 2vw;
+  background-color: #78be95;
+}
+
+.product-co2-impact-color-label {
+  font-size: 15vw;
+  font-weight: 900;
+  border-radius: 70px;
+  right: 15%;
+  bottom: 3vw;
+  position: relative;
+}
+
+.icon-label-co2-impact {
+  font-size: 10vw;
+}
+.product-co2-impact-title {
+  width: 70vw;
+  margin-top: 5vw;
   margin-left: 5vw;
-  width: 20%;
+}
+
+.product-co2-impact-title-text {
+  font-size: 3vw;
+  font-weight: 900;
+}
+.product-co2-impact-title-label {
+  color: grey;
+  font-size: 2.5vw;
+}
+
+.product-co2-impact-content {
+  width: 100%;
+  height: 70%;
+  display: flex;
+}
+
+.product-co2-impact-content-text {
+  margin-left: 8vw;
+  margin-top: auto;
+  margin-bottom: auto;
+  color: grey;
+  font-size: 3vw;
+  font-weight: 900;
+}
+.product-co2-impact-content-progress {
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 40vw;
+  margin-left: 2vw;
+  margin-top: 2vw;
+}
+
+.product-co2-impact-content-details {
+  display: flex;
+  height: 30%;
+}
+.product-co2-impact-content-details-text {
+  font-size: 3vw;
+  font-weight: 900;
+  margin-left: 5%;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.product-co2-impact-content-details-score {
+  font-size: 3vw;
+  font-weight: 900;
+  margin-right: 5%;
+  margin-left: 5%;
+  margin-top: auto;
+  margin-bottom: auto;
 }

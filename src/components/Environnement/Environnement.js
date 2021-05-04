@@ -5,30 +5,31 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.css";
 import { CircleProgress } from "react-gradient-progress";
 import { PRODUCTS } from "../../assets/alternatives/alternatives";
-import nutella from '../../assets/images/nutella.png';
+import nutella from "../../assets/images/nutella.png";
 
-function RenderColor ({item}) {
+function RenderColor({ item }) {
   var labelColor;
   var labelLevel;
-	if (item.ecoscore_score <= 33) {
-		labelColor = "red";
+  if (item.ecoscore_score <= 33) {
+    labelColor = "red";
     labelLevel = "Mauvais";
-	} else if (item.ecoscore_score > 33 && item.ecoscore_score < 67) {
-		labelColor = "yellow";
+  } else if (item.ecoscore_score > 33 && item.ecoscore_score < 67) {
+    labelColor = "yellow";
     labelLevel = "Moyen";
-	} else {
-		labelColor = "green";
+  } else {
+    labelColor = "green";
     labelLevel = "Bonne";
-	}
-  return(
+  }
+  return (
     <div className="product-alternative-label-position">
       <div className="product-alternative-label">
         <div style={{ color: labelColor }}>●</div>
-			  <div className="product-alternative-label-text">{item.ecoscore_score}/100</div>
+        <div className="product-alternative-label-text">
+          {item.ecoscore_score}/100
+        </div>
       </div>
       <div className="product-alternative-label-level ">{labelLevel}</div>
     </div>
-    
   );
 }
 
@@ -197,6 +198,113 @@ class Environnement extends React.Component {
     this.setState({ width: window.innerWidth });
   };
 
+  displayCO2Repartition = (pourcentage, nbKg, type) => {
+    return (
+      <div className="product-co2-impact-container">
+        <div className="product-co2-impact-header">
+          <div className="product-co2-impact-logo">
+            <div className="material-icons icon-label-co2-impact">
+              {this.getMaterialIcon("Truck")}
+            </div>
+          </div>
+          <div className="product-co2-impact-title">
+            <div className="product-co2-impact-title-text">CO2 {type}</div>
+            <div className="product-co2-impact-title-label">Répartition</div>
+          </div>
+        </div>
+        <div className="product-co2-impact-content">
+          <div className="product-transport-impact-content-details-text">
+            {parseFloat(nbKg).toFixed(3)}kg C02 eq/kg produit
+          </div>
+          <div className="product-co2-impact-content-progress">
+            <CircleProgress
+              percentage={parseFloat(pourcentage * 100).toFixed(1)}
+              strokeWidth={window.innerWidth * (1.0 / 60.0)}
+              width={window.innerWidth * (1.0 / 5.0)}
+              fontSize={window.innerWidth * (1.0 / 25.0)}
+              primaryColor={["#FF3333", "#33FF63"]}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  displayRepartitionAllItems = () => {
+    var html_agriculture = <React.Fragment></React.Fragment>;
+    var html_transport = <React.Fragment></React.Fragment>;
+    var html_consommation = <React.Fragment></React.Fragment>;
+    var html_distribution = <React.Fragment></React.Fragment>;
+    var html_packaging = <React.Fragment></React.Fragment>;
+    var html_processing = <React.Fragment></React.Fragment>;
+
+    if (this.props.dataEcoScore?.agribalyse?.co2_agriculture) {
+      html_agriculture = this.displayCO2Repartition(
+        this.props.dataEcoScore?.agribalyse?.co2_agriculture /
+          this.props.dataEcoScore?.agribalyse?.co2_total,
+        this.props.dataEcoScore?.agribalyse?.co2_agriculture,
+        "Agriculture"
+      );
+    }
+    if (this.props.dataEcoScore?.agribalyse?.co2_transportation) {
+      html_transport = this.displayCO2Repartition(
+        this.props.dataEcoScore?.agribalyse?.co2_transportation /
+          this.props.dataEcoScore?.agribalyse?.co2_total,
+        this.props.dataEcoScore?.agribalyse?.co2_transportation,
+        "Transport"
+      );
+    }
+
+    if (this.props.dataEcoScore?.agribalyse?.co2_consumption) {
+      html_consommation = this.displayCO2Repartition(
+        this.props.dataEcoScore?.agribalyse?.co2_consumption /
+          this.props.dataEcoScore?.agribalyse?.co2_total,
+        this.props.dataEcoScore?.agribalyse?.co2_consumption,
+        "Consommation"
+      );
+    }
+
+    if (this.props.dataEcoScore?.agribalyse?.co2_distribution) {
+      html_distribution = this.displayCO2Repartition(
+        this.props.dataEcoScore?.agribalyse?.co2_distribution /
+          this.props.dataEcoScore?.agribalyse?.co2_total,
+        this.props.dataEcoScore?.agribalyse?.co2_distribution,
+        "Distribution"
+      );
+    }
+
+    if (this.props.dataEcoScore?.agribalyse?.co2_packaging) {
+      html_packaging = this.displayCO2Repartition(
+        this.props.dataEcoScore?.agribalyse?.co2_packaging /
+          this.props.dataEcoScore?.agribalyse?.co2_total,
+        this.props.dataEcoScore?.agribalyse?.co2_packaging,
+        "Emballage"
+      );
+    }
+
+    if (this.props.dataEcoScore?.agribalyse?.co2_processing) {
+      html_processing = this.displayCO2Repartition(
+        this.props.dataEcoScore?.agribalyse?.co2_processing /
+          this.props.dataEcoScore?.agribalyse?.co2_total,
+        this.props.dataEcoScore?.agribalyse?.co2_processing,
+        "Processing"
+      );
+    }
+
+    let res = (
+      <React.Fragment>
+        {html_agriculture}
+        {html_transport}
+        {html_consommation}
+        {html_distribution}
+        {html_packaging}
+        {html_processing}
+      </React.Fragment>
+    );
+
+    return res;
+  };
+
   displayTransportImpact = () => {
     let res = <React.Fragment></React.Fragment>;
 
@@ -242,7 +350,10 @@ class Environnement extends React.Component {
     if (agribalyse_CO2 > 0) {
       co2_impact_html = (
         <div className="product-transport-impact-content-details-text">
-          {agribalyse_CO2.toFixed(3)}kg C02 eq/kg produit
+          {parseFloat(
+            this.props.dataEcoScore?.agribalyse?.co2_transportation
+          ).toFixed(3)}
+          kg C02 eq/kg produit
         </div>
       );
     }
@@ -335,7 +446,7 @@ class Environnement extends React.Component {
             recyclable = "";
           }
 
-          return <React.Fragment></React.Fragment>;
+          return <React.Fragment>{this.getMaterialIcon("")}</React.Fragment>;
         }
       );
     }
@@ -387,36 +498,28 @@ class Environnement extends React.Component {
     this.setState({ currentIndex: index });
   };
 
-  alternativesloop = () => {   
-      const alternativesList = PRODUCTS.map((item) => {
-        console.log(this.props.EcoScore)
-        if(item.label <= this.props.ecoScore) {
-          return (
-            <SwiperSlide className="product-alternative">
-              <div>
-                <img src={nutella} className="product-alternative-image" alt="" />
-              </div>
-              <div className="product-alternative-text">
-                <label className="product-alternative-title">
-                  {item.name}
-                </label>
-                <label className="product-alternative-brand">
-                  {item.brand}
-                </label>
-                <RenderColor item={item} />
-              </div>
-            </SwiperSlide>
-          );
-          }
-        else {
-          return(
-          <React.Fragment>
-          </React.Fragment>
-          );
-        }
-        });
-      return alternativesList;
-};
+  alternativesloop = () => {
+    const alternativesList = PRODUCTS.map((item) => {
+      console.log(this.props.EcoScore);
+      if (item.label <= this.props.ecoScore) {
+        return (
+          <SwiperSlide className="product-alternative">
+            <div>
+              <img src={nutella} className="product-alternative-image" alt="" />
+            </div>
+            <div className="product-alternative-text">
+              <label className="product-alternative-title">{item.name}</label>
+              <label className="product-alternative-brand">{item.brand}</label>
+              <RenderColor item={item} />
+            </div>
+          </SwiperSlide>
+        );
+      } else {
+        return <React.Fragment></React.Fragment>;
+      }
+    });
+    return alternativesList;
+  };
 
   render = () => {
     return (
@@ -432,21 +535,20 @@ class Environnement extends React.Component {
           {this.displaySlides()}
         </Swiper>
         {this.displayTransportImpact()}
+        {this.displayRepartitionAllItems()}
 
-        <span className="title-part-environnement">
-                    Alternatives
-                </span>
-                <Swiper
-                    spaceBetween={10}
-                    slidesPerView={1}
-                    centeredSlides={true}
-                    onSlideChange={(i) => this.onSlideChange(i.activeIndex)}
-                    onSwiper={(swiper) => this.setState({ swiper: swiper })}
-                >
-                  {this.alternativesloop()}
-                </Swiper>
-        </React.Fragment>
-      );
+        <span className="title-part-environnement">Alternatives</span>
+        <Swiper
+          spaceBetween={10}
+          slidesPerView={1}
+          centeredSlides={true}
+          onSlideChange={(i) => this.onSlideChange(i.activeIndex)}
+          onSwiper={(swiper) => this.setState({ swiper: swiper })}
+        >
+          {this.alternativesloop()}
+        </Swiper>
+      </React.Fragment>
+    );
   };
 }
 
