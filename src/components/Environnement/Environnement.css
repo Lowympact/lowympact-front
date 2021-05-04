@@ -65,11 +65,13 @@
 	background-position: 265px 30px;
 }
 .env-icon-label {
-	font-size: 60px;
+	font-size: 5vw;
+	margin-top: 4vw;
 }
 
 .product-slide-name {
-	font-size: 20px;
+	font-size: 2vw;
+	margin-top: 4vw;
 }
 
 .product-slide-recyclable {
@@ -115,11 +117,11 @@
 	color: grey;
 }
 .product-ecoscore {
-	position: relative;
-	font-size: 20px;
+	font-size: 2vw;
 	font-weight: 900;
 	color: black;
-	bottom: 0px;
+
+	text-align: center;
 }
 .env-product-ecoscore {
 	position: relative;
@@ -156,27 +158,23 @@
 }
 
 .env-history-label-container {
-	position: relative;
-	margin-right: 5px;
-	bottom: 55px;
-	margin-left: auto;
+	display: flex;
+	flex-direction: column;
 }
 
 .env-history-label {
 	color: grey;
 	font-size: smaller;
-	left: 5px;
-	bottom: 10px;
+	text-align: center;
 	position: relative;
+	bottom: 10vw;
 }
 .packaging-label-color {
 	position: relative;
-	left: 20px;
 	font-size: 50px;
 	font-weight: 900;
-	width: 50px;
-	height: 50px;
-	border-radius: 50px;
+	bottom: 7vw;
+	margin: auto;
 }
 
 .product-bitmap-image-packaging {
@@ -344,12 +342,13 @@
 
 .product-packaging-impact-container {
 	width: 80vw;
-	height: 30vw;
+	height: 70vw;
 	border-radius: 30px;
 	border: 2px solid grey;
 	margin-top: 5vw;
 	margin-bottom: 5vw;
 	display: flex;
+	flex-direction: column;
 }
 
 .product-packaging-impact-logo {
@@ -382,4 +381,15 @@
 .product-packaging-impact-title-label {
 	color: grey;
 	font-size: 3vw;
+}
+.product-packaging-impact-header {
+	margin-top: 2vw;
+	position: relative;
+	width: 100%;
+	height: 70%;
+	display: flex;
+}
+.product-transport-impact-content-details-item {
+	margin-left: 5vw;
+	width: 20%;
 }
