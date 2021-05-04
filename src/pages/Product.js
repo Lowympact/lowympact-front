@@ -385,6 +385,7 @@ class Product extends React.Component {
 					{this.state.value === 0 ? (
 						<Environnement
 							dataEcoScore={this.state.dataEcoScore}
+							ecoScore={this.state.ecoScore}
 						></Environnement>
 					) : (
 						<div className="product-bottom-container">
