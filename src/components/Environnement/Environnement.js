@@ -286,36 +286,68 @@ class Environnement extends React.Component {
     return res;
   };
 
+  diplayPackagingDetailImpact = () => {
+    let slides = <React.Fragment></React.Fragment>;
+    if (
+      this.props.dataEcoScore &&
+      this.props.dataEcoScore?.adjustments?.packaging?.packagings.length >= 1
+    ) {
+      slides = this.props.dataEcoScore?.adjustments?.packaging?.packagings.map(
+        (data) => {
+          var recyclable = "";
+          if (data.recycling) {
+            recyclable = data.recycling.split(":")[1];
+          }
+          if (recyclable && recyclable == "recycle") {
+            recyclable = "Recyclable";
+          } else if (recyclable && recyclable == "discard") {
+            recyclable = "Non recyclable";
+          } else {
+            recyclable = "";
+          }
+
+          return <React.Fragment></React.Fragment>;
+        }
+      );
+    }
+    return slides;
+  };
+
   displayPackagingImpact = () => {
     let res = <React.Fragment></React.Fragment>;
 
     if (this.props.dataEcoScore?.adjustments?.packaging?.value) {
       return (
         <div className="product-packaging-impact-container">
-          <div className="product-packaging-impact-logo">
-            <div className="material-icons icon-label-transport-impact">
-              {this.getMaterialIcon("")}
+          <div className="product-packaging-impact-header">
+            <div className="product-packaging-impact-logo">
+              <div className="material-icons icon-label-transport-impact">
+                {this.getMaterialIcon("")}
+              </div>
+            </div>
+            <div className="product-packaging-impact-title">
+              <div className="product-packaging-impact-title-text">
+                Impact du packaging
+              </div>
+              <div className="product-packaging-impact-title-label">
+                {this.getLabelImpactPackaging(
+                  this.props.dataEcoScore?.adjustments?.packaging?.value
+                )}
+              </div>
+            </div>
+            <div
+              className="product-packaging-impact-color-label"
+              style={{
+                color: this.getColorImpactPackaging(
+                  this.props.dataEcoScore?.adjustments?.packaging?.value
+                ),
+              }}
+            >
+              ●
             </div>
           </div>
-          <div className="product-packaging-impact-title">
-            <div className="product-packaging-impact-title-text">
-              Impact du packaging
-            </div>
-            <div className="product-packaging-impact-title-label">
-              {this.getLabelImpactPackaging(
-                this.props.dataEcoScore?.adjustments?.packaging?.value
-              )}
-            </div>
-          </div>
-          <div
-            className="product-packaging-impact-color-label"
-            style={{
-              color: this.getColorImpactPackaging(
-                this.props.dataEcoScore?.adjustments?.packaging?.value
-              ),
-            }}
-          >
-            ●
+          <div className="product-transport-impact-content-details">
+            {this.diplayPackagingDetailImpact()}
           </div>
         </div>
       );
