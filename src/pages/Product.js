@@ -26,6 +26,27 @@ class Product extends React.Component {
 
 	isFlipping = false;
 
+	//for scrolling
+	getBottomRef = (component) => {
+		this.bottomComponent = component;
+	};
+
+	componentDidMount = () => {
+		this.Verify();
+		let userId = localStorage.getItem("userId");
+		if (userId) {
+			this.setState({ userId: userId });
+			this.loadHistory(userId);
+		}
+		this.loadFromOpenFoodFacts(this.props.match.params.barcode);
+		if (this.props.match.params.bcProductId) {
+			this.loadProductInformations(
+				this.props.match.params.barcode,
+				this.props.match.params.bcProductId
+			);
+		}
+	};
+
 	handleBarCodeUpdate = () => {
 		if (this.state.barcode !== this.props.match.params.barcode) {
 			this.setState({
@@ -57,20 +78,6 @@ class Product extends React.Component {
 		}
 	};
 
-	componentDidMount = () => {
-		this.Verify();
-		let userId = localStorage.getItem("userId");
-		if (userId) {
-			this.setState({ userId: userId });
-		}
-		this.loadFromOpenFoodFacts(this.props.match.params.barcode);
-		if (this.props.match.params.bcProductId) {
-			this.loadProductInformations(
-				this.props.match.params.barcode,
-				this.props.match.params.bcProductId
-			);
-		}
-	};
 	loadProductInformations = (barcode, bcProductId) => {
 		fetch(
 			`https://api.lowympact.fr/api/v1/products/${barcode}?bcProductId=${bcProductId}`,
@@ -138,6 +145,31 @@ class Product extends React.Component {
 			});
 	};
 
+	loadHistory = (userId) => {
+		if (userId && this.state.barcode && this.state.bcProductId) {
+			fetch(
+				`https://api.lowympact.fr/api/v1/users/${userId}/cart/${this.state.barcode}?bcProductAddress=${this.state.bcProductId}`,
+				// `http://localhost:8080/api/v1/users/${this.state.userId}/history`,
+				{
+					method: "get",
+					credentials: "include",
+					headers: new Headers({
+						Authorization: localStorage.getItem("token"),
+						"api-key": "99d8fb95-abdd-4885-bf6c-3a81d8874043",
+						"Content-Type": "application/json",
+					}),
+				}
+			)
+				.then((response) => response.json())
+				.then((res) => {
+					console.log(res);
+					if (res.success) {
+						this.setState({ cart: res.data?.quantity });
+					}
+				});
+		}
+	};
+
 	saveHistory = async () => {
 		await delay(2000);
 
@@ -180,7 +212,7 @@ class Product extends React.Component {
 					}),
 					body: JSON.stringify({
 						barcode: this.state.barcode,
-						bcProductId: this.state.bcProductId,
+						bcProductAddress: this.state.bcProductId,
 					}),
 				}
 			)
@@ -192,15 +224,69 @@ class Product extends React.Component {
 	};
 
 	addToCart = () => {
-		this.setState({ cart: this.state.cart + 1 });
-		this.flip();
+		if (this.state.barcode && this.state.cart >= 0) {
+			this.flip();
+			fetch(
+				`https://api.lowympact.fr/api/v1/users/${this.state.userId}/cart`,
+				// `http://localhost:8080/api/v1/users/${this.state.userId}/cart`,
+				{
+					method: "put",
+					credentials: "include",
+					headers: new Headers({
+						Authorization: localStorage.getItem("token"),
+						"api-key": "99d8fb95-abdd-4885-bf6c-3a81d8874043",
+						"Content-Type": "application/json",
+					}),
+					body: JSON.stringify({
+						barcode: this.state.barcode,
+						bcProductAddress: this.state.bcProductId,
+						quantityDelta: 1,
+						ecoscore: this.state.ecoScore,
+						carbonImpact: null,
+					}),
+				}
+			)
+				.then((response) => response.json())
+				.then((res) => {
+					console.log(res);
+					if (res.success) {
+						this.setState({ cart: this.state.cart + 1 });
+					}
+				});
+		}
 	};
 
 	removeFromCart = () => {
-		if (this.state.cart > 0) {
-			this.setState({ cart: this.state.cart - 1 });
+		if (this.state.barcode && this.state.cart > 0) {
+			this.flip();
+			fetch(
+				`https://api.lowympact.fr/api/v1/users/${this.state.userId}/cart`,
+				// `http://localhost:8080/api/v1/users/${this.state.userId}/cart`,
+				{
+					method: "put",
+					credentials: "include",
+					headers: new Headers({
+						Authorization: localStorage.getItem("token"),
+						"api-key": "99d8fb95-abdd-4885-bf6c-3a81d8874043",
+						"Content-Type": "application/json",
+					}),
+					body: JSON.stringify({
+						barcode: this.state.barcode,
+						bcProductAddress: this.state.bcProductId,
+						quantityDelta: -1,
+						ecoscore: this.state.ecoScore,
+						carbonImpact: null,
+					}),
+				}
+			)
+				.then((response) => response.json())
+				.then((res) => {
+					console.log(res);
+					if (res.success) {
+						this.setState({ cart: this.state.cart - 1 });
+					}
+				});
 		}
-		this.flip();
 	};
 
 	flip = async (event) => {
@@ -245,7 +331,7 @@ class Product extends React.Component {
 		if (this.state.ecoScore) {
 			let scoreClass = "color_score_" + this.state.ecoScore;
 			ecoScore = (
-				<div className="product-ecoscore">
+				<div className="product-ecoscore-image">
 					<span className={"circle-score " + scoreClass}>⬤ </span>
 					EcoScore :
 					<span className="uppercase ">
@@ -298,7 +384,10 @@ class Product extends React.Component {
 	handleChange = (event, newValue) => {
 		this.setState({ value: newValue });
 		if (newValue === 1) {
-			window.scrollTo({ bottom: "0px", behavior: "smooth" });
+			let elem = document.getElementsByClassName("swiper-container");
+			if (elem[0]) {
+				elem[0].scrollIntoView({ behavior: "smooth" });
+			}
 		}
 	};
 
@@ -389,14 +478,16 @@ class Product extends React.Component {
 						></Environnement>
 					) : (
 						<div className="product-bottom-container">
-							<Traceability products={products} />
+							<Traceability
+								products={products}
+								getBottomRef={this.getBottomRef}
+							/>
 						</div>
 					)}
 					<Navbar
 						barcode={this.props.match.params.barcode}
 						bcProductId={this.props.match.params.bcProductId}
 					/>
-					<Labels dataEcoScore={this.state.dataEcoScore}></Labels>
 				</div>
 			</React.Fragment>
 		);

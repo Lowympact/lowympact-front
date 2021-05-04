@@ -17,7 +17,7 @@ class Labels extends React.Component {
 					?.value < 0
 			) {
 				return (
-					<SwiperSlide>
+					<div>
 						<div className="labels-container-bad">
 							<span class="material-icons">warning_amber</span>
 							{
@@ -25,11 +25,11 @@ class Labels extends React.Component {
 									?.threatened_species?.ingredient
 							}
 						</div>
-					</SwiperSlide>
+					</div>
 				);
 			} else {
 				return (
-					<SwiperSlide>
+					<div>
 						<div className="labels-container-good">
 							<span class="material-icons">task_alt</span>
 							{
@@ -37,7 +37,7 @@ class Labels extends React.Component {
 									?.threatened_species?.ingredient
 							}
 						</div>
-					</SwiperSlide>
+					</div>
 				);
 			}
 		}
@@ -117,15 +117,24 @@ class Labels extends React.Component {
 	};
 
 	render() {
-		return (
-			<div>
-				<h1>Labels</h1>
-				<div className="labels-container">
-					{this.displaySpecies()}
-					{this.displayProduction()}
+		if (
+			this.props.dataEcoScore?.adjustments?.threatened_species?.length !=
+				0 &&
+			this.props.dataEcoScore?.adjustments?.production_system?.label
+		) {
+			return (
+				<div>
+					<h1>Labels</h1>
+
+					<div className="labels-container">
+						{this.displaySpecies()}
+						{this.displayProduction()}
+					</div>
 				</div>
-			</div>
-		);
+			);
+		} else {
+			return <React.Fragment />;
+		}
 	}
 }
 

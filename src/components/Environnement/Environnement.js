@@ -6,6 +6,7 @@ import "swiper/swiper-bundle.css";
 import { CircleProgress } from "react-gradient-progress";
 import { PRODUCTS } from "../../assets/alternatives/alternatives";
 import nutella from "../../assets/images/nutella.png";
+import Labels from "../Labels/Labels";
 
 function RenderColor({ item }) {
 	var labelColor;
@@ -377,7 +378,6 @@ class Environnement extends React.Component {
 
 	alternativesloop = () => {
 		const alternativesList = PRODUCTS.map((item) => {
-			console.log(this.props.EcoScore);
 			if (item.label <= this.props.ecoScore) {
 				return (
 					<SwiperSlide className="product-alternative">
@@ -409,9 +409,14 @@ class Environnement extends React.Component {
 	render = () => {
 		return (
 			<React.Fragment>
-				<span className="title-part-environnement">
-					Impact de l'emballage
-				</span>
+				{this.props.dataEcoScore?.adjustments?.packaging?.packagings
+					.length >= 1 ? (
+					<span className="title-part-environnement">
+						Impact de l'emballage
+					</span>
+				) : (
+					<React.Fragment />
+				)}
 				<Swiper
 					spaceBetween={10}
 					slidesPerView={1}
@@ -433,6 +438,7 @@ class Environnement extends React.Component {
 				>
 					{this.alternativesloop()}
 				</Swiper>
+				<Labels dataEcoScore={this.props.dataEcoScore}></Labels>
 			</React.Fragment>
 		);
 	};
