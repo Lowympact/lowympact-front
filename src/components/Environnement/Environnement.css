@@ -331,3 +331,45 @@
 .product-alternative-label-position {
   margin-left: 30px;
 }
+
+.product-packaging-impact-container {
+  width: 80vw;
+  height: 30vw;
+  border-radius: 30px;
+  border: 2px solid grey;
+  margin-top: 5vw;
+  margin-bottom: 5vw;
+  display: flex;
+}
+
+.product-packaging-impact-logo {
+  margin: auto;
+  background-color: #78be95;
+  margin-left: 5vw;
+}
+
+.product-packaging-impact-color-label {
+  font-size: 15vw;
+  font-weight: 900;
+  border-radius: 70px;
+  left: 0;
+  bottom: 3vw;
+  position: relative;
+  margin: auto;
+}
+
+.product-packaging-impact-title {
+  width: 40vw;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 5vw;
+}
+
+.product-packaging-impact-title-text {
+  font-size: 3.5vw;
+  font-weight: 900;
+}
+.product-packaging-impact-title-label {
+  color: grey;
+  font-size: 3vw;
+}

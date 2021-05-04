@@ -47,6 +47,8 @@ class Environnement extends React.Component {
         return "highlight_off";
       case "Truck":
         return "local_shipping";
+      case "Packaging":
+        return "inventory_2";
       default:
         return "view_in_ar";
     }
@@ -74,7 +76,7 @@ class Environnement extends React.Component {
 
   getLabel = (note) => {
     if (note > 67) {
-      return "Bonne";
+      return "Bon";
     }
     if (note <= 33) {
       return "Mauvais";
@@ -90,6 +92,26 @@ class Environnement extends React.Component {
       return "Impact faible";
     }
     return "Impact moyen";
+  };
+
+  getLabelImpactPackaging = (note) => {
+    if (note > 2) {
+      return "Bon";
+    }
+    if (note < -2) {
+      return "Mauvais";
+    }
+    return "Moyen";
+  };
+
+  getColorImpactPackaging = (note) => {
+    if (note > 2) {
+      return "green";
+    }
+    if (note < -2) {
+      return "red";
+    }
+    return "yellow";
   };
 
   displaySlides = () => {
@@ -114,43 +136,45 @@ class Environnement extends React.Component {
           }
 
           return (
-            <SwiperSlide>
-              <div className="env-product-slide-container ">
-                <div className="env-product-slide-icon">
-                  <span class="material-icons env-icon-label">
-                    {this.getMaterialIcon("")}
-                  </span>
-                </div>
-                <div className="env-product-slide-wrapper">
-                  <div className="product-slide-name">
-                    {data?.material.split(":")[1]}
-                  </div>
-                  <div className="product-ecoscore">
-                    Ecoscore : {data?.ecoscore_material_score}
-                  </div>
-
-                  <div className="env-history-label-container">
-                    <span
-                      className="packaging-label-color"
-                      style={{
-                        color: this.getColor(data?.ecoscore_material_score),
-                      }}
-                    >
-                      ●
+            <div>
+              <SwiperSlide>
+                <div className="env-product-slide-container ">
+                  <div className="env-product-slide-icon">
+                    <span class="material-icons env-icon-label">
+                      {this.getMaterialIcon("")}
                     </span>
-                    <div className="env-history-label">
-                      {this.getLabel(data?.ecoscore_material_score)}
-                    </div>
                   </div>
-                  <div className="product-slide-recyclable">
-                    {recyclable}
-                    <div className="material-icons icon-label-recyclable">
-                      {this.getMaterialIcon(recyclable)}
+                  <div className="env-product-slide-wrapper">
+                    <div className="product-slide-name">
+                      {data?.material.split(":")[1]}
+                    </div>
+                    <div className="product-ecoscore">
+                      Ecoscore : {data?.ecoscore_material_score}
+                    </div>
+
+                    <div className="env-history-label-container">
+                      <span
+                        className="packaging-label-color"
+                        style={{
+                          color: this.getColor(data?.ecoscore_material_score),
+                        }}
+                      >
+                        ●
+                      </span>
+                      <div className="env-history-label">
+                        {this.getLabel(data?.ecoscore_material_score)}
+                      </div>
+                    </div>
+                    <div className="product-slide-recyclable">
+                      {recyclable}
+                      <div className="material-icons icon-label-recyclable">
+                        {this.getMaterialIcon(recyclable)}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </SwiperSlide>
+              </SwiperSlide>
+            </div>
           );
         }
       );
@@ -291,6 +315,42 @@ class Environnement extends React.Component {
     return res;
   };
 
+  displayPackagingImpact = () => {
+    let res = <React.Fragment></React.Fragment>;
+
+    if (this.props.dataEcoScore?.adjustments?.packaging?.value) {
+      return (
+        <div className="product-packaging-impact-container">
+          <div className="product-packaging-impact-logo">
+            <div className="material-icons icon-label-transport-impact">
+              {this.getMaterialIcon("")}
+            </div>
+          </div>
+          <div className="product-packaging-impact-title">
+            <div className="product-packaging-impact-title-text">
+              Impact du packaging
+            </div>
+            <div className="product-packaging-impact-title-label">
+              {this.getLabelImpactPackaging(
+                this.props.dataEcoScore?.adjustments?.packaging?.value
+              )}
+            </div>
+          </div>
+          <div
+            className="product-packaging-impact-color-label"
+            style={{
+              color: this.getColorImpactPackaging(
+                this.props.dataEcoScore?.adjustments?.packaging?.value
+              ),
+            }}
+          >
+            ●
+          </div>
+        </div>
+      );
+    }
+  };
+
   onSlideChange = (index) => {
     this.setState({ currentIndex: index });
   };
@@ -345,7 +405,10 @@ class Environnement extends React.Component {
                   {this.alternativesloop()}
                 </Swiper>
         </React.Fragment>
-    );
+      );
+    } else {
+      return <React.Fragment></React.Fragment>;
+    }
   };
 }
 
