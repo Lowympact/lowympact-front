@@ -297,6 +297,9 @@ class Product extends React.Component {
 
 	handleChange = (event, newValue) => {
 		this.setState({ value: newValue });
+		if (newValue === 1) {
+			window.scrollTo({ bottom: "0px", behavior: "smooth" });
+		}
 	};
 
 	displayNavbar = () => {
