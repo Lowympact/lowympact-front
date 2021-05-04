@@ -67,6 +67,14 @@
 	left: 50px;
 }
 
+@media (max-height: 650px) {
+	.back-button {
+		position: absolute;
+		top: 100px;
+		left: 20px;
+	}
+}
+
 /***** Page Product *****/
 
 .product-page-container {

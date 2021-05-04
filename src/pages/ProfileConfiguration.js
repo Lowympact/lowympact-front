@@ -36,10 +36,7 @@ class ProfileConfiguration extends Component {
 	handleChange = (e) => {
 		e.preventDefault();
 		const { currentPassword, newPassword, confirmPassword } = this.state;
-		const errors = validate(
-			newPassword,
-			confirmPassword
-		);
+		const errors = validate(newPassword, confirmPassword);
 		console.log(
 			this.state.user.email,
 			currentPassword,
@@ -49,12 +46,16 @@ class ProfileConfiguration extends Component {
 		);
 		this.setState({ errors });
 		if (errors.length === 0) {
-			this.changeUserInfo(this.state.user._id, currentPassword, newPassword);
+			this.changeUserInfo(
+				this.state.user._id,
+				currentPassword,
+				newPassword
+			);
 		}
 	};
 
 	changeUserInfo = (userId, currentPassword, newPassword) => {
-		console.log('hey')
+		console.log("hey");
 		fetch(
 			`https://api.lowympact.fr/api/v1/users/${userId}`,
 			// `http://localhost:8080/api/v1/users/login`,
@@ -67,17 +68,18 @@ class ProfileConfiguration extends Component {
 				},
 				body: JSON.stringify({
 					currentPassword: currentPassword,
-					newPassword: newPassword
-				})
+					newPassword: newPassword,
+				}),
 			}
 		)
 			.then((response) => response.json())
 			.then((res) => {
 				console.log(res);
-				if(res.success === false){
-					this.setState({ errors: [...this.state.errors, res.error]})
-				}
-				else{
+				if (res.success === false) {
+					this.setState({
+						errors: [...this.state.errors, res.error],
+					});
+				} else {
 					this.setState({ redirect: true });
 				}
 			});
@@ -150,56 +152,63 @@ class ProfileConfiguration extends Component {
 				<div className="errors-change-password">
 					{this.state.errors}
 				</div>
-				<div className="configuration-email-block">
-					<div>email</div>
-					<div>{this.state.user.email}</div>
+				<div className="configuration-container">
+					<div className="configuration-email-block">
+						<div>email</div>
+						<div>{this.state.user.email}</div>
+					</div>
+					<form className="configuration-form">
+						<label>
+							{/* Mot de passe actuel */}
+							<input
+								placeholder="mot de passe actuel"
+								className="input-forms"
+								value={this.state.currentPassword}
+								onChange={(evt) =>
+									this.setState({
+										currentPassword: evt.target.value,
+									})
+								}
+								type="password"
+							/>
+						</label>
+						<label>
+							{/* Nouveau mot de passe */}
+							<input
+								value={this.state.newPassword}
+								className="input-forms"
+								onChange={(evt) =>
+									this.setState({
+										newPassword: evt.target.value,
+									})
+								}
+								type="password"
+								placeholder="nouveau mot de passe"
+							/>
+						</label>
+						<label>
+							{/* Confirmation de mot de passe */}
+							<input
+								placeholder="confirmation de mdp"
+								className="input-forms"
+								value={this.state.confirmPassword}
+								onChange={(evt) =>
+									this.setState({
+										confirmPassword: evt.target.value,
+									})
+								}
+								type="password"
+							/>
+						</label>
+						<Link
+							className="button-change-password"
+							onClick={this.handleChange}
+							to=""
+						>
+							<ButtonChangePassword />
+						</Link>
+					</form>
 				</div>
-				<form>
-					<label>
-						{/* Mot de passe actuel */}
-						<input
-							placeholder="mot de passe actuel"
-							value={this.state.currentPassword}
-							onChange={(evt) =>
-								this.setState({
-									currentPassword: evt.target.value,
-								})
-							}
-							type="password"
-						/>
-					</label>
-					<label>
-						{/* Nouveau mot de passe */}
-						<input
-							value={this.state.newPassword}
-							onChange={(evt) =>
-								this.setState({ newPassword: evt.target.value })
-							}
-							type="password"
-							placeholder="nouveau mot de passe"
-						/>
-					</label>
-					<label>
-						{/* Confirmation de mot de passe */}
-						<input
-							placeholder="confirmation de mdp"
-							value={this.state.confirmPassword}
-							onChange={(evt) =>
-								this.setState({
-									confirmPassword: evt.target.value,
-								})
-							}
-							type="password"
-						/>
-					</label>
-					<Link
-						className="button-change-password"
-						onClick={this.handleChange}
-						to=""
-					>
-						<ButtonChangePassword />
-					</Link>
-				</form>
 			</div>
 		);
 	}
