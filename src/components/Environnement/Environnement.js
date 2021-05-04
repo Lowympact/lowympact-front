@@ -404,9 +404,14 @@ class Environnement extends React.Component {
 	render = () => {
 		return (
 			<React.Fragment>
-				<span className="title-part-environnement">
-					Impact de l'emballage
-				</span>
+				{this.props.dataEcoScore?.adjustments?.packaging?.packagings
+					.length >= 1 ? (
+					<span className="title-part-environnement">
+						Impact de l'emballage
+					</span>
+				) : (
+					<React.Fragment />
+				)}
 				<Swiper
 					spaceBetween={10}
 					slidesPerView={1}
