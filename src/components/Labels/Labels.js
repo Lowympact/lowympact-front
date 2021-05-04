@@ -7,7 +7,7 @@ import "./Labels.css";
 class Labels extends React.Component {
 
   displaySpecies = () => {
-    if(this.props.dataEcoScore?.adjustments?.threatened_species.length === 0){
+    if(this.props.dataEcoScore?.adjustments?.threatened_species?.length === 0){
         return(<div></div>);
     }
     else{

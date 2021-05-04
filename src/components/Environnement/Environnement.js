@@ -357,23 +357,32 @@ class Environnement extends React.Component {
 
   alternativesloop = () => {   
       const alternativesList = PRODUCTS.map((item) => {
-        return (
-          <SwiperSlide className="product">
-            <div>
-					    <img src={nutella} className="product-alternative-image" alt="" />
-				    </div>
-            <div className="product-alternative-text">
-              <label className="product-alternative-title">
-                {item.name}
-              </label>
-              <label className="product-alternative-brand">
-                {item.brand}
-              </label>
-              <RenderColor item={item} />
-            </div>
-          </SwiperSlide>
-        );
-      });
+        console.log(this.props.EcoScore)
+        if(item.label <= this.props.ecoScore) {
+          return (
+            <SwiperSlide className="product-alternative">
+              <div>
+                <img src={nutella} className="product-alternative-image" alt="" />
+              </div>
+              <div className="product-alternative-text">
+                <label className="product-alternative-title">
+                  {item.name}
+                </label>
+                <label className="product-alternative-brand">
+                  {item.brand}
+                </label>
+                <RenderColor item={item} />
+              </div>
+            </SwiperSlide>
+          );
+          }
+        else {
+          return(
+          <React.Fragment>
+          </React.Fragment>
+          );
+        }
+        });
       return alternativesList;
 };
 
@@ -406,9 +415,6 @@ class Environnement extends React.Component {
                 </Swiper>
         </React.Fragment>
       );
-    } else {
-      return <React.Fragment></React.Fragment>;
-    }
   };
 }
 

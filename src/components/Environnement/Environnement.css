@@ -280,10 +280,15 @@
   margin-bottom: auto;
 }
 
-.product {
+.product-alternative {
   top: 10px;
   display: flex;
   flex-direction: row;
+  border-radius: 30px;
+  box-shadow: 0px 0px 17px -10px rgb(0 0 0 / 80%);
+  height: 120px;
+  width: 80vw;
+  align-items: center;
 }
 
 .product-alternative-title {
