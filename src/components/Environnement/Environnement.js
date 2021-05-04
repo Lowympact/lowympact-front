@@ -402,7 +402,10 @@ class Environnement extends React.Component {
 				transport_final_indicator * 100
 			);
 			return (
-				<div className="product-transport-impact-container">
+				<div
+					className="product-transport-impact-container"
+					onClick={this.handleShowTransport}
+				>
 					<div className="product-transport-impact-header">
 						<div className="product-transport-impact-logo">
 							<div className="material-icons icon-label-transport-impact">
@@ -576,18 +579,6 @@ class Environnement extends React.Component {
 	render = () => {
 		return (
 			<React.Fragment>
-				<span className="title-part-environnement">
-					Impact de l'emballage
-				</span>
-				<Swiper
-					spaceBetween={10}
-					slidesPerView={1}
-					centeredSlides={true}
-					onSlideChange={(i) => this.onSlideChange(i.activeIndex)}
-					onSwiper={(swiper) => this.setState({ swiper: swiper })}
-				>
-					{this.displaySlides()}
-				</Swiper>
 				{this.displayTransportImpact()}
 				{this.displayRepartitionAllItems()}
 
@@ -600,6 +591,18 @@ class Environnement extends React.Component {
 					onSwiper={(swiper) => this.setState({ swiper: swiper })}
 				>
 					{this.alternativesloop()}
+				</Swiper>
+				<span className="title-part-environnement">
+					Impact de l'emballage
+				</span>
+				<Swiper
+					spaceBetween={10}
+					slidesPerView={1}
+					centeredSlides={true}
+					onSlideChange={(i) => this.onSlideChange(i.activeIndex)}
+					onSwiper={(swiper) => this.setState({ swiper: swiper })}
+				>
+					{this.displaySlides()}
 				</Swiper>
 			</React.Fragment>
 		);

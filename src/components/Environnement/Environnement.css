@@ -414,12 +414,12 @@
 		height: 0px;
 	}
 	to {
-		height: 246px;
+		height: 233px;
 	}
 }
 @keyframes disappearBottom {
 	from {
-		height: 246px;
+		height: 233px;
 	}
 	to {
 		height: 0px;
