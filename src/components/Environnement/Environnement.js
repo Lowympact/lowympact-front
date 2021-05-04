@@ -140,6 +140,43 @@ class Environnement extends React.Component {
 		this.setState({ currentIndex: index });
 	};
 
+	displayAlternatives = () => {
+		let slides = <React.Fragment></React.Fragment>;
+		return (
+			<SwiperSlide>
+				<div className="env-product-slide-container ">
+					<div className="env-product-slide-icon">
+						<span class="material-icons env-icon-label">
+							{this.getMaterialIcon("")}
+						</span>
+					</div>
+					<div className="env-product-slide-wrapper">
+						<div className="product-slide-name">
+							Nom
+						</div>
+						<div className="product-ecoscore">
+							Ecoscore :{" "}
+							1
+						</div>
+
+						<div className="env-history-label-container">
+							<span
+								className="packaging-label-color"
+								style={{
+									color: this.getColor(
+										0
+									),
+								}}
+							>
+							</span>
+						</div>
+					</div>
+				</div>
+			</SwiperSlide>
+		);
+		
+	};
+
 	render = () => {
 		return (
 			<React.Fragment>
@@ -172,6 +209,17 @@ class Environnement extends React.Component {
 						<div className="test">Slide 3</div>
 					</SwiperSlide>
 				</Swiper> */}
+				<span className="title-part-environnement">
+					Alternatives
+				</span>
+				<Swiper
+					spaceBetween={10}
+					slidesPerView={1}
+					centeredSlides={true}
+					onSlideChange={(i) => this.onSlideChange(i.activeIndex)}
+					onSwiper={(swiper) => this.setState({ swiper: swiper })}
+				>
+				</Swiper>
 			</React.Fragment>
 		);
 	};
