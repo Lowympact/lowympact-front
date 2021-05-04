@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../components/Navbar/Navbar";
 import Traceability from "../components/Traceability/Traceability";
 import Environnement from "../components/Environnement/Environnement";
+import Labels from "../components/Labels/Labels";
 import "./Product.css";
 import { Link } from "react-router-dom";
 import jwt from "jsonwebtoken";
@@ -391,6 +392,7 @@ class Product extends React.Component {
 						barcode={this.props.match.params.barcode}
 						bcProductId={this.props.match.params.bcProductId}
 					/>
+					<Labels dataEcoScore={this.state.dataEcoScore}></Labels>
 				</div>
 			</React.Fragment>
 		);
