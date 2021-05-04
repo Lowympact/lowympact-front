@@ -7,64 +7,64 @@ import "./Labels.css";
 class Labels extends React.Component {
 
   displaySpecies = () => {
-    if(this.props.dataEcoScore?.adjustments?.threatened_species?.length === 0){
+    if(!this.props.dataEcoScore?.adjustments?.threatened_species?.ingredient){
         return(<div></div>);
     }
     else{
         if(this.props.dataEcoScore?.adjustments?.threatened_species?.value < 0){
             return(
-            <SwiperSlide>
+            <div>
                 <div className="labels-container-bad">
                     <span class="material-icons">
                         warning_amber
                     </span>
                     {this.props.dataEcoScore?.adjustments?.threatened_species?.ingredient}
                 </div>
-            </SwiperSlide>
+            </div>
             );
         }
         else{
             return(
-            <SwiperSlide>
+            <div>
                 <div className="labels-container-good">
                     <span class="material-icons">
                         task_alt
                     </span>
                     {this.props.dataEcoScore?.adjustments?.threatened_species?.ingredient}
                 </div>
-            </SwiperSlide>
+            </div>
             );
         }
     }
   }
 
   displayProduction = () => {
-    if(this.props.dataEcoScore?.adjustments?.production_system?.warning === "no_label"){
+    if(!this.props.dataEcoScore?.adjustments?.production_system?.label){
         return(<div></div>);
     }
     else{
         if(this.props.dataEcoScore?.adjustments?.production_system?.value < 0){
             return(
-            <SwiperSlide>
+            <div>
                 <div className="labels-container-bad">
                     <span class="material-icons">
                         warning_amber
                     </span>
                     {this.props.dataEcoScore?.adjustments?.production_system?.label}
                 </div>
-            </SwiperSlide>
+            </div>
             );
         }
         else{
             return(
-            <SwiperSlide>
+            <div>
                 <div className="labels-container-good">
                     <span class="material-icons">
                         task_alt
                     </span>
                     {this.props.dataEcoScore?.adjustments?.production_system?.label}
                 </div>
-            </SwiperSlide>
+            </div>
             );
         }
     }
