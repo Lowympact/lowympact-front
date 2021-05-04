@@ -71,8 +71,8 @@ class History extends Component {
 
 	loadHistoryInformations = (userId) => {
 		fetch(
-			`https://api.lowympact.fr/api/v1/users/history/${userId}`,
-			// `http://localhost:8080/api/v1/users/history/${userId}`,
+			`https://api.lowympact.fr/api/v1/users/${userId}/history`,
+			// `http://localhost:8080/api/v1/users/${userId}/history`,
 
 			{
 				method: "get",
