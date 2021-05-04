@@ -208,9 +208,8 @@
 	padding-bottom: 20px;
 }
 .product-transport-impact-logo {
-	margin-left: 6vw;
+	margin-left: 10vw;
 	margin-top: 2vw;
-	/* background-color: #78be95; */
 }
 
 .product-transport-impact-color-label {
@@ -442,7 +441,6 @@
 .product-co2-impact-logo {
 	margin-left: 28%;
 	margin-top: 2vw;
-	background-color: #78be95;
 }
 
 .product-co2-impact-color-label {

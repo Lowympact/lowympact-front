@@ -38,10 +38,18 @@ class Environnement extends React.Component {
 		swiper: undefined,
 		currentIndex: 0,
 		width: undefined,
+		showTransport: false,
 	};
 
 	getMaterialIcon = (mode) => {
 		switch (mode) {
+			case "Transformation":
+				return "transform";
+
+			case "Consommation":
+				return "microwave";
+			case "Distribution":
+				return "store";
 			case "Recyclable":
 				return "check_circle_outline";
 			case "Non recyclable":
@@ -50,6 +58,10 @@ class Environnement extends React.Component {
 				return "local_shipping";
 			case "Packaging":
 				return "inventory_2";
+			case "Agriculture":
+				return "agriculture";
+			case "Transport":
+				return "local_shipping";
 			default:
 				return "view_in_ar";
 		}
@@ -113,10 +125,6 @@ class Environnement extends React.Component {
 			return "red";
 		}
 		return "yellow";
-	};
-
-	handleShowTransport = () => {
-		this.setState({ showTransport: !this.state.showTransport });
 	};
 
 	displaySlides = () => {
@@ -216,7 +224,7 @@ class Environnement extends React.Component {
 				<div className="product-co2-impact-header">
 					<div className="product-co2-impact-logo">
 						<div className="material-icons icon-label-co2-impact">
-							{this.getMaterialIcon("Truck")}
+							{this.getMaterialIcon(type)}
 						</div>
 					</div>
 					<div className="product-co2-impact-title">
@@ -305,7 +313,7 @@ class Environnement extends React.Component {
 				this.props.dataEcoScore?.agribalyse?.co2_processing /
 					this.props.dataEcoScore?.agribalyse?.co2_total,
 				this.props.dataEcoScore?.agribalyse?.co2_processing,
-				"Processing"
+				"Transformation"
 			);
 		}
 
@@ -321,6 +329,10 @@ class Environnement extends React.Component {
 		);
 
 		return res;
+	};
+
+	handleShowTransport = () => {
+		this.setState({ showTransport: !this.state.showTransport });
 	};
 
 	displayTransportImpact = () => {
@@ -579,6 +591,18 @@ class Environnement extends React.Component {
 	render = () => {
 		return (
 			<React.Fragment>
+				<span className="title-part-environnement">
+					Impact de l'emballage
+				</span>
+				<Swiper
+					spaceBetween={10}
+					slidesPerView={1}
+					centeredSlides={true}
+					onSlideChange={(i) => this.onSlideChange(i.activeIndex)}
+					onSwiper={(swiper) => this.setState({ swiper: swiper })}
+				>
+					{this.displaySlides()}
+				</Swiper>
 				{this.displayTransportImpact()}
 				{this.displayRepartitionAllItems()}
 
@@ -591,18 +615,6 @@ class Environnement extends React.Component {
 					onSwiper={(swiper) => this.setState({ swiper: swiper })}
 				>
 					{this.alternativesloop()}
-				</Swiper>
-				<span className="title-part-environnement">
-					Impact de l'emballage
-				</span>
-				<Swiper
-					spaceBetween={10}
-					slidesPerView={1}
-					centeredSlides={true}
-					onSlideChange={(i) => this.onSlideChange(i.activeIndex)}
-					onSwiper={(swiper) => this.setState({ swiper: swiper })}
-				>
-					{this.displaySlides()}
 				</Swiper>
 			</React.Fragment>
 		);
