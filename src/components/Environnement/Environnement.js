@@ -4,6 +4,33 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/swiper-bundle.css";
 import { CircleProgress } from "react-gradient-progress";
+import { PRODUCTS } from "../../assets/alternatives/alternatives";
+import nutella from '../../assets/images/nutella.png';
+
+function RenderColor ({item}) {
+  var labelColor;
+  var labelLevel;
+	if (item.ecoscore_score <= 33) {
+		labelColor = "red";
+    labelLevel = "Mauvais";
+	} else if (item.ecoscore_score > 33 && item.ecoscore_score < 67) {
+		labelColor = "yellow";
+    labelLevel = "Moyen";
+	} else {
+		labelColor = "green";
+    labelLevel = "Bonne";
+	}
+  return(
+    <div className="product-alternative-label-position">
+      <div className="product-alternative-label">
+        <div style={{ color: labelColor }}>●</div>
+			  <div className="product-alternative-label-text">{item.ecoscore_score}/100</div>
+      </div>
+      <div className="product-alternative-label-level ">{labelLevel}</div>
+    </div>
+    
+  );
+}
 
 class Environnement extends React.Component {
   state = {
@@ -268,41 +295,26 @@ class Environnement extends React.Component {
     this.setState({ currentIndex: index });
   };
 
-  displayAlternatives = () => {
-    let slides = <React.Fragment></React.Fragment>;
-    return (
-        <SwiperSlide>
-            <div className="env-product-slide-container ">
-                <div className="env-product-slide-icon">
-                    <span class="material-icons env-icon-label">
-                        {this.getMaterialIcon("")}
-                    </span>
-                </div>
-                <div className="env-product-slide-wrapper">
-                    <div className="product-slide-name">
-                        Nom
-                    </div>
-                    <div className="product-ecoscore">
-                        Ecoscore :{" "}
-                        1
-                    </div>
-
-                    <div className="env-history-label-container">
-                        <span
-                            className="packaging-label-color"
-                            style={{
-                                color: this.getColor(
-                                    0
-                                ),
-                            }}
-                        >
-                        </span>
-                    </div>
-                </div>
+  alternativesloop = () => {   
+      const alternativesList = PRODUCTS.map((item) => {
+        return (
+          <SwiperSlide className="product">
+            <div>
+					    <img src={nutella} className="product-alternative-image" alt="" />
+				    </div>
+            <div className="product-alternative-text">
+              <label className="product-alternative-title">
+                {item.name}
+              </label>
+              <label className="product-alternative-brand">
+                {item.brand}
+              </label>
+              <RenderColor item={item} />
             </div>
-        </SwiperSlide>
-    );
-    
+          </SwiperSlide>
+        );
+      });
+      return alternativesList;
 };
 
   render = () => {
@@ -330,6 +342,7 @@ class Environnement extends React.Component {
                     onSlideChange={(i) => this.onSlideChange(i.activeIndex)}
                     onSwiper={(swiper) => this.setState({ swiper: swiper })}
                 >
+                  {this.alternativesloop()}
                 </Swiper>
         </React.Fragment>
     );
