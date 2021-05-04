@@ -39,6 +39,7 @@ class Environnement extends React.Component {
 		swiper: undefined,
 		currentIndex: 0,
 		width: undefined,
+		showTransport: false,
 	};
 
 	getMaterialIcon = (mode) => {
@@ -207,6 +208,10 @@ class Environnement extends React.Component {
 		this.setState({ width: window.innerWidth });
 	};
 
+	handleShowTransport = () => {
+		this.setState({ showTransport: !this.state.showTransport });
+	};
+
 	displayTransportImpact = () => {
 		let res = <React.Fragment></React.Fragment>;
 
@@ -255,7 +260,7 @@ class Environnement extends React.Component {
 		if (agribalyse_CO2 > 0) {
 			co2_impact_html = (
 				<div className="product-transport-impact-content-details-text">
-					{agribalyse_CO2.toFixed(3)}kg C02 eq/kg produit
+					{">"} {agribalyse_CO2.toFixed(3)}kg C02 eq/kg produit
 				</div>
 			);
 		}
@@ -263,7 +268,7 @@ class Environnement extends React.Component {
 		if (transportation_score > 0) {
 			transportation_score_html = (
 				<div className="product-transport-impact-content-details-score">
-					Impact du transport des ingrédients en France :
+					{">"} Impact du transport des ingrédients en France :
 					<span
 						style={{
 							color: this.getColorImpact(
@@ -282,8 +287,12 @@ class Environnement extends React.Component {
 			transport_final_indicator = Math.round(
 				transport_final_indicator * 100
 			);
+
 			return (
-				<div className="product-transport-impact-container">
+				<div
+					className="product-transport-impact-container"
+					onClick={this.handleShowTransport}
+				>
 					<div className="product-transport-impact-header">
 						<div className="product-transport-impact-logo">
 							<div className="material-icons icon-label-transport-impact">
@@ -309,23 +318,33 @@ class Environnement extends React.Component {
 							●
 						</div>
 					</div>
-					<div className="product-transport-impact-content">
-						<div className="product-transport-impact-content-text">
-							Impact total transport en % :
+					<div
+						className={
+							this.state.showTransport
+								? "animation-appear"
+								: "animation-disappear"
+						}
+					>
+						<div className="product-transport-impact-content">
+							<div className="product-transport-impact-content-text">
+								Impact total transport en % :
+							</div>
+							<div className="product-transport-impact-content-progress">
+								<CircleProgress
+									percentage={transport_final_indicator}
+									strokeWidth={
+										window.innerWidth * (1.0 / 50.0)
+									}
+									width={window.innerWidth * (1.0 / 4.0)}
+									fontSize={window.innerWidth * (1.0 / 20.0)}
+									primaryColor={["#FF3333", "#33FF63"]}
+								/>
+							</div>
 						</div>
-						<div className="product-transport-impact-content-progress">
-							<CircleProgress
-								percentage={transport_final_indicator}
-								strokeWidth={window.innerWidth * (1.0 / 50.0)}
-								width={window.innerWidth * (1.0 / 4.0)}
-								fontSize={window.innerWidth * (1.0 / 20.0)}
-								primaryColor={["#FF3333", "#33FF63"]}
-							/>
+						<div className="product-transport-impact-content-details">
+							{co2_impact_html}
+							{transportation_score_html}
 						</div>
-					</div>
-					<div className="product-transport-impact-content-details">
-						{co2_impact_html}
-						{transportation_score_html}
 					</div>
 				</div>
 			);
