@@ -1,514 +1,517 @@
 .leaflet-tile-container img {
-	filter: invert(100%) contrast(10%) brightness(200%) !important;
+    filter: invert(100%) contrast(10%) brightness(200%) !important;
 }
 
 .leaflet-container {
-	width: 100vw !important;
-	height: 400px !important;
-	background-color: white;
+    width: 100vw !important;
+    height: 400px !important;
+    background-color: white;
 }
 
 .leaflet-control-attribution {
-	display: none;
+    display: none;
 }
 
 .slider-container {
-	margin-top: 50px;
+    margin-top: 50px;
 }
 
 .swiper-container {
-	margin-top: 0px;
+    margin-top: 0px;
 }
 
 .env-product-slide-container {
-	height: 180px;
-	width: 100vw;
+    height: 180px;
+    width: 100vw;
 
-	margin-top: 10px;
-	/* margin-left: 10vw; */
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	border-radius: 30px;
-	box-shadow: 0px 0px 17px -10px rgb(0 0 0 / 80%);
+    margin-top: 10px;
+    /* margin-left: 10vw; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+    box-shadow: 0px 0px 17px -10px rgb(0 0 0 / 80%);
 }
 
 .swiper-wrapper {
-	height: 250px !important;
+    height: 250px !important;
 }
 
 .env-product-slide-icon {
-	width: 60px;
-	height: 60px;
-	display: flex;
-	position: absolute;
-	left: 6%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    position: absolute;
+    left: 6%;
 }
 
 .product-slide-icon .env-material-icons {
-	font-size: 60px;
+    font-size: 60px;
 }
 .icon-label-recyclable {
-	position: relative;
-	top: 5px;
+    position: relative;
+    top: 5px;
 }
 
 .env-product-slide-wrapper {
-	width: 90%;
-	height: 100px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: space-between;
-	background-image: url("../../assets/images/bitmap.png");
-	background-position: 265px 30px;
+    width: 90%;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-image: url("../../assets/images/bitmap.png");
+    background-position: 265px 30px;
 }
 .env-icon-label {
-	font-size: 5vw;
-	margin-top: 4vw;
+    font-size: 5vw;
+    margin-top: 4vw;
 }
 
 .product-slide-name {
-	font-size: 2vw;
-	margin-top: 4vw;
+    font-size: 2vw;
+    margin-top: 4vw;
 }
 
 .product-slide-recyclable {
-	bottom: 80px;
-	position: relative;
-	margin-bottom: 100px;
+    bottom: 80px;
+    position: relative;
+    margin-bottom: 100px;
 }
 
 .product-slide-lowername {
-	font-size: 12px;
-	color: grey;
-	margin-left: 5px;
-	margin-top: 5px;
+    font-size: 12px;
+    color: grey;
+    margin-left: 5px;
+    margin-top: 5px;
 }
 
 .product-slide-part {
-	width: 40%;
-	height: 100%;
+    width: 40%;
+    height: 100%;
 }
 
 .product-slide-place {
-	display: flex;
-	flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .product-slide-middle {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	height: 100%;
-	width: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 20%;
 }
 
 .product-slide-place-name {
-	margin-top: 15px;
-	color: black;
-	font-size: 13px;
+    margin-top: 15px;
+    color: black;
+    font-size: 13px;
 }
 
 .product-slide-brand-name {
-	font-size: 10px;
-	margin-top: 30px;
-	color: grey;
+    font-size: 10px;
+    margin-top: 30px;
+    color: grey;
 }
 .product-ecoscore {
-	font-size: 2vw;
-	font-weight: 900;
-	color: black;
+    font-size: 2vw;
+    font-weight: 900;
+    color: black;
 
-	text-align: center;
+    text-align: center;
 }
 .env-product-ecoscore {
-	position: relative;
-	font-size: 20px;
-	font-weight: 900;
-	color: black;
-	bottom: 0px;
+    position: relative;
+    font-size: 20px;
+    font-weight: 900;
+    color: black;
+    bottom: 0px;
 }
 .swiper-slide {
-	/* margin-left: 50px; */
+    /* margin-left: 50px; */
 }
 .test {
-	background-color: red;
-	width: 100vw;
+    background-color: red;
+    width: 100vw;
 }
 
 .product-bottom-container .swiper-slide {
-	margin-left: 0px;
+    margin-left: 0px;
 }
 
 .text-left {
-	text-align: left;
+    text-align: left;
 }
 .text-right {
-	text-align: right;
+    text-align: right;
 }
 
 .product-place-city,
 .product-place-country {
-	white-space: nowrap;
-	width: 90%;
-	overflow: hidden;
-	text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .env-history-label-container {
-	display: flex;
-	flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 
 .env-history-label {
-	color: grey;
-	font-size: smaller;
-	text-align: center;
-	position: relative;
-	bottom: 10vw;
+    color: grey;
+    font-size: smaller;
+    text-align: center;
+    position: relative;
+    bottom: 10vw;
 }
 .packaging-label-color {
-	position: relative;
-	font-size: 50px;
-	font-weight: 900;
-	bottom: 7vw;
-	margin: auto;
+    position: relative;
+    font-size: 50px;
+    font-weight: 900;
+    bottom: 7vw;
+    margin: auto;
 }
 
 .product-bitmap-image-packaging {
-	width: 50px;
-	position: absolute;
-	transform: rotate(305deg);
+    width: 50px;
+    position: absolute;
+    transform: rotate(305deg);
 }
 
 .title-part-environnement {
-	margin-top: 50px;
-	font-size: 20px;
-	font-weight: 900;
+    margin-top: 50px;
+    font-size: 20px;
+    font-weight: 900;
 }
 
 .product-transport-impact-container {
-	width: 80vw;
-	/* height: 60vw; */
-	border-radius: 30px;
-	/* border: 2px solid grey; */
-	margin-bottom: 15vw;
-	-webkit-box-shadow: 0px 0px 20px -10px rgba(0, 0, 0, 0.8);
-	-moz-box-shadow: 0px 0px 20px -10px rgba(0, 0, 0, 0.8);
-	box-shadow: 0px 0px 20px -10px rgba(0, 0, 0, 0.8);
+    width: 80vw;
+    /* height: 60vw; */
+    border-radius: 30px;
+    /* border: 2px solid grey; */
+    margin-bottom: 15vw;
+    -webkit-box-shadow: 0px 0px 20px -10px rgba(0, 0, 0, 0.8);
+    -moz-box-shadow: 0px 0px 20px -10px rgba(0, 0, 0, 0.8);
+    box-shadow: 0px 0px 20px -10px rgba(0, 0, 0, 0.8);
 }
 .product-transport-impact-header {
-	position: relative;
-	width: 100%;
-	height: 30%;
-	display: flex;
-	padding-top: 20px;
-	padding-bottom: 20px;
+    position: relative;
+    width: 100%;
+    height: 30%;
+    display: flex;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 .product-transport-impact-logo {
-	margin-left: 10vw;
-	margin-top: 2vw;
+    margin-left: 10vw;
+    margin-top: 2vw;
 }
 
 .product-transport-impact-color-label {
-	font-size: 15vw;
-	font-weight: 900;
-	border-radius: 70px;
-	right: 5%;
-	bottom: 3vw;
-	position: relative;
+    font-size: 15vw;
+    font-weight: 900;
+    border-radius: 70px;
+    right: 5%;
+    bottom: 3vw;
+    position: relative;
 }
 
 .icon-label-transport-impact {
-	font-size: 15vw;
+    font-size: 15vw;
 }
 .product-transport-impact-title {
-	width: 70vw;
-	margin-top: 5vw;
-	margin-left: 5vw;
+    width: 70vw;
+    margin-top: 5vw;
+    margin-left: 5vw;
 }
 
 .product-transport-impact-title-text {
-	font-size: 3vw;
-	font-weight: 900;
+    font-size: 3vw;
+    font-weight: 900;
 }
 .product-transport-impact-title-label {
-	color: grey;
-	font-size: 2.5vw;
+    color: grey;
+    font-size: 2.5vw;
 }
 
 .product-transport-impact-content {
-	width: 100%;
-	/* height: 40%; */
-	display: flex;
+    width: 100%;
+    /* height: 40%; */
+    display: flex;
 }
 
 .product-transport-impact-content-text {
-	margin-left: 8vw;
-	margin-top: auto;
-	margin-bottom: auto;
-	color: grey;
-	font-size: 4vw;
-	font-weight: 900;
+    margin-left: 8vw;
+    margin-top: auto;
+    margin-bottom: auto;
+    color: grey;
+    font-size: 4vw;
+    font-weight: 900;
 }
 .product-transport-impact-content-progress {
-	margin-top: auto;
-	margin-bottom: auto;
-	width: 40vw;
-	margin-left: 2vw;
-	margin-top: 0px;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 40vw;
+    margin-left: 2vw;
+    margin-top: 0px;
 }
 
 .product-transport-impact-content-details {
-	display: flex;
-	height: 30%;
-	flex-direction: column;
-	margin-left: 4vw;
+    display: flex;
+    height: 30%;
+    flex-direction: column;
+    margin-left: 4vw;
 }
 .product-transport-impact-content-details-text {
-	font-size: 3vw;
-	/* font-weight: 900; */
-	margin-left: 5%;
-	color: grey;
-	margin-top: auto;
-	margin-bottom: auto;
+    font-size: 3vw;
+    /* font-weight: 900; */
+    margin-left: 5%;
+    color: grey;
+    margin-top: 10vw;
+    margin-bottom: auto;
 }
 
 .product-transport-impact-content-details-score {
-	font-size: 3vw;
-	/* font-weight: 900; */
-	color: grey;
-	margin-right: 5%;
-	margin-left: 5%;
-	margin-top: 10px;
-	margin-bottom: 20px;
+    font-size: 3vw;
+    /* font-weight: 900; */
+    color: grey;
+    margin-right: 5%;
+    margin-left: 5%;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .product-alternative {
-	top: 10px;
-	display: flex;
-	flex-direction: row;
-	border-radius: 30px;
-	box-shadow: 0px 0px 17px -10px rgb(0 0 0 / 80%);
-	height: 120px;
-	width: 80vw;
-	align-items: center;
+    top: 10px;
+    display: flex;
+    flex-direction: row;
+    border-radius: 30px;
+    box-shadow: 0px 0px 17px -10px rgb(0 0 0 / 80%);
+    height: 120px;
+    width: 80vw;
+    align-items: center;
 }
 
 .product-alternative-title {
-	font-size: 12pt;
-	margin-top: 5px;
-	margin-bottom: 5px;
+    font-size: 12pt;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .product-alternative-brand {
-	font-size: 10pt;
-	margin-bottom: 12px;
-	color: grey;
+    font-size: 10pt;
+    margin-bottom: 12px;
+    color: grey;
 }
 
 .product-alternative-image {
-	height: 100px;
-	width: 100px;
+    height: 100px;
+    width: 100px;
 }
 
 .product-alternative-text {
-	display: flex;
-	margin-left: 20px;
-	flex-direction: column;
+    display: flex;
+    margin-left: 20px;
+    flex-direction: column;
 }
 
 .product-alternative-label-text {
-	display: flex;
-	font-size: small;
-	text-transform: capitalize;
-	margin-left: 5px;
-	font-weight: bold;
+    display: flex;
+    font-size: small;
+    text-transform: capitalize;
+    margin-left: 5px;
+    font-weight: bold;
 }
 
 .product-alternative-label {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .product-alternative-label-level {
-	font-size: small;
-	margin-left: 15px;
+    font-size: small;
+    margin-left: 15px;
 }
 
 .product-alternative-label-position {
-	margin-left: 30px;
+    margin-left: 30px;
 }
 
 .product-packaging-impact-container {
-	width: 80vw;
-	height: 70vw;
-	border-radius: 30px;
-	border: 2px solid grey;
-	margin-top: 5vw;
-	margin-bottom: 5vw;
-	display: flex;
-	flex-direction: column;
+    width: 80vw;
+    height: 70vw;
+    border-radius: 30px;
+    border: 2px solid grey;
+    margin-top: 5vw;
+    margin-bottom: 5vw;
+    display: flex;
+    flex-direction: column;
 }
 
 .product-packaging-impact-logo {
-	margin: auto;
-	background-color: #78be95;
-	margin-left: 5vw;
+    margin: auto;
+    background-color: #78be95;
+    margin-left: 5vw;
 }
 
 .product-packaging-impact-color-label {
-	font-size: 15vw;
-	font-weight: 900;
-	border-radius: 70px;
-	left: 0;
-	bottom: 3vw;
-	position: relative;
-	margin: auto;
+    font-size: 15vw;
+    font-weight: 900;
+    border-radius: 70px;
+    left: 0;
+    bottom: 3vw;
+    position: relative;
+    margin: auto;
 }
 
 .product-packaging-impact-title {
-	width: 40vw;
-	margin-top: auto;
-	margin-bottom: auto;
-	margin-left: 5vw;
+    width: 40vw;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 5vw;
 }
 
 .product-packaging-impact-title-text {
-	font-size: 3.5vw;
-	font-weight: 900;
+    font-size: 3.5vw;
+    font-weight: 900;
 }
 .product-packaging-impact-title-label {
-	color: grey;
-	font-size: 3vw;
+    color: grey;
+    font-size: 3vw;
 }
 .product-packaging-impact-header {
-	margin-top: 2vw;
-	position: relative;
-	width: 100%;
-	height: 70%;
-	display: flex;
+    margin-top: 2vw;
+    position: relative;
+    width: 100%;
+    height: 70%;
+    display: flex;
 }
 .product-transport-impact-content-details-item {
-	margin-left: 5vw;
-	width: 20%;
+    margin-left: 5vw;
+    width: 20%;
 }
 
 .animation-appear {
-	animation: appearBottom 0.5s ease-in-out;
-	overflow: hidden;
+    animation: appearBottom 0.5s ease-in-out;
+    overflow: hidden;
 }
 
 .animation-disappear {
-	animation: disappearBottom 0.5s ease-in-out;
-	overflow: hidden;
-	height: 0px;
+    animation: disappearBottom 0.5s ease-in-out;
+    overflow: hidden;
+    height: 0px;
 }
 
 @keyframes appearBottom {
-	from {
-		height: 0px;
-	}
-	to {
-		height: 233px;
-	}
+    from {
+        height: 0px;
+    }
+    to {
+        height: 233px;
+    }
 }
 @keyframes disappearBottom {
-	from {
-		height: 233px;
-	}
-	to {
-		height: 0px;
-	}
+    from {
+        height: 233px;
+    }
+    to {
+        height: 0px;
+    }
 }
 
 .product-co2-impact-container {
-	width: 80vw;
-	height: 30vw;
-	border-radius: 30px;
-	border: 2px solid grey;
-	margin-bottom: 15vw;
+    width: 80vw;
+    height: 30vw;
+    border-radius: 30px;
+    /* border: 2px solid grey; */
+    margin-bottom: 5vw;
+    -webkit-box-shadow: 0px 0px 20px -10px rgba(0, 0, 0, 0.8);
+    -moz-box-shadow: 0px 0px 20px -10px rgba(0, 0, 0, 0.8);
+    box-shadow: 0px 0px 20px -10px rgba(0, 0, 0, 0.8);
 }
 .product-co2-impact-header {
-	position: relative;
-	width: 100%;
-	height: 30%;
-	display: flex;
+    position: relative;
+    width: 100%;
+    height: 30%;
+    display: flex;
 }
 .product-co2-impact-logo {
-	margin-left: 28%;
-	margin-top: 2vw;
+    margin-left: 8%;
+    margin-top: 3vw;
 }
 
 .product-co2-impact-color-label {
-	font-size: 15vw;
-	font-weight: 900;
-	border-radius: 70px;
-	right: 15%;
-	bottom: 3vw;
-	position: relative;
+    font-size: 15vw;
+    font-weight: 900;
+    border-radius: 70px;
+    right: 15%;
+    bottom: 3vw;
+    position: relative;
 }
 
 .icon-label-co2-impact {
-	font-size: 10vw;
+    font-size: 10vw;
 }
 .product-co2-impact-title {
-	width: 70vw;
-	margin-top: 5vw;
-	margin-left: 5vw;
+    width: 70vw;
+    margin-top: 5vw;
+    margin-left: 5vw;
 }
 
 .product-co2-impact-title-text {
-	font-size: 3vw;
-	font-weight: 900;
+    font-size: 3vw;
+    font-weight: 900;
 }
 .product-co2-impact-title-label {
-	color: grey;
-	font-size: 2.5vw;
+    color: grey;
+    font-size: 2.5vw;
 }
 
 .product-co2-impact-content {
-	width: 100%;
-	height: 70%;
-	display: flex;
+    width: 100%;
+    height: 70%;
+    display: flex;
 }
 
 .product-co2-impact-content-text {
-	margin-left: 8vw;
-	margin-top: auto;
-	margin-bottom: auto;
-	color: grey;
-	font-size: 3vw;
-	font-weight: 900;
+    margin-left: 8vw;
+    margin-top: auto;
+    margin-bottom: auto;
+    color: grey;
+    font-size: 3vw;
+    font-weight: 900;
 }
 .product-co2-impact-content-progress {
-	margin-top: auto;
-	margin-bottom: auto;
-	width: 40vw;
-	margin-left: 2vw;
-	margin-top: 2vw;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 40vw;
+    margin-left: 25vw;
+    /* margin-top: 2vw; */
 }
 
 .product-co2-impact-content-details {
-	display: flex;
-	height: 30%;
+    display: flex;
+    height: 30%;
 }
 .product-co2-impact-content-details-text {
-	font-size: 3vw;
-	font-weight: 900;
-	margin-left: 5%;
-	margin-top: auto;
-	margin-bottom: auto;
+    font-size: 3vw;
+    font-weight: 900;
+    margin-left: 5%;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .product-co2-impact-content-details-score {
-	font-size: 3vw;
-	font-weight: 900;
-	margin-right: 5%;
-	margin-left: 5%;
-	margin-top: auto;
-	margin-bottom: auto;
+    font-size: 3vw;
+    font-weight: 900;
+    margin-right: 5%;
+    margin-left: 5%;
+    margin-top: auto;
+    margin-bottom: auto;
 }

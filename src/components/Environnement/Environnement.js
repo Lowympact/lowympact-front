@@ -591,7 +591,32 @@ class Environnement extends React.Component {
     render = () => {
         return (
             <React.Fragment>
-                <span className="title-part-environnement">
+                {this.displayTransportImpact()}
+                {this.displayRepartitionAllItems()}
+
+                {this.props.ecoScore ? (
+                    <React.Fragment>
+                        <span className="title-part-environnement">
+                            Alternatives
+                        </span>
+                        <Swiper
+                            spaceBetween={10}
+                            slidesPerView={1}
+                            centeredSlides={true}
+                            onSlideChange={(i) =>
+                                this.onSlideChange(i.activeIndex)
+                            }
+                            onSwiper={(swiper) =>
+                                this.setState({ swiper: swiper })
+                            }
+                        >
+                            {this.alternativesloop()}
+                        </Swiper>{" "}
+                    </React.Fragment>
+                ) : (
+                    <p>Pas encore de données pour ce produit</p>
+                )}
+                {/* <span className="title-part-environnement">
                     Impact de l'emballage
                 </span>
                 <Swiper
@@ -602,20 +627,7 @@ class Environnement extends React.Component {
                     onSwiper={(swiper) => this.setState({ swiper: swiper })}
                 >
                     {this.displaySlides()}
-                </Swiper>
-                {this.displayTransportImpact()}
-                {this.displayRepartitionAllItems()}
-
-                <span className="title-part-environnement">Alternatives</span>
-                <Swiper
-                    spaceBetween={10}
-                    slidesPerView={1}
-                    centeredSlides={true}
-                    onSlideChange={(i) => this.onSlideChange(i.activeIndex)}
-                    onSwiper={(swiper) => this.setState({ swiper: swiper })}
-                >
-                    {this.alternativesloop()}
-                </Swiper>
+                </Swiper> */}
             </React.Fragment>
         );
     };
