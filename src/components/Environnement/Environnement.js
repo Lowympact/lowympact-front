@@ -87,43 +87,45 @@ class Environnement extends React.Component {
           }
 
           return (
-            <SwiperSlide>
-              <div className="env-product-slide-container ">
-                <div className="env-product-slide-icon">
-                  <span class="material-icons env-icon-label">
-                    {this.getMaterialIcon("")}
-                  </span>
-                </div>
-                <div className="env-product-slide-wrapper">
-                  <div className="product-slide-name">
-                    {data?.material.split(":")[1]}
-                  </div>
-                  <div className="product-ecoscore">
-                    Ecoscore : {data?.ecoscore_material_score}
-                  </div>
-
-                  <div className="env-history-label-container">
-                    <span
-                      className="packaging-label-color"
-                      style={{
-                        color: this.getColor(data?.ecoscore_material_score),
-                      }}
-                    >
-                      ●
+            <div>
+              <SwiperSlide>
+                <div className="env-product-slide-container ">
+                  <div className="env-product-slide-icon">
+                    <span class="material-icons env-icon-label">
+                      {this.getMaterialIcon("")}
                     </span>
-                    <div className="env-history-label">
-                      {this.getLabel(data?.ecoscore_material_score)}
-                    </div>
                   </div>
-                  <div className="product-slide-recyclable">
-                    {recyclable}
-                    <div className="material-icons icon-label-recyclable">
-                      {this.getMaterialIcon(recyclable)}
+                  <div className="env-product-slide-wrapper">
+                    <div className="product-slide-name">
+                      {data?.material.split(":")[1]}
+                    </div>
+                    <div className="product-ecoscore">
+                      Ecoscore : {data?.ecoscore_material_score}
+                    </div>
+
+                    <div className="env-history-label-container">
+                      <span
+                        className="packaging-label-color"
+                        style={{
+                          color: this.getColor(data?.ecoscore_material_score),
+                        }}
+                      >
+                        ●
+                      </span>
+                      <div className="env-history-label">
+                        {this.getLabel(data?.ecoscore_material_score)}
+                      </div>
+                    </div>
+                    <div className="product-slide-recyclable">
+                      {recyclable}
+                      <div className="material-icons icon-label-recyclable">
+                        {this.getMaterialIcon(recyclable)}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </SwiperSlide>
+              </SwiperSlide>
+            </div>
           );
         }
       );
@@ -271,7 +273,6 @@ class Environnement extends React.Component {
             </div>
         </SwiperSlide>
     );
-    
 };
 
   render = () => {
@@ -289,18 +290,19 @@ class Environnement extends React.Component {
         </Swiper>
         {this.displayTransportImpact()}
 
-        <span className="title-part-environnement">
+        {/* <span className="title-part-environnement">
                     Alternatives
-                </span>
-                <Swiper
-                    spaceBetween={10}
-                    slidesPerView={1}
-                    centeredSlides={true}
-                    onSlideChange={(i) => this.onSlideChange(i.activeIndex)}
-                    onSwiper={(swiper) => this.setState({ swiper: swiper })}
-                >
-                </Swiper>
-        </React.Fragment>
+        </span>
+        <Swiper
+            spaceBetween={10}
+            slidesPerView={1}
+            centeredSlides={true}
+            onSlideChange={(i) => this.onSlideChange(i.activeIndex)}
+            onSwiper={(swiper) => this.setState({ swiper: swiper })}
+        >
+          {this.displayAlternatives()}
+        </Swiper> */}
+      </React.Fragment>
     );
   };
 }
