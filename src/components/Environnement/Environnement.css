@@ -193,10 +193,10 @@
 
 .product-transport-impact-container {
   width: 80vw;
-  height: 40vw;
+  height: 60vw;
   border-radius: 30px;
   border: 2px solid grey;
-  margin-bottom: 5vw;
+  margin-bottom: 15vw;
 }
 .product-transport-impact-header {
   position: relative;
@@ -239,7 +239,7 @@
 
 .product-transport-impact-content {
   width: 100%;
-  height: 70%;
+  height: 40%;
   display: flex;
 }
 
@@ -257,4 +257,25 @@
   width: 40vw;
   margin-left: 2vw;
   margin-top: 20px;
+}
+
+.product-transport-impact-content-details {
+  display: flex;
+  height: 30%;
+}
+.product-transport-impact-content-details-text {
+  font-size: 3vw;
+  font-weight: 900;
+  margin-left: 5%;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.product-transport-impact-content-details-score {
+  font-size: 3vw;
+  font-weight: 900;
+  margin-right: 5%;
+  margin-left: 5%;
+  margin-top: auto;
+  margin-bottom: auto;
 }
