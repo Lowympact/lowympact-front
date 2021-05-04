@@ -185,6 +185,33 @@ class Environnement extends React.Component {
       }
     }
 
+    let co2_impact_html = <React.Fragment></React.Fragment>;
+    let transportation_score_html = <React.Fragment></React.Fragment>;
+
+    if (agribalyse_CO2 > 0) {
+      co2_impact_html = (
+        <div className="product-transport-impact-content-details-text">
+          {agribalyse_CO2.toFixed(3)}kg C02 eq/kg produit
+        </div>
+      );
+    }
+
+    if (transportation_score > 0) {
+      transportation_score_html = (
+        <div className="product-transport-impact-content-details-score">
+          Impact du transport des ingrédients en France :
+          <span
+            style={{
+              color: this.getColorImpact(100 - transportation_score * 100),
+            }}
+          >
+            {Math.round(transportation_score * 100)}
+          </span>
+          /100
+        </div>
+      );
+    }
+
     if (transport_final_indicator) {
       transport_final_indicator = Math.round(transport_final_indicator * 100);
       return (
@@ -214,7 +241,7 @@ class Environnement extends React.Component {
           </div>
           <div className="product-transport-impact-content">
             <div className="product-transport-impact-content-text">
-              Impact en % :
+              Impact total transport en % :
             </div>
             <div className="product-transport-impact-content-progress">
               <CircleProgress
@@ -225,6 +252,10 @@ class Environnement extends React.Component {
                 primaryColor={["#FF3333", "#33FF63"]}
               />
             </div>
+          </div>
+          <div className="product-transport-impact-content-details">
+            {co2_impact_html}
+            {transportation_score_html}
           </div>
         </div>
       );
