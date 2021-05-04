@@ -278,6 +278,63 @@
   margin-bottom: auto;
 }
 
+.product-alternative {
+  top: 10px;
+  display: flex;
+  flex-direction: row;
+  border-radius: 30px;
+  box-shadow: 0px 0px 17px -10px rgb(0 0 0 / 80%);
+  height: 120px;
+  width: 80vw;
+  align-items: center;
+}
+
+.product-alternative-title {
+  font-size: 12pt;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.product-alternative-brand {
+  font-size: 10pt;
+  margin-bottom: 12px;
+  color: grey;
+}
+
+.product-alternative-image {
+  height: 100px;
+  width: 100px;
+}
+
+.product-alternative-text {
+  display: flex;
+  margin-left: 20px;
+  flex-direction: column;
+}
+
+.product-alternative-label-text {
+  display: flex;
+  font-size: small;
+  text-transform: capitalize;
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+.product-alternative-label {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.product-alternative-label-level {
+  font-size: small;
+  margin-left: 15px;
+}
+
+.product-alternative-label-position {
+  margin-left: 30px;
+}
+
 .product-packaging-impact-container {
   width: 80vw;
   height: 70vw;

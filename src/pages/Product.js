@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../components/Navbar/Navbar";
 import Traceability from "../components/Traceability/Traceability";
 import Environnement from "../components/Environnement/Environnement";
+import Labels from "../components/Labels/Labels";
 import "./Product.css";
 import { Link } from "react-router-dom";
 import jwt from "jsonwebtoken";
@@ -100,7 +101,7 @@ class Product extends React.Component {
         let productName = res?.product?.product_name;
         let genericName = res?.product?.generic_name;
         let ecoScore = res?.product?.ecoscore_grade;
-
+        
         let dataEcoScore = res?.product?.ecoscore_data;
 
         if (res?.product) {
@@ -126,6 +127,7 @@ class Product extends React.Component {
         ) {
           this.setState({ ecoScore: ecoScore });
         }
+
         if (dataEcoScore) {
           this.setState({ dataEcoScore: dataEcoScore });
         }
@@ -362,6 +364,7 @@ class Product extends React.Component {
           {this.state.value === 0 ? (
             <Environnement
               dataEcoScore={this.state.dataEcoScore}
+              ecoScore={this.state.ecoScore}
             ></Environnement>
           ) : (
             <div className="product-bottom-container">
@@ -372,6 +375,8 @@ class Product extends React.Component {
             barcode={this.props.match.params.barcode}
             bcProductId={this.props.match.params.bcProductId}
           />
+          <Labels dataEcoScore={this.state.dataEcoScore}>
+          </Labels>
         </div>
       </React.Fragment>
     );
