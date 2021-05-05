@@ -122,7 +122,7 @@ class Signin extends Component {
                 </div>
 
                 <Link className="back-button" to="/login">
-                    {"< retour"}
+                    {"< Retour"}
                 </Link>
                 <div className="signin-container">
                     <form className="forms">

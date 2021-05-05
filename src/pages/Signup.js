@@ -106,7 +106,7 @@ class Signup extends Component {
                     <img src={fruits} className="logo" alt="Fruits" />
                 </div>
                 <Link className="back-button" to="/login">
-                    {"< retour"}
+                    {"< Retour"}
                 </Link>
                 <div className="signup-container">
                     <form className="forms">

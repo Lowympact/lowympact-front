@@ -152,7 +152,7 @@ class History extends Component {
             let image = (
                 <div>
                     <img src={fruits} className="logo" alt="Fruits" />
-                    <p className="logo-text">Commencer à scanner des produits!</p>
+                    <p className="logo-text">Commence à scanner des produits !</p>
                 </div>
             );
             if (this.state.loading) {
