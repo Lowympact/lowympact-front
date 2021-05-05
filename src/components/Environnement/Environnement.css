@@ -213,12 +213,17 @@
 }
 
 .product-transport-impact-color-label {
-    font-size: 15vw;
+    font-size: 50px;
     font-weight: 900;
     border-radius: 70px;
     right: 5%;
-    bottom: 3vw;
+    /* bottom: 3vw; */
     position: relative;
+}
+
+.product-alternative-fleche {
+    position: absolute;
+    right: 20px;
 }
 
 .icon-label-transport-impact {

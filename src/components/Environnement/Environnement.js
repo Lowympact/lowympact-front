@@ -573,6 +573,7 @@ class Environnement extends React.Component {
                                 <label className="product-alternative-brand">{item.brand}</label>
                                 <RenderColor item={item} />
                             </div>
+                            <div className="product-alternative-fleche">{">"}</div>
                         </a>
                     </SwiperSlide>
                 );
