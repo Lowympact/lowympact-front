@@ -69,10 +69,10 @@
     margin-top: 4vw;
 }
 
-.product-slide-name {
+/* .product-slide-name {
     font-size: 2vw;
     margin-top: 4vw;
-}
+} */
 
 .product-slide-recyclable {
     bottom: 80px;
@@ -292,15 +292,18 @@
     top: 10px;
     display: flex;
     flex-direction: row;
+    position: relative;
+    left: 10vw;
     border-radius: 30px;
     box-shadow: 0px 0px 17px -10px rgb(0 0 0 / 80%);
-    height: 120px;
+    height: 133px;
     width: 80vw;
     align-items: center;
 }
 
 .product-alternative-title {
-    font-size: 12pt;
+    font-size: 3vw;
+    width: auto;
     margin-top: 5px;
     margin-bottom: 5px;
 }
@@ -313,7 +316,9 @@
 
 .product-alternative-image {
     height: 100px;
-    width: 100px;
+    width: auto;
+    margin-left: 15px;
+    border-radius: 20px;
 }
 
 .product-alternative-text {

@@ -1,5 +1,4 @@
 import React from "react";
-import "./DoughnutChartEcoScore.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/swiper-bundle.css";

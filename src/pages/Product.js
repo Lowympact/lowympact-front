@@ -230,6 +230,11 @@ class Product extends React.Component {
             if (this.state.dataEcoScore?.agribalyse?.co2_total) {
                 co2 = parseFloat(this.state.dataEcoScore?.agribalyse?.co2_total);
             }
+
+            let ecoscore = "unkown";
+            if (this.state.ecoScore) {
+                ecoscore = this.state.ecoScore;
+            }
             this.flip();
             fetch(
                 `https://api.lowympact.fr/api/v1/users/${this.state.userId}/cart`,
@@ -246,7 +251,7 @@ class Product extends React.Component {
                         barcode: this.state.barcode,
                         bcProductAddress: this.state.bcProductId,
                         quantityDelta: 1,
-                        ecoscore: this.state.ecoScore,
+                        ecoscore: ecoscore,
                         carbonImpact: co2,
                     }),
                 }
@@ -268,6 +273,10 @@ class Product extends React.Component {
             if (this.state.dataEcoScore?.agribalyse?.co2_total) {
                 co2 = parseFloat(this.state.dataEcoScore?.agribalyse?.co2_total);
             }
+            let ecoscore = "unkown";
+            if (this.state.ecoScore) {
+                ecoscore = this.state.ecoScore;
+            }
             fetch(
                 `https://api.lowympact.fr/api/v1/users/${this.state.userId}/cart`,
                 // `http://localhost:8080/api/v1/users/${this.state.userId}/cart`,
@@ -283,7 +292,7 @@ class Product extends React.Component {
                         barcode: this.state.barcode,
                         bcProductAddress: this.state.bcProductId,
                         quantityDelta: -1,
-                        ecoscore: this.state.ecoScore,
+                        ecoscore: ecoscore,
                         carbonImpact: co2,
                     }),
                 }

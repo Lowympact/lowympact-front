@@ -1,5 +1,4 @@
 import React from "react";
-import "./BarChartCarbonImpact.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/swiper-bundle.css";

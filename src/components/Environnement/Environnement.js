@@ -6,6 +6,7 @@ import "swiper/swiper-bundle.css";
 import { CircleProgress } from "react-gradient-progress";
 import { PRODUCTS } from "../../assets/alternatives/alternatives";
 import nutella from "../../assets/images/nutella.png";
+import { Link } from "react-router-dom";
 
 function RenderColor({ item }) {
     var labelColor;
@@ -553,23 +554,33 @@ class Environnement extends React.Component {
 
     alternativesloop = () => {
         const alternativesList = PRODUCTS.map((item) => {
-            if (item.label <= this.props.ecoScore) {
+            var pathProduct = "/products/" + item.barcode;
+            //console.log(pathProduct);
+            if (item.label <= this.props.ecoScore && item.barcode !== this.props.barcode) {
+                console.log(item.name);
                 return (
-                    <SwiperSlide className="product-alternative">
-                        <div>
-                            <img src={nutella} className="product-alternative-image" alt="" />
-                        </div>
-                        <div className="product-alternative-text">
-                            <label className="product-alternative-title">{item.name}</label>
-                            <label className="product-alternative-brand">{item.brand}</label>
-                            <RenderColor item={item} />
-                        </div>
+                    <SwiperSlide>
+                        <a href={pathProduct} className="product-alternative">
+                            <div>
+                                <img
+                                    src={item.image}
+                                    className="product-alternative-image"
+                                    alt=""
+                                />
+                            </div>
+                            <div className="product-alternative-text">
+                                <label className="product-alternative-title">{item.name}</label>
+                                <label className="product-alternative-brand">{item.brand}</label>
+                                <RenderColor item={item} />
+                            </div>
+                        </a>
                     </SwiperSlide>
                 );
             } else {
                 return <React.Fragment></React.Fragment>;
             }
         });
+
         return alternativesList;
     };
 
@@ -584,7 +595,7 @@ class Environnement extends React.Component {
                     <React.Fragment>
                         <span className="title-part-environnement">Alternatives</span>
                         <Swiper
-                            spaceBetween={10}
+                            spaceBetween={0}
                             slidesPerView={1}
                             centeredSlides={true}
                             onSlideChange={(i) => this.onSlideChange(i.activeIndex)}
