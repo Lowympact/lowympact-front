@@ -521,8 +521,18 @@
 	/* box-shadow: 0px -12px 19px -11px rgb(0 0 0 / 16%); */
 }
 
-.stats-chart {
+.stats-chart-pie {
 	width: 60vw;
+}
+
+.stats-chart-bar {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-left: -50px;
+	margin-top: -20px;
+	margin-bottom: -25px;
+	width: 100vw;
 }
 
 .stats-slider {
