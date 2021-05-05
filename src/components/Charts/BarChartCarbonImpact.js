@@ -157,7 +157,7 @@ class BarChartCarbonImpact extends React.Component {
             for (let i = 0; i < sortedData.length; i++) {
                 let finalValue =
                     this.state.selectedSegment === 0
-                        ? sortedData[i].impact
+                        ? sortedData[i].impact.toFixed(2)
                         : (sortedData[i].impact / sortedData[i].nbProducts).toFixed(2);
                 series[0].data.push(finalValue);
             }
