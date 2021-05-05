@@ -46,7 +46,8 @@ class Environnement extends React.Component {
             case "Transformation":
                 return "transform";
             case "Arrow":
-                return "arrow_drop_down";
+                if (this.state.showTransport) return "arrow_drop_up";
+                else return "arrow_drop_down";
             case "Consommation":
                 return "microwave";
             case "Distribution":
@@ -586,29 +587,42 @@ class Environnement extends React.Component {
     };
 
     render = () => {
-        return (
-            <React.Fragment>
-                {this.displayTransportImpact()}
-                {this.displayPackagingImpact()}
-                {this.displayRepartitionAllItems()}
+        let displaySugg = true;
+        let arraySuggestion = [
+            "8001505005707",
+            "3560070472888",
+            "3760020500658",
+            "3256226384296",
+            "8001505000061",
+            "3017620424403",
+        ];
+        if (arraySuggestion.indexOf(this.props.barcode) < 0) {
+            displaySugg = false;
+        }
+        if (this.props.barcode)
+            return (
+                <React.Fragment>
+                    {this.displayTransportImpact()}
+                    {this.displayPackagingImpact()}
+                    {this.displayRepartitionAllItems()}
 
-                {this.props.ecoScore ? (
-                    <React.Fragment>
-                        <span className="title-part-environnement">Alternatives</span>
-                        <Swiper
-                            spaceBetween={0}
-                            slidesPerView={1}
-                            centeredSlides={true}
-                            onSlideChange={(i) => this.onSlideChange(i.activeIndex)}
-                            onSwiper={(swiper) => this.setState({ swiper: swiper })}
-                        >
-                            {this.alternativesloop()}
-                        </Swiper>{" "}
-                    </React.Fragment>
-                ) : (
-                    <p>Pas encore de données pour ce produit</p>
-                )}
-                {/* <span className="title-part-environnement">
+                    {this.props.ecoScore && displaySugg ? (
+                        <React.Fragment>
+                            <span className="title-part-environnement">Alternatives</span>
+                            <Swiper
+                                spaceBetween={0}
+                                slidesPerView={1}
+                                centeredSlides={true}
+                                onSlideChange={(i) => this.onSlideChange(i.activeIndex)}
+                                onSwiper={(swiper) => this.setState({ swiper: swiper })}
+                            >
+                                {this.alternativesloop()}
+                            </Swiper>{" "}
+                        </React.Fragment>
+                    ) : (
+                        <p>Pas encore de données pour ce produit</p>
+                    )}
+                    {/* <span className="title-part-environnement">
                     Impact de l'emballage
                 </span>
                 <Swiper
@@ -620,8 +634,8 @@ class Environnement extends React.Component {
                 >
                     {this.displaySlides()}
                 </Swiper> */}
-            </React.Fragment>
-        );
+                </React.Fragment>
+            );
     };
 }
 
