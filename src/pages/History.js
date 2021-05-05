@@ -129,7 +129,7 @@ class History extends Component {
 									alt="Fruits"
 								/>
 								<p className="logo-text">
-									Commencer à scanner des produits!
+									Commence à scanner des produits !
 								</p>
 							</div>
 						</motion.div>
