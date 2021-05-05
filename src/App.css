@@ -413,6 +413,7 @@
     font-size: 15px;
     text-align: center;
     z-index: 100;
+    width: 70vw;
 }
 
 .stats-text-container {
