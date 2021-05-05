@@ -34,7 +34,9 @@ function RenderHistoryItem({ item }) {
                 </div>
                 <div className="history-label-container">
                     <div style={{ color: labelColor }}>●</div>
-                    <div className="history-label">{item.label}</div>
+                    <div className="history-label">
+                        {item.label == "not-applicable" ? "" : item.label}
+                    </div>
                 </div>
                 <div style={{ marginRight: "10px", color: "rgb(41,72,102)" }}>{">"}</div>
             </Link>
