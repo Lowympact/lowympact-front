@@ -1,47 +1,47 @@
 .header-container {
-	width: 100vw;
-	height: 100px;
-	position: fixed;
-	top: -15px;
-	vertical-align: middle;
-	display: flex;
-	align-items: center;
-	font-family: "Comfortaa";
-	color: #1b3044;
-	font-size: 18px;
-	font-weight: bold;
-	letter-spacing: 2px;
-	left: -5px;
+    width: 100vw;
+    height: 100px;
+    position: fixed;
+    top: -15px;
+    vertical-align: middle;
+    display: flex;
+    align-items: center;
+    font-family: "Comfortaa";
+    color: #1b3044;
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    left: -5px;
 }
 .header-logo {
-	max-width: 80px;
-	height: auto;
-	top: -10px;
+    max-width: 80px;
+    height: auto;
+    top: -10px;
 }
 
 .blob-left {
-	max-width: 110px;
-	height: auto;
-	position: fixed;
-	top: 60%;
-	transform: rotate(180deg);
-	left: -60px;
-	transform: scaleX(-1);
-	z-index: -1;
+    max-width: 110px;
+    height: auto;
+    position: fixed;
+    top: 60%;
+    transform: rotate(180deg);
+    left: -60px;
+    transform: scaleX(-1);
+    z-index: -1;
 }
 .blob-right {
-	max-width: 120px;
-	height: auto;
-	position: fixed;
-	z-index: -1;
-	top: 150px;
-	right: -60px;
+    max-width: 120px;
+    height: auto;
+    position: fixed;
+    z-index: -1;
+    top: 150px;
+    right: -60px;
 }
 .blob-top {
-	max-width: 185px;
-	height: auto;
-	position: fixed;
-	top: -120px;
-	left: -20px;
-	transform: rotate(250deg);
+    max-width: 185px;
+    height: auto;
+    position: fixed;
+    top: -110px;
+    left: -20px;
+    transform: rotate(250deg);
 }
