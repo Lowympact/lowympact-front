@@ -22,6 +22,11 @@ function RenderHistoryItem({ item }) {
         pathProduct += "/" + item.bcProductId;
     }
 
+    // Mock Soutenance
+    if (item.barcode === "80135463") {
+        item.name = "Nutella 200g";
+    }
+
     return (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <Link className="history-item" to={pathProduct}>
@@ -51,7 +56,7 @@ class History extends Component {
         this.state = {
             items: undefined,
             loading: true,
-            userId: undefined, //TO DO : récupérer le vrai user ID qui est connecté, puis le token dans Auhtorization ? (voir avec les cookies)
+            userId: undefined,
         };
     }
 

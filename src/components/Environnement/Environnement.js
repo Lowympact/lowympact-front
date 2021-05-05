@@ -595,6 +595,7 @@ class Environnement extends React.Component {
             "3256226384296",
             "8001505000061",
             "3017620424403",
+            "80135463",
         ];
         if (arraySuggestion.indexOf(this.props.barcode) < 0) {
             displaySugg = false;

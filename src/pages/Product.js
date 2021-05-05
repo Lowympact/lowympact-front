@@ -142,6 +142,11 @@ class Product extends React.Component {
                 if (res.status === 1) {
                     this.saveHistory();
                 }
+
+                // Mock Soutenance
+                if (barcode === "80135463") {
+                    this.setState({ productName: "Nutella 200g" });
+                }
             });
     };
 
