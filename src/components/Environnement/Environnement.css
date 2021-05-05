@@ -415,12 +415,12 @@
     height: 0px;
   }
   to {
-    height: 233px;
+    height: 50vw;
   }
 }
 @keyframes disappearBottom {
   from {
-    height: 233px;
+    height: 50vw;
   }
   to {
     height: 0px;
@@ -520,9 +520,12 @@
 }
 
 .icon-label-arrow {
-  font-size: 20vw;
-  position: relative;
-  top: 10vw;
+  font-size: 10vw;
+  margin-top: -40px;
+}
+
+.arrow-container {
+  text-align: center;
 }
 .impact-percentage-progressBar {
   position: absolute;
@@ -536,4 +539,12 @@
   font-size: 3vw;
   color: grey;
   margin-bottom: 5vw;
+}
+.product-packaging-impact-content-details-text {
+  font-size: 2vw;
+  /* font-weight: 900; */
+  margin-left: 5%;
+  color: grey;
+  margin-top: 10vw;
+  margin-bottom: auto;
 }

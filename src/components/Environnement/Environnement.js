@@ -39,6 +39,7 @@ class Environnement extends React.Component {
     currentIndex: 0,
     width: undefined,
     showTransport: false,
+    materials: [],
   };
 
   getMaterialIcon = (mode) => {
@@ -110,12 +111,12 @@ class Environnement extends React.Component {
 
   getLabelImpactPackaging = (note) => {
     if (note > 2) {
-      return "Bon";
+      return "Impact faible";
     }
     if (note < -2) {
-      return "Mauvais";
+      return "Impact fort";
     }
-    return "Moyen";
+    return "Impact moyen";
   };
 
   getColorImpactPackaging = (note) => {
@@ -425,9 +426,6 @@ class Environnement extends React.Component {
               <div className="product-transport-impact-title-label">
                 {this.getLabelImpact(transport_final_indicator)}
               </div>
-              <div className="material-icons icon-label-arrow">
-                {this.getMaterialIcon("Arrow")}
-              </div>
             </div>
             <div
               className="product-transport-impact-color-label"
@@ -438,6 +436,12 @@ class Environnement extends React.Component {
               ●
             </div>
           </div>
+          <div className="arrow-container">
+            <div className="material-icons icon-label-arrow">
+              {this.getMaterialIcon("Arrow")}
+            </div>
+          </div>
+
           <div
             className={
               this.state.showTransport
@@ -474,7 +478,7 @@ class Environnement extends React.Component {
     return res;
   };
 
-  diplayPackagingDetailImpact = () => {
+  displayPackagingDetailImpact = () => {
     let slides = <React.Fragment></React.Fragment>;
     if (
       this.props.dataEcoScore &&
@@ -482,19 +486,15 @@ class Environnement extends React.Component {
     ) {
       slides = this.props.dataEcoScore?.adjustments?.packaging?.packagings.map(
         (data) => {
-          var recyclable = "";
-          if (data.recycling) {
-            recyclable = data.recycling.split(":")[1];
+          if (!this.state.materials.includes(data?.material.split(":")[1])) {
+            var list = this.state.materials;
+            list.push();
+            return (
+              <React.Fragment>
+                <span>{data?.material.split(":")[1]}&nbsp;</span>
+              </React.Fragment>
+            );
           }
-          if (recyclable && recyclable == "recycle") {
-            recyclable = "Recyclable";
-          } else if (recyclable && recyclable == "discard") {
-            recyclable = "Non recyclable";
-          } else {
-            recyclable = "";
-          }
-
-          return <React.Fragment>{this.getMaterialIcon("")}</React.Fragment>;
         }
       );
     }
@@ -506,25 +506,25 @@ class Environnement extends React.Component {
 
     if (this.props.dataEcoScore?.adjustments?.packaging?.value) {
       return (
-        <div className="product-packaging-impact-container">
-          <div className="product-packaging-impact-header">
-            <div className="product-packaging-impact-logo">
-              <div className="material-icons icon-label-transport-impact">
+        <div className="product-co2-impact-container">
+          <div className="product-co2-impact-header">
+            <div className="product-co2-impact-logo">
+              <div className="material-icons icon-label-co2-impact">
                 {this.getMaterialIcon("")}
               </div>
             </div>
-            <div className="product-packaging-impact-title">
-              <div className="product-packaging-impact-title-text">
-                Impact du packaging
+            <div className="product-co2-impact-title">
+              <div className="product-co2-impact-title-text">
+                Impact de l'emballage
               </div>
-              <div className="product-packaging-impact-title-label">
+              <div className="product-co2-impact-title-label">
                 {this.getLabelImpactPackaging(
                   this.props.dataEcoScore?.adjustments?.packaging?.value
                 )}
               </div>
             </div>
             <div
-              className="product-packaging-impact-color-label"
+              className="product-transport-impact-color-label"
               style={{
                 color: this.getColorImpactPackaging(
                   this.props.dataEcoScore?.adjustments?.packaging?.value
@@ -534,11 +534,15 @@ class Environnement extends React.Component {
               ●
             </div>
           </div>
-          <div className="product-transport-impact-content-details">
-            {this.diplayPackagingDetailImpact()}
+          <div className="product-co2-impact-content">
+            <div className="product-packaging-impact-content-details-text">
+              Matériaux utilisés : &nbsp;{this.displayPackagingDetailImpact()}
+            </div>
           </div>
         </div>
       );
+    } else {
+      return res;
     }
   };
 
@@ -573,6 +577,7 @@ class Environnement extends React.Component {
     return (
       <React.Fragment>
         {this.displayTransportImpact()}
+        {this.displayPackagingImpact()}
         {this.displayRepartitionAllItems()}
 
         {this.props.ecoScore ? (
