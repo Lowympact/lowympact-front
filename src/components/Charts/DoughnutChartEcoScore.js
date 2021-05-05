@@ -28,7 +28,7 @@ class DoughnutChartEcoScore extends React.Component {
 
 	displayChart = () => {
 		let chart = <React.Fragment></React.Fragment>;
-		if (this.props.ecoScoreData && this.props.scannedProduct > 0) {
+		if (this.props.ecoScoreData && this.props.cartedProduct > 0) {
 			chart = (
 				<PieChart
 					data={dataMock}
@@ -102,7 +102,7 @@ class DoughnutChartEcoScore extends React.Component {
 
 	displaySlides = () => {
 		let slides = <React.Fragment></React.Fragment>;
-		if (this.props.ecoScoreData && this.props.scannedProduct > 0) {
+		if (this.props.ecoScoreData && this.props.cartedProduct > 0) {
 			slides = (
 				<React.Fragment>
 					<SwiperSlide>
@@ -208,9 +208,8 @@ class DoughnutChartEcoScore extends React.Component {
 
 	render = () => {
 		return (
-			//<div className="stats-chart-container">{this.displayChart()}</div>
 			<React.Fragment>
-				<div className="stats-chart">{this.displayChart()}</div>
+				<div className="stats-chart-pie">{this.displayChart()}</div>
 				<div className="stats-chart-slider">
 					<Swiper
 						spaceBetween={0}
