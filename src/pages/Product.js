@@ -353,13 +353,19 @@ class Product extends React.Component {
         }
         return (
             <React.Fragment>
-                <div
-                    className={this.state.cart > 0 ? "add-to-cart green" : "add-to-cart"}
-                    onClick={this.addToCart}
-                >
-                    <span className="cart-count">{this.state.cart > 0 ? this.state.cart : ""}</span>
-                    <span class="material-icons">add_shopping_cart</span>
-                </div>
+                {this.state.userId ? (
+                    <div
+                        className={this.state.cart > 0 ? "add-to-cart green" : "add-to-cart"}
+                        onClick={this.addToCart}
+                    >
+                        <span className="cart-count">
+                            {this.state.cart > 0 ? this.state.cart : ""}
+                        </span>
+                        <span class="material-icons">add_shopping_cart</span>
+                    </div>
+                ) : (
+                    <React.Fragment />
+                )}
                 {this.state.cart > 0 ? (
                     <div className="remove-from-cart" onClick={this.removeFromCart}>
                         <span class="material-icons">remove_shopping_cart</span>
@@ -471,6 +477,7 @@ class Product extends React.Component {
                         <Environnement
                             dataEcoScore={this.state.dataEcoScore}
                             ecoScore={this.state.ecoScore}
+                            barcode={this.props.match.params.barcode}
                         ></Environnement>
                     ) : (
                         <div className="product-bottom-container">
