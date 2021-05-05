@@ -101,6 +101,13 @@ class Signin extends Component {
             });
     };
 
+    onPasswordChange = () => {
+        this.setState({
+            password: this.passwordInput.value,
+            email: this.emailInput.value,
+        });
+    };
+
     render() {
         if (this.state.redirect) {
             return <Redirect to="/history" />;
@@ -124,7 +131,8 @@ class Signin extends Component {
                             <input
                                 className="input-forms"
                                 value={this.state.email}
-                                onChange={(evt) => this.setState({ email: evt.target.value })}
+                                onChange={this.onPasswordChange}
+                                ref={(ref) => (this.emailInput = ref)}
                                 type="email"
                             />
                         </label>
@@ -133,11 +141,8 @@ class Signin extends Component {
                             <input
                                 className="input-forms"
                                 value={this.state.password}
-                                onChange={(evt) =>
-                                    this.setState({
-                                        password: evt.target.value,
-                                    })
-                                }
+                                onChange={this.onPasswordChange}
+                                ref={(ref) => (this.passwordInput = ref)}
                                 type="password"
                             />
                         </label>
