@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 function validate(newPassword, confirmPassword) {
     const errors = [];
     if (newPassword.length < 6) {
-        errors.push(<p>Entre un mot de passe. 6 caràcteres minimum requis</p>);
+        errors.push(<p>Entre un mot de passe. 6 caractères minimum requis</p>);
     }
     if (newPassword !== confirmPassword) {
         errors.push(<p>Les mots de passe ne correspondent pas</p>);
@@ -134,7 +134,7 @@ class ProfileConfiguration extends Component {
                     <img src={fruits} className="logo" alt="Fruits" />
                 </div>
                 <Link className="back-button" to="/profil">
-                    {"< retour"}
+                    {"< Retour"}
                 </Link>
                 <div className="configuration-screen-title"></div>
                 <div className="errors-change-password">{this.state.errors}</div>
