@@ -395,10 +395,10 @@ class Environnement extends React.Component {
           Score environnemental du transport vers la France :
           <span
             style={{
-              color: this.getColorImpact(transportation_score * 100),
+              color: this.getColorImpact(100 - transportation_score * 100),
             }}
           >
-            {Math.round(transportation_score * 100)}
+            {Math.round(99 - transportation_score * 100)}
           </span>
           /100
         </div>
