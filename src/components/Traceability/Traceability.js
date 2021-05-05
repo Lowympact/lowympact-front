@@ -363,6 +363,7 @@ class Traceability extends React.Component {
 					maxBoundsViscosity={1}
 					ref={(ref) => {
 						this.map = ref;
+						this.props.getBottomRef(ref);
 					}}
 					whenCreated={(map) => this.setState({ map })}
 				>

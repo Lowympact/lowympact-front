@@ -10,23 +10,19 @@ export const validEmail = new RegExp(
 	"^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$"
 );
 
-
 class Signup extends Component {
-
-
-	state={
+	state = {
 		userName: "",
 		email: "",
 		password: "",
 		confirmPassword: "",
 		errors: [],
 		redirect: false,
-		userPostSuccess: false,
-		submit: false
+		submit: false,
 	};
 
 	validate() {
-		var errors= [];
+		var errors = [];
 		if (this.state.userName.length === 0) {
 			errors.push("Saissez votre nom");
 		}
@@ -42,44 +38,50 @@ class Signup extends Component {
 		if (this.state.password !== this.state.confirmPassword) {
 			errors.push("Les mots de passe ne correspondent pas");
 		}
-		this.setState({errors:errors});
+		this.setState({ errors: errors });
 		return errors;
-	};
+	}
 
-	signUser = () => {
-		var errors = [];
-		fetch(
-			`https://api.lowympact.fr/api/v1/users/${this.state.userName}/${this.state.email}/${this.state.password}`,
-			{
-				method: "post",
-				credentials: "include",
-				headers: new Headers({
-					Authorization:
-					"Bearer 99d8fb95-abdd-4885-bf6c-3a81d8874043",
-					"Content-Type": "application/json",
-				}),
-			}
-		)
+	signUser = async () => {
+		let errors = await fetch(`https://api.lowympact.fr/api/v1/users/`, {
+			method: "post",
+			credentials: "include",
+			headers: new Headers({
+				"api-key": "99d8fb95-abdd-4885-bf6c-3a81d8874043",
+				"Content-Type": "application/json",
+			}),
+			body: JSON.stringify({
+				username: this.state.userName,
+				email: this.state.email,
+				password: this.state.password,
+			}),
+		})
 			.then((response) => response.json())
 			.then((res) => {
 				console.log(res);
-				this.setState({
-					userPostSuccess: res.data.success
-				});
+				let errors = [];
+
+				if (!res.success) {
+					errors.push(
+						"Il y a déjà un compte avec ce mail ou une erreur réseau."
+					);
+				} else {
+					localStorage.setItem("token", res.token);
+					localStorage.setItem("userId", res._id);
+					this.props.history.push("/history");
+				}
+				this.setState({ errors: errors });
+				return errors;
 			});
-			if(this.state.userPostSuccess === false || this.state.userPostSuccess === undefined) {
-				errors.push("Il y a déjà un compte avec ce mail ou une erreur réseau.");
-			}
-		this.setState({errors:errors});	
-		return errors
+		return errors;
 	};
 
-	handleSubmit = (e) => {
+	handleSubmit = async (e) => {
 		e.preventDefault();
 		let errors = this.validate();
-		console.log("errors: " + errors);
-		if(errors.length === 0) {
-			errors = this.signUser ();
+		//console.log("errors: " + errors);
+		if (errors.length === 0) {
+			errors = await this.signUser();
 		}
 		if (errors.length === 0) {
 			this.setState({ redirect: true });
@@ -87,20 +89,18 @@ class Signup extends Component {
 	};
 
 	displayErrors = () => {
-		let errors = <React.Fragment></React.Fragment>
-		errors = this.state.errors.map(
-			(error) => {
-				return(<p>{error}</p>);
-			});
+		let errors = <React.Fragment></React.Fragment>;
+		errors = this.state.errors.map((error) => {
+			return <p>{error}</p>;
+		});
 		return errors;
 	};
 
 	render() {
-		
 		if (this.state.redirect) {
 			return <Redirect to="/history" />;
 		}
-		console.log("render");
+		//console.log("render");
 		return (
 			<React.Fragment>
 				<Link to="/login">
@@ -112,54 +112,65 @@ class Signup extends Component {
 				<Link className="back-button" to="/login">
 					{"< retour"}
 				</Link>
-
-				<form>
-				<label>
-						nom
-						<input
-							value={this.state.userName}
-							onChange={(evt) =>
-								this.setState({ userName: evt.target.value })
-							}
-							type="text"
-						/>
+				<div className="signup-container">
+					<form className="forms">
+						<label>
+							nom
+							<input
+								className="input-forms"
+								value={this.state.userName}
+								onChange={(evt) =>
+									this.setState({
+										userName: evt.target.value,
+									})
+								}
+								type="text"
+							/>
+						</label>
+						<label>
+							email
+							<input
+								className="input-forms"
+								value={this.state.email}
+								onChange={(evt) =>
+									this.setState({ email: evt.target.value })
+								}
+								type="text"
+							/>
+						</label>
+						<label>
+							mot de passe
+							<input
+								className="input-forms"
+								value={this.state.password}
+								onChange={(evt) =>
+									this.setState({
+										password: evt.target.value,
+									})
+								}
+								type="password"
+							/>
+						</label>
+						<label>
+							confirmer mot de passe
+							<input
+								className="input-forms"
+								value={this.state.passwordConfirm}
+								onChange={(evt) =>
+									this.setState({
+										confirmPassword: evt.target.value,
+									})
+								}
+								type="password"
+							/>
+						</label>
+					</form>
+					<label className="errors-signup">
+						{this.displayErrors()}
 					</label>
-					<label>
-						email
-						<input
-							value={this.state.email}
-							onChange={(evt) =>
-								this.setState({ email: evt.target.value })
-							}
-							type="text"
-						/>
-					</label>
-					<label>
-						mot de passe
-						<input
-							value={this.state.password}
-							onChange={(evt) =>
-								this.setState({ password: evt.target.value })
-							}
-							type="password"
-						/>
-					</label>
-					<label>
-						confirmer mot de passe
-						<input
-							value={this.state.passwordConfirm}
-							onChange={(evt) =>
-								this.setState({
-									confirmPassword: evt.target.value,
-								})
-							}
-							type="password"
-						/>
-					</label>
-				</form>
-				<label className="errors-signup">{this.displayErrors()}</label>
-				<div className="button-signup" onClick={this.handleSubmit}>
-					<ButtonSignup />
+					<div className="button-signup" onClick={this.handleSubmit}>
+						<ButtonSignup />
+					</div>
 				</div>
 			</React.Fragment>
 		);

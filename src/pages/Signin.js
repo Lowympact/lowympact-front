@@ -36,7 +36,7 @@ class Signin extends Component {
 		e.preventDefault();
 		const { email, password } = this.state;
 		const errors = validate(email, password);
-		console.log(email, password, errors);
+		//console.log(email, password, errors);
 		this.setState({ errors });
 		if (errors.length === 0) {
 			this.Connect();
@@ -63,25 +63,22 @@ class Signin extends Component {
 	};
 
 	Connect = () => {
-		fetch(
-			`https://api.lowympact.fr/api/v1/users/login`,
-			{
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					"api-key": "99d8fb95-abdd-4885-bf6c-3a81d8874043",
+		fetch(`https://api.lowympact.fr/api/v1/users/login`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				"api-key": "99d8fb95-abdd-4885-bf6c-3a81d8874043",
 
-					//'x-access-token': localStorage.getItem('token'),
-				},
-				body: JSON.stringify({
-					email: this.state.email,
-					password: this.state.password,
-				}),
-			}
-		)
+				//'x-access-token': localStorage.getItem('token'),
+			},
+			body: JSON.stringify({
+				email: this.state.email,
+				password: this.state.password,
+			}),
+		})
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(data);
+				//console.log(data);
 				if (data.error === "No user found") {
 					this.setState({ loginSuccessful: false });
 					let err = this.state.errors;
@@ -123,32 +120,37 @@ class Signin extends Component {
 				<Link className="back-button" to="/login">
 					{"< retour"}
 				</Link>
-
-				<form>
-					<label>
-						email
-						<input
-							value={this.state.email}
-							onChange={(evt) =>
-								this.setState({ email: evt.target.value })
-							}
-							type="text"
-						/>
-					</label>
-					<label>
-						mot de passe
-						<input
-							value={this.state.password}
-							onChange={(evt) =>
-								this.setState({ password: evt.target.value })
-							}
-							type="password"
-						/>
-					</label>
-				</form>
-				<label className="errors-signin">{this.state.errors}</label>
-				<div className="button-signin" onClick={this.handleSubmit}>
-					<ButtonSignin />
+				<div className="signin-container">
+					<form className="forms">
+						<label>
+							email
+							<input
+								className="input-forms"
+								value={this.state.email}
+								onChange={(evt) =>
+									this.setState({ email: evt.target.value })
+								}
+								type="text"
+							/>
+						</label>
+						<label>
+							mot de passe
+							<input
+								className="input-forms"
+								value={this.state.password}
+								onChange={(evt) =>
+									this.setState({
+										password: evt.target.value,
+									})
+								}
+								type="password"
+							/>
+						</label>
+					</form>
+					<label className="errors-signin">{this.state.errors}</label>
+					<div className="button-signin" onClick={this.handleSubmit}>
+						<ButtonSignin />
+					</div>
 				</div>
 			</React.Fragment>
 		);

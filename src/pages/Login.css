@@ -1,13 +1,13 @@
 /*sign up and sign in forms and buttons*/
-form {
+.text-align {
+	text-align: left;
+}
+.forms {
 	display: flex;
-	position: relative;
-	margin-top: 200px;
-	margin-bottom: 0px;
-	height: auto;
 	left: calc(50vw - 100px);
-	top: 30%;
-	justify-content: space-between;
+	/* position: fixed; */
+	height: auto;
+	top: 25%;
 	flex-direction: column;
 	font-family: "Comfortaa";
 	color: #1b3044;
@@ -15,14 +15,10 @@ form {
 	font-weight: bold;
 }
 
-label,
-input {
-	display: block;
-}
-
-input {
+.input-forms {
 	width: 180px;
 	margin-top: 5px;
+	margin-bottom: 5px;
 	color: #1b3044;
 	border-color: #1b3044;
 	border-radius: 5px;
@@ -30,15 +26,13 @@ input {
 	font-size: 14px;
 	padding: 10px;
 }
-label {
-	margin-bottom: 5%;
-}
 
 .errors-signup {
-	width: 210px;
-	position: relative;
+	width: 216px;
+	/* position: fixed; */
 	left: calc(50vw - 100px);
-	top: 50%;
+	margin-left: 3px;
+	top: 61%;
 	font-family: "Comfortaa";
 	font-size: 10px;
 	color: red;
@@ -47,22 +41,36 @@ label {
 
 .errors-signin {
 	width: 210px;
-	position: relative;
+	/* position: fixed; */
 	left: calc(50vw - 100px);
-	top: 50%;
+	margin-left: 3px;
+	top: 43%;
 	font-family: "Comfortaa";
 	font-size: 10px;
 	color: red;
 	line-height: 90%;
 }
 
+.signup-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 200px;
+}
+.signin-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 200px;
+}
+
 .button-signup {
 	width: 160px;
 	height: 45px;
 	border-radius: 10px;
-	position: relative;
 	left: calc(50vw - 80px);
-	top: 75%;
+	/* position: fixed; */
+	top: 76%;
 	/*text*/
 	align-items: center;
 	display: flex;
@@ -73,15 +81,16 @@ label {
 	color: white;
 	margin-bottom: 100px;
 	font-size: 14px;
+	margin-top: 20px;
 }
 
 .button-signin {
 	width: 160px;
 	height: 45px;
 	border-radius: 10px;
-	position: relative;
+	/* position: relative; */
 	left: calc(50vw - 80px);
-	top: 60%;
+	top: 50%;
 	/*text*/
 	align-items: center;
 	display: flex;
@@ -91,6 +100,7 @@ label {
 	font-family: "Comfortaa";
 	color: white;
 	font-size: 14px;
+	margin-top: 20px;
 }
 
 /*buttons login page*/
