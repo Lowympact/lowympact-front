@@ -412,6 +412,8 @@
 .stats-welcome-text {
     font-size: 15px;
     text-align: center;
+    line-height: 1.5em;
+    margin-bottom: -10px;
     z-index: 100;
     width: 70vw;
 }
@@ -602,6 +604,9 @@
 @media (max-width: 400px) {
     .stats-header-text {
         font-size: 16px;
+    }
+    .stats-ecoscore-image {
+        margin-right: 20px;
     }
 }
 
