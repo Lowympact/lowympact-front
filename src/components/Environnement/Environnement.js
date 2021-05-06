@@ -556,6 +556,10 @@ class Environnement extends React.Component {
     alternativesloop = () => {
         const alternativesList = PRODUCTS.map((item) => {
             var pathProduct = "/products/" + item.barcode;
+            // Mock Front
+            if (item.barcode === "8001505005707") {
+                pathProduct += "/24";
+            }
             //console.log(pathProduct);
             if (item.label <= this.props.ecoScore && item.barcode !== this.props.barcode) {
                 console.log(item.name);
@@ -595,6 +599,7 @@ class Environnement extends React.Component {
             "3256226384296",
             "8001505000061",
             "3017620424403",
+            "3017620425035",
             "80135463",
         ];
         if (arraySuggestion.indexOf(this.props.barcode) < 0) {
