@@ -22,6 +22,7 @@ class Product extends React.Component {
         productData: undefined,
         userId: undefined,
         cart: 0,
+        totalCO2Traceability: undefined,
     };
 
     isFlipping = false;
@@ -97,6 +98,7 @@ class Product extends React.Component {
                 this.setState({
                     products: res?.data?.traceability,
                     impact: res?.data?.impact,
+                    totalCO2Traceability: res?.data?.transportCO2Impact,
                 });
             });
     };
@@ -482,11 +484,16 @@ class Product extends React.Component {
                         <Environnement
                             dataEcoScore={this.state.dataEcoScore}
                             ecoScore={this.state.ecoScore}
+                            displayTranportImpact={this.state.totalCO2Traceability}
                             barcode={this.props.match.params.barcode}
                         ></Environnement>
                     ) : (
                         <div className="product-bottom-container">
-                            <Traceability products={products} getBottomRef={this.getBottomRef} />
+                            <Traceability
+                                products={products}
+                                getBottomRef={this.getBottomRef}
+                                totalCO2Traceability={this.state.totalCO2Traceability}
+                            />
                         </div>
                     )}
                     <Navbar

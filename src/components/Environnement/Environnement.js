@@ -307,7 +307,7 @@ class Environnement extends React.Component {
         if (this.props.dataEcoScore?.agribalyse?.co2_total) {
             html_total = (
                 <span className="product-CO2-total">
-                    Impact total carbone :&nbsp;
+                    Impact carbone générique :&nbsp;
                     <span className="carbon-total-number">
                         {parseFloat(this.props.dataEcoScore?.agribalyse?.co2_total).toFixed(3)}
                     </span>
@@ -399,7 +399,7 @@ class Environnement extends React.Component {
             );
         }
 
-        if (transport_final_indicator) {
+        if (!this.props.displayTranportImpact && transport_final_indicator) {
             transport_final_indicator = Math.round(transport_final_indicator * 100);
             return (
                 <div
@@ -470,10 +470,11 @@ class Environnement extends React.Component {
     };
 
     displayPackagingDetailImpact = () => {
-        let slides = <React.Fragment></React.Fragment>;
+        let res = <React.Fragment></React.Fragment>;
 
         if (this.props.dataEcoScore?.adjustments?.packaging?.packagings) {
             var materials = [];
+            let slides = <React.Fragment></React.Fragment>;
 
             this.props.dataEcoScore?.adjustments?.packaging?.packagings.map((data) => {
                 if (data?.material.split(":")[1] != "unknown") {
@@ -490,7 +491,6 @@ class Environnement extends React.Component {
                     if (materials.indexOf(data) < materials.length - 1) {
                         separator = " ; ";
                     }
-
                     return (
                         <React.Fragment>
                             <span>
@@ -499,9 +499,31 @@ class Environnement extends React.Component {
                         </React.Fragment>
                     );
                 });
+
+            if (materials.length > 0) {
+                res = (
+                    <React.Fragment>
+                        <div className="product-co2-impact-content">
+                            <div className="product-packaging-impact-content-details-text">
+                                Matériaux utilisés : &nbsp;{slides}
+                            </div>
+                        </div>
+                    </React.Fragment>
+                );
+            } else {
+                res = (
+                    <React.Fragment>
+                        <div className="product-co2-impact-content">
+                            <div className="product-packaging-impact-content-details-text">
+                                Matériaux utilisés : &nbsp; Inconnu
+                            </div>
+                        </div>
+                    </React.Fragment>
+                );
+            }
         }
 
-        return slides;
+        return res;
     };
 
     displayPackagingImpact = () => {
@@ -537,11 +559,7 @@ class Environnement extends React.Component {
                             ●
                         </div>
                     </div>
-                    <div className="product-co2-impact-content">
-                        <div className="product-packaging-impact-content-details-text">
-                            Matériaux utilisés : &nbsp;{this.displayPackagingDetailImpact()}
-                        </div>
-                    </div>
+                    {this.displayPackagingDetailImpact()}
                 </div>
             );
         } else {
@@ -605,7 +623,7 @@ class Environnement extends React.Component {
         if (arraySuggestion.indexOf(this.props.barcode) < 0) {
             displaySugg = false;
         }
-        if (this.props.barcode)
+        if (this.props.barcode) {
             return (
                 <React.Fragment>
                     {this.displayTransportImpact()}
@@ -642,6 +660,9 @@ class Environnement extends React.Component {
                 </Swiper> */}
                 </React.Fragment>
             );
+        } else {
+            return <React.Fragment></React.Fragment>;
+        }
     };
 }
 
