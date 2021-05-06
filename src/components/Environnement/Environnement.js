@@ -620,9 +620,13 @@ class Environnement extends React.Component {
             "3017620425035",
             "80135463",
         ];
-        if (arraySuggestion.indexOf(this.props.barcode) < 0) {
-            displaySugg = false;
+
+        var hmtl_suggestion = <React.Fragment></React.Fragment>;
+
+        if (arraySuggestion.indexOf(this.props.barcode) >= 0) {
+            hmtl_suggestion = this.alternativesloop();
         }
+
         if (this.props.barcode) {
             return (
                 <React.Fragment>
@@ -630,7 +634,7 @@ class Environnement extends React.Component {
                     {this.displayPackagingImpact()}
                     {this.displayRepartitionAllItems()}
 
-                    {this.props.ecoScore && displaySugg ? (
+                    {this.props.ecoScore ? (
                         <React.Fragment>
                             <span className="title-part-environnement">Alternatives</span>
                             <Swiper
@@ -640,7 +644,7 @@ class Environnement extends React.Component {
                                 onSlideChange={(i) => this.onSlideChange(i.activeIndex)}
                                 onSwiper={(swiper) => this.setState({ swiper: swiper })}
                             >
-                                {this.alternativesloop()}
+                                {hmtl_suggestion}
                             </Swiper>{" "}
                         </React.Fragment>
                     ) : (
