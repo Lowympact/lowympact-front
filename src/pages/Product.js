@@ -484,7 +484,10 @@ class Product extends React.Component {
                         <Environnement
                             dataEcoScore={this.state.dataEcoScore}
                             ecoScore={this.state.ecoScore}
-                            displayTranportImpact={this.state.totalCO2Traceability}
+                            displayTranportImpact={
+                                this.props.match.params.bcProductId !== null &&
+                                this.props.match.params.bcProductId !== undefined
+                            }
                             barcode={this.props.match.params.barcode}
                         ></Environnement>
                     ) : (
