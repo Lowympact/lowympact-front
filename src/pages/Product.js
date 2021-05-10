@@ -23,6 +23,7 @@ class Product extends React.Component {
         userId: undefined,
         cart: 0,
         totalCO2Traceability: undefined,
+        alternatives: undefined,
     };
 
     isFlipping = false;
@@ -94,7 +95,6 @@ class Product extends React.Component {
         )
             .then((response) => response.json())
             .then((res) => {
-                console.log(res);
                 this.setState({
                     products: res?.data?.traceability,
                     impact: res?.data?.impact,
@@ -103,17 +103,46 @@ class Product extends React.Component {
             });
     };
 
+    loadAlternatives = (code, score) => {
+        this.setState({ alternatives: "loading" });
+        fetch(
+            `https://fr.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories_properties.ciqual_food_code:en&tag_contains_0=contains&tag_0=${code}&tagtype_1=ecoscore_grade&tag_contains_1=contains&tag_1=${score}&json=true`
+        )
+            .then((response) => response.json())
+            .then((res) => {
+                if (res.products[0] == undefined) {
+                    this.setState({ alternatives: "" });
+                    return;
+
+                    /*console.log("TAILLENULLE");
+                    switch (score) {
+                        case "a":
+                            return this.loadAlternatives(code, "b");
+                        case "b":
+                            return this.loadAlternatives(code, "c");
+                        case "c":
+                            return this.loadAlternatives(code, "d");
+                        default:
+                            break;
+                    }
+                    */
+                }
+                this.setState({ alternatives: res });
+            });
+    };
+
     loadFromOpenFoodFacts = (barcode) => {
+        let dataEcoScore;
+
         fetch(`https://world.openfoodfacts.org/api/v0/product/${barcode}.json/`)
             .then((response) => response.json())
             .then((res) => {
-                console.log(res);
                 let productImageUrl = res?.product?.image_url;
                 let productName = res?.product?.product_name;
                 let genericName = res?.product?.generic_name;
                 let ecoScore = res?.product?.ecoscore_grade;
 
-                let dataEcoScore = res?.product?.ecoscore_data;
+                dataEcoScore = res?.product?.ecoscore_data;
 
                 if (res?.product) {
                     this.setState({ productData: res.product });
@@ -149,6 +178,35 @@ class Product extends React.Component {
                 if (barcode === "80135463") {
                     this.setState({ productName: "Nutella 200g" });
                 }
+
+                var scoreSearch = "a";
+
+                switch (res.product?.ecoscore_grade) {
+                    case "b":
+                        scoreSearch = "a";
+                        break;
+                    case "c":
+                        scoreSearch = "b";
+                        break;
+                    case "d":
+                        scoreSearch = "c";
+                        break;
+                    case "e":
+                        scoreSearch = "c";
+                        break;
+
+                    default:
+                        break;
+                }
+
+                if (res.product?.ecoscore_grade != "a") {
+                    this.loadAlternatives(
+                        res.product.categories_properties["ciqual_food_code:en"],
+                        scoreSearch
+                    );
+                } else {
+                    this.setState({ alternatives: "" });
+                }
             });
     };
 
@@ -169,7 +227,6 @@ class Product extends React.Component {
             )
                 .then((response) => response.json())
                 .then((res) => {
-                    console.log(res);
                     if (res.success) {
                         this.setState({ cart: res.data?.quantity });
                     }
@@ -205,7 +262,6 @@ class Product extends React.Component {
                 localStorage.setItem("local_history", JSON.stringify(history));
             }
         } else if (this.state.userId) {
-            console.log(this.state.barcode, this.state.bcProductId);
             fetch(
                 `https://api.lowympact.fr/api/v1/users/${this.state.userId}/history`,
                 // `http://localhost:8080/api/v1/users/${this.state.userId}/history`,
@@ -231,7 +287,6 @@ class Product extends React.Component {
     };
 
     addToCart = () => {
-        console.log(this.state.dataEcoScore);
         if (this.state.barcode && this.state.cart >= 0) {
             let co2 = -1;
             if (this.state.dataEcoScore?.agribalyse?.co2_total) {
@@ -489,6 +544,7 @@ class Product extends React.Component {
                                 this.props.match.params.bcProductId !== undefined
                             }
                             barcode={this.props.match.params.barcode}
+                            alternatives={this.state.alternatives}
                         ></Environnement>
                     ) : (
                         <div className="product-bottom-container">

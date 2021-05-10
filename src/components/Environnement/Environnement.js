@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/swiper-bundle.css";
 import { CircleProgress } from "react-gradient-progress";
-import { PRODUCTS } from "../../assets/alternatives/alternatives";
+//import { PRODUCTS } from "../../assets/alternatives/alternatives";
 import nutella from "../../assets/images/nutella.png";
 import { Link } from "react-router-dom";
 
@@ -572,38 +572,47 @@ class Environnement extends React.Component {
     };
 
     alternativesloop = () => {
-        const alternativesList = PRODUCTS.map((item) => {
-            var pathProduct = "/products/" + item.barcode;
-            // Mock Front
-            if (item.barcode === "8001505005707") {
-                pathProduct += "/24";
-            }
-            //console.log(pathProduct);
-            if (item.label <= this.props.ecoScore && item.barcode !== this.props.barcode) {
-                console.log(item.name);
-                return (
-                    <SwiperSlide>
-                        <a href={pathProduct} className="product-alternative">
-                            <div>
-                                <img
-                                    src={item.image}
-                                    className="product-alternative-image"
-                                    alt=""
-                                />
-                            </div>
-                            <div className="product-alternative-text">
-                                <label className="product-alternative-title">{item.name}</label>
-                                <label className="product-alternative-brand">{item.brand}</label>
-                                <RenderColor item={item} />
-                            </div>
-                            <div className="product-alternative-fleche">{">"}</div>
-                        </a>
-                    </SwiperSlide>
-                );
-            } else {
-                return <React.Fragment></React.Fragment>;
-            }
-        });
+        var alternativesList = <React.Fragment></React.Fragment>;
+
+        if (
+            this.props.alternatives &&
+            this.props.alternatives != "loading" &&
+            this.props.alternatives != ""
+        ) {
+            alternativesList = this.props.alternatives.products.map((item) => {
+                var pathProduct = "/products/" + item.id;
+                // Mock Front
+                if (item.id === "8001505005707") {
+                    pathProduct += "/24";
+                }
+
+                if (item.id !== this.props.barcode) {
+                    return (
+                        <SwiperSlide>
+                            <a href={pathProduct} className="product-alternative">
+                                <div>
+                                    <img
+                                        src={item.image_url}
+                                        className="product-alternative-image"
+                                        alt=""
+                                    />
+                                </div>
+                                <div className="product-alternative-text">
+                                    <label className="product-alternative-title">
+                                        {item.product_name}
+                                    </label>
+                                    <label className="product-alternative-brand">{}</label>
+                                    <RenderColor item={item} />
+                                </div>
+                                <div className="product-alternative-fleche">{">"}</div>
+                            </a>
+                        </SwiperSlide>
+                    );
+                } else {
+                    return <React.Fragment></React.Fragment>;
+                }
+            });
+        }
 
         return alternativesList;
     };
@@ -623,8 +632,17 @@ class Environnement extends React.Component {
 
         var hmtl_suggestion = <React.Fragment></React.Fragment>;
 
-        if (arraySuggestion.indexOf(this.props.barcode) >= 0) {
-            hmtl_suggestion = this.alternativesloop();
+        hmtl_suggestion = this.alternativesloop();
+        var alternatives_title = "";
+
+        if (this.props.alternatives === "") {
+            alternatives_title = "Pas d'alternatives disponible";
+        } else {
+            if (this.props.alternatives === "loading") {
+                alternatives_title = "Chargement des alternatives ...";
+            } else {
+                alternatives_title = "Alternatives";
+            }
         }
 
         if (this.props.barcode) {
@@ -636,7 +654,7 @@ class Environnement extends React.Component {
 
                     {this.props.ecoScore ? (
                         <React.Fragment>
-                            <span className="title-part-environnement">Alternatives</span>
+                            <span className="title-part-environnement">{alternatives_title}</span>
                             <Swiper
                                 spaceBetween={0}
                                 slidesPerView={1}
