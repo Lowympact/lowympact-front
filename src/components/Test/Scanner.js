@@ -2,15 +2,34 @@ import React, { Component } from "react";
 import Quagga from "quagga";
 
 class Scanner extends Component {
-    componentDidMount() {
+    state = {
+        usedCamera: 0,
+        devices: [],
+    };
+
+    componentDidMount = async () => {
+        let a = await navigator.mediaDevices.enumerateDevices().then(function (devices) {
+            return devices;
+        });
+        let cameras = [];
+        a.forEach(function (device) {
+            if (device.kind == "videoinput") {
+                cameras.push(device);
+                if (device.label.match(/back/) != null) {
+                    console.log("found");
+                }
+            }
+        });
+        this.setState({ devices: cameras });
         Quagga.init(
             {
                 inputStream: {
                     type: "LiveStream",
                     constraints: {
-                        width: { ideal: 2048 },
-                        height: { ideal: 1080 },
-                        facingMode: "environment", // or user
+                        width: { ideal: 640 },
+                        height: { ideal: 480 },
+                        // facingMode: "environment", // or user
+                        deviceId: this.state.devices[this.state.usedCamera].deviceId,
                         aspectRatio: {
                             min: 1,
                             max: 2,
@@ -19,8 +38,8 @@ class Scanner extends Component {
                     },
                 },
                 locator: {
-                    patchSize: "x-large",
-                    halfSample: true,
+                    patchSize: "normal",
+                    halfSample: false,
                 },
                 locate: true,
                 area: {
@@ -50,7 +69,7 @@ class Scanner extends Component {
             }
         );
         Quagga.onDetected(this._onDetected);
-    }
+    };
 
     componentWillUnmount() {
         Quagga.offDetected(this._onDetected);
@@ -60,8 +79,24 @@ class Scanner extends Component {
         this.props.onDetected(result);
     };
 
+    switchCamera = () => {
+        let num = this.state.usedCamera + 1;
+        if (num >= this.state.devices.length) {
+            num = 0;
+        }
+
+        this.setState({ usedCamera: num });
+    };
+
     render() {
-        return <div id="interactive" className="viewport" />;
+        return (
+            <React.Fragment>
+                <button onClick={this.switchCamera}>
+                    Current Camera : {this.state.usedCamera}
+                </button>
+                <div id="interactive" className="viewport" />
+            </React.Fragment>
+        );
     }
 }
 
