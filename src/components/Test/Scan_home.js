@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Scanner from "./Scanner";
 import QrReader from "react-qr-reader";
 import Switch from "react-switch";
+import { Redirect } from "react-router-dom";
 
 class Scan_home extends Component {
     state = {
@@ -11,7 +12,7 @@ class Scan_home extends Component {
         usedCamera: 0,
         devices: [],
         reading: 0,
-        QRresult: undefined,
+        redirect: undefined,
     };
 
     componentDidMount = async () => {
@@ -45,30 +46,40 @@ class Scan_home extends Component {
         this.setState({ scanning: !this.state.scanning, status: "" });
     };
 
-    _onDetected = (result) => {
-        console.log(result);
-        this.setState(
-            {
-                results: [result],
-                scanning: false,
-                status: "waiting",
-            },
-            () => {
-                setTimeout(() => {
-                    this.setState({
-                        scanning: true,
-                        status: "scanning",
-                        results: [],
+    _onDetected = (res) => {
+        console.log(res);
+        if (res) {
+            if (res.codeResult && res.codeResult.code) {
+                this.setState({
+                    results: [res],
+                    scanning: true,
+                    status: "waiting",
+                });
+                fetch(`https://world.openfoodfacts.org/api/v0/product/${res.codeResult.code}.json/`)
+                    .then((response) => response.json())
+                    .then((result) => {
+                        console.log(result);
+                        if (result.status !== 0) {
+                            this.setState({
+                                scanning: false,
+                                status: "found",
+                                redirect: `https://lowympact.fr/products/${res.codeResult.code}`,
+                            });
+                        } else {
+                            this.setState({
+                                scanning: true,
+                                status: "not found",
+                            });
+                        }
                     });
-                }, 1000);
             }
-        );
+        }
     };
 
     handleScan = (data) => {
         if (data) {
             this.setState({
-                QRresult: data,
+                redirect: data,
             });
         }
     };
@@ -83,6 +94,7 @@ class Scan_home extends Component {
                 onError={this.handleError}
                 onScan={this.handleScan}
                 style={{ width: "100%" }}
+                showViewFinder={false}
             />
         );
     };
@@ -105,7 +117,12 @@ class Scan_home extends Component {
                         <ul className="results">
                             {this.state.results.map((result, i) => (
                                 <div key={result.codeResult.code + i}>
-                                    {result?.codeResult?.code} [{result?.codeResult?.format}]
+                                    {this.state.status === "waiting"
+                                        ? "Vérification du code" + result?.codeResult?.code
+                                        : ""}
+                                    {this.state.status === "not found"
+                                        ? "code non trouvé, merci de réessayer"
+                                        : ""}
                                 </div>
                             ))}
                         </ul>
@@ -129,42 +146,54 @@ class Scan_home extends Component {
     };
 
     render() {
-        console.log("Results: ", this.state.results);
-        return (
-            <div className="code-reader-container">
-                <div className="code-switch" onClick={this.switchReader}>
-                    <div className="span-code-switch">
-                        <span
-                            className={
-                                this.state.reading ? "material-icons" : "material-icons green"
-                            }
-                        >
-                            view_week
-                        </span>
-                        <span>Barcode</span>
+        console.log("Results: ", this.state.results, this.state.redirect);
+        if (this.state.redirect) {
+            return <Redirect to={this.state.redirect} />;
+        } else {
+            return (
+                <div className="code-reader-container">
+                    <span
+                        class="close"
+                        onClick={() => {
+                            this.props?.onCrossClicked(false);
+                        }}
+                    >
+                        &times;
+                    </span>
+                    <div className="code-switch" onClick={this.switchReader}>
+                        <div className="span-code-switch">
+                            <span
+                                className={
+                                    this.state.reading ? "material-icons" : "material-icons green"
+                                }
+                            >
+                                view_week
+                            </span>
+                            <span>Barcode</span>
+                        </div>
+                        <Switch
+                            onChange={this.switchReader}
+                            uncheckedIcon={false}
+                            checkedIcon={false}
+                            checked={this.state.reading}
+                            onColor={"#888"}
+                            offColor={"#888"}
+                        />
+                        <div className="span-code-switch">
+                            <span
+                                className={
+                                    !this.state.reading ? "material-icons" : "material-icons green"
+                                }
+                            >
+                                qr_code_scanner
+                            </span>
+                            <span>QR Code</span>
+                        </div>
                     </div>
-                    <Switch
-                        onChange={this.switchReader}
-                        uncheckedIcon={false}
-                        checkedIcon={false}
-                        checked={this.state.reading}
-                        onColor={"#888"}
-                        offColor={"#888"}
-                    />
-                    <div className="span-code-switch">
-                        <span
-                            className={
-                                !this.state.reading ? "material-icons" : "material-icons green"
-                            }
-                        >
-                            qr_code_scanner
-                        </span>
-                        <span>QR Code</span>
-                    </div>
+                    {this.state.reading ? this.displayQrCode() : this.displayBarCode()}
                 </div>
-                {this.state.reading ? this.displayQrCode() : this.displayBarCode()}
-            </div>
-        );
+            );
+        }
     }
 }
 

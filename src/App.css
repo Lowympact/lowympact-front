@@ -634,6 +634,7 @@
     height: 100px;
     border: 2px dotted white;
     z-index: 999999;
+    border-radius: 20px;
 }
 
 #interactive {
@@ -647,6 +648,19 @@
     height: 100vh;
     overflow-x: hidden;
     width: 100vw;
+    position: relative;
+}
+
+.code-reader-container section:nth-child(1)::after {
+    content: "";
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    height: 50%;
+    border: 2px dotted white;
+    z-index: 999999;
+    border-radius: 20px;
 }
 
 .code-switch {
