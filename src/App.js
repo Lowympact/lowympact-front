@@ -12,6 +12,7 @@ import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 import ProfileConfiguration from "./pages/ProfileConfiguration";
 import Statistics from "./pages/Statistics";
+import Scan_home from "./components/Test/Scan_home";
 
 class App extends Component {
     render() {
@@ -30,6 +31,7 @@ class App extends Component {
                         <Route path="/signin" component={Signin} exact />
                         <Route path="/configuration" component={ProfileConfiguration} exact />
                         <Route path="/stats" component={Statistics} exact />
+                        <Route path="/test" component={Scan_home} exact />
                         {/* Errors Pages */}
                         <Route path="/error404" component={Error404} />
                         <Redirect to="/error404" />
