@@ -10,8 +10,8 @@ class Scanner extends Component {
                     constraints: {
                         width: { ideal: 1280 },
                         height: { ideal: 960 },
-                        // facingMode: "environment", // or user
-                        deviceId: this.props.deviceId,
+                        facingMode: "environment", // or user
+                        // deviceId: this.props.deviceId,
                         aspectRatio: {
                             min: 1,
                             max: 2,

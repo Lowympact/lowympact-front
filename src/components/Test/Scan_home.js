@@ -145,7 +145,7 @@ class Scan_home extends Component {
             return (
                 <React.Fragment>
                     <div className="header">
-                        {this.state.devices?.length > 1 ? (
+                        {this.state.devices?.length > 4 ? (
                             <button className="code-switch-camera" onClick={this.switchCamera}>
                                 <span className="material-icons">cameraswitch</span>
                                 {this.state.usedCamera}
