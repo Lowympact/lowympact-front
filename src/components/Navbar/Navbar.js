@@ -139,6 +139,7 @@ class Navbar extends React.Component {
                         console.error(error.message);
                     }}
                 />
+                // <Scan_home onCrossClicked={this.handleScannerButton} history={this.props.history} />
             );
         }
     };

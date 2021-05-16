@@ -57,8 +57,12 @@ class Scanner extends Component {
         Quagga.offDetected(this._onDetected);
     }
 
-    _onDetected = (result) => {
-        this.props.onDetected(result);
+    _onDetected = async (result) => {
+        let stop = await this.props.onDetected(result);
+        console.log(stop);
+        if (stop) {
+            Quagga.stop();
+        }
     };
 
     render() {

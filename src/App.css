@@ -648,7 +648,9 @@
     height: 100vh;
     overflow-x: hidden;
     width: 100vw;
-    position: relative;
+    position: absolute;
+    z-index: 999;
+    top: 0px;
 }
 
 .code-reader-container section:nth-child(1)::after {

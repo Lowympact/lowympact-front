@@ -12,7 +12,8 @@ class Scan_home extends Component {
         usedCamera: 0,
         devices: [],
         reading: 0,
-        redirect: undefined,
+        barcode: undefined,
+        bcProductId: undefined,
     };
 
     componentDidMount = async () => {
@@ -42,11 +43,10 @@ class Scan_home extends Component {
     };
 
     _scan = () => {
-        console.log("hey");
         this.setState({ scanning: !this.state.scanning, status: "" });
     };
 
-    _onDetected = (res) => {
+    _onDetected = async (res) => {
         console.log(res);
         if (res) {
             if (res.codeResult && res.codeResult.code) {
@@ -55,32 +55,56 @@ class Scan_home extends Component {
                     scanning: true,
                     status: "waiting",
                 });
-                fetch(`https://world.openfoodfacts.org/api/v0/product/${res.codeResult.code}.json/`)
-                    .then((response) => response.json())
-                    .then((result) => {
-                        console.log(result);
-                        if (result.status !== 0) {
-                            this.setState({
-                                scanning: false,
-                                status: "found",
-                                redirect: `https://lowympact.fr/products/${res.codeResult.code}`,
-                            });
-                        } else {
-                            this.setState({
-                                scanning: true,
-                                status: "not found",
-                            });
-                        }
+                let response = await fetch(
+                    `https://world.openfoodfacts.org/api/v0/product/${res.codeResult.code}.json/`
+                );
+                let result = await response.json();
+                console.log(result);
+                if (result.status !== 0) {
+                    this.setState({
+                        scanning: false,
+                        status: "found",
+                        barcode: res.codeResult.code,
                     });
+                    return true;
+                } else {
+                    this.setState({
+                        scanning: true,
+                        status: "not found",
+                    });
+                    return false;
+                }
+                // .then((response) => response.json())
+                //     .then((result) => {
+                //         console.log(result);
+                //         if (result.status !== 0) {
+                //             this.setState({
+                //                 scanning: false,
+                //                 status: "found",
+                //                 barcode: res.codeResult.code,
+                //             });
+                //         } else {
+                //             this.setState({
+                //                 scanning: true,
+                //                 status: "not found",
+                //             });
+                //         }
+                //     });
             }
         }
     };
 
     handleScan = (data) => {
         if (data) {
-            this.setState({
-                redirect: data,
-            });
+            let arr = data.split("/");
+            if (arr.length > 1) {
+                this.setState({
+                    scanning: false,
+                    barcode: arr[4],
+                    bcProductId: arr[5],
+                    status: "found",
+                });
+            }
         }
     };
     handleError = (err) => {
@@ -88,19 +112,23 @@ class Scan_home extends Component {
     };
 
     displayQrCode = () => {
-        return (
-            <QrReader
-                delay={300}
-                onError={this.handleError}
-                onScan={this.handleScan}
-                style={{ width: "100%" }}
-                showViewFinder={false}
-            />
-        );
+        if (this.state.status !== "found") {
+            return (
+                <QrReader
+                    delay={300}
+                    onError={this.handleError}
+                    onScan={this.handleScan}
+                    style={{ width: "100%" }}
+                    showViewFinder={false}
+                />
+            );
+        } else {
+            return <React.Fragment />;
+        }
     };
 
     displayBarCode = () => {
-        if (this.state.devices.length > 0) {
+        if (this.state.devices.length > 0 && this.state.status !== "found") {
             return (
                 <React.Fragment>
                     <div className="header">
@@ -147,8 +175,18 @@ class Scan_home extends Component {
 
     render() {
         console.log("Results: ", this.state.results, this.state.redirect);
-        if (this.state.redirect) {
-            return <Redirect to={this.state.redirect} />;
+        if (
+            this.state.barcode &&
+            this.state.bcProductId &&
+            (this.props.barcode !== this.state.barcode ||
+                this.props.bcProductId !== this.state.bcProductId)
+        ) {
+            return (
+                <Redirect to={"/products/" + this.state.barcode + "/" + this.state.bcProductId} />
+            );
+        }
+        if (this.state.barcode && this.props.barcode !== this.state.barcode) {
+            return <Redirect to={"/products/" + this.state.barcode} />;
         } else {
             return (
                 <div className="code-reader-container">
