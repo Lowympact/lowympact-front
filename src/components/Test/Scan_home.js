@@ -43,16 +43,16 @@ class Scan_home extends Component {
         this.setState({ Quagga: quagga });
     };
 
-    switchCamera = () => {
-        let num = this.state.usedCamera + 1;
-        if (num >= this.state.devices.length) {
-            num = 0;
-        }
+    // switchCamera = () => {
+    //     let num = this.state.usedCamera + 1;
+    //     if (num >= this.state.devices.length) {
+    //         num = 0;
+    //     }
 
-        this.setState({ usedCamera: num, scanning: false }, () =>
-            this.setState({ scanning: true })
-        );
-    };
+    //     this.setState({ usedCamera: num, scanning: false }, () =>
+    //         this.setState({ scanning: true })
+    //     );
+    // };
 
     _scan = () => {
         this.setState({ scanning: !this.state.scanning, status: "" });
@@ -145,14 +145,14 @@ class Scan_home extends Component {
             return (
                 <React.Fragment>
                     <div className="header">
-                        {this.state.devices?.length > 4 ? (
+                        {/* {this.state.devices?.length > 4 ? (
                             <button className="code-switch-camera" onClick={this.switchCamera}>
                                 <span className="material-icons">cameraswitch</span>
                                 {this.state.usedCamera}
                             </button>
                         ) : (
                             <React.Fragment />
-                        )}
+                        )} */}
                         <ul className="results">
                             {this.state.results.map((result, i) => (
                                 <div key={result.codeResult.code + i}>
