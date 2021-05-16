@@ -43,16 +43,16 @@ class Scan_home extends Component {
         this.setState({ Quagga: quagga });
     };
 
-    // switchCamera = () => {
-    //     let num = this.state.usedCamera + 1;
-    //     if (num >= this.state.devices.length) {
-    //         num = 0;
-    //     }
+    switchCamera = () => {
+        let num = this.state.usedCamera + 1;
+        if (num >= this.state.devices.length) {
+            num = 0;
+        }
 
-    //     this.setState({ usedCamera: num, scanning: false }, () =>
-    //         this.setState({ scanning: true })
-    //     );
-    // };
+        this.setState({ usedCamera: num, scanning: false }, () =>
+            this.setState({ scanning: true })
+        );
+    };
 
     _scan = () => {
         this.setState({ scanning: !this.state.scanning, status: "" });
@@ -141,10 +141,11 @@ class Scan_home extends Component {
     };
 
     displayBarCode = () => {
-        if (this.state.devices.length > 0 && this.state.status !== "found") {
+        if (this.state.status !== "found") {
             return (
                 <React.Fragment>
                     <div className="header">
+                        {this.state.scanning ? "true" : "false"}
                         {/* {this.state.devices?.length > 4 ? (
                             <button className="code-switch-camera" onClick={this.switchCamera}>
                                 <span className="material-icons">cameraswitch</span>
@@ -167,11 +168,7 @@ class Scan_home extends Component {
                         </ul>
                     </div>
                     {this.state.scanning ? (
-                        <Scanner
-                            onDetected={this._onDetected}
-                            deviceId={this.state.devices[this.state.usedCamera].deviceId}
-                            setQuagga={this.setQuagga}
-                        />
+                        <Scanner onDetected={this._onDetected} setQuagga={this.setQuagga} />
                     ) : null}
                 </React.Fragment>
             );
