@@ -8,8 +8,8 @@ class Scanner extends Component {
                 inputStream: {
                     type: "LiveStream",
                     constraints: {
-                        width: { ideal: 4096 },
-                        height: { ideal: 2160 },
+                        width: { ideal: 2048 },
+                        height: { ideal: 1080 },
                         facingMode: "environment", // or user
                         aspectRatio: {
                             min: 1,
@@ -19,15 +19,15 @@ class Scanner extends Component {
                     },
                 },
                 locator: {
-                    patchSize: "medium",
+                    patchSize: "x-large",
                     halfSample: true,
                 },
                 locate: true,
                 area: {
-                    top: "25%",
+                    top: "0%",
                     right: "0%",
                     left: "0%",
-                    bottom: "25%",
+                    bottom: "0%",
                 },
                 numOfWorkers: window.navigator.hardwareConcurrency || 2,
                 decoder: {
