@@ -2,25 +2,7 @@ import React, { Component } from "react";
 import Quagga from "quagga";
 
 class Scanner extends Component {
-    state = {
-        usedCamera: 0,
-        devices: [],
-    };
-
-    componentDidMount = async () => {
-        let a = await navigator.mediaDevices.enumerateDevices().then(function (devices) {
-            return devices;
-        });
-        let cameras = [];
-        a.forEach(function (device) {
-            if (device.kind == "videoinput") {
-                cameras.push(device);
-                if (device.label.match(/back/) != null) {
-                    console.log("found");
-                }
-            }
-        });
-        this.setState({ devices: cameras });
+    componentDidMount = () => {
         Quagga.init(
             {
                 inputStream: {
@@ -29,7 +11,7 @@ class Scanner extends Component {
                         width: { ideal: 640 },
                         height: { ideal: 480 },
                         // facingMode: "environment", // or user
-                        deviceId: this.state.devices[this.state.usedCamera].deviceId,
+                        deviceId: this.props.deviceId,
                         aspectRatio: {
                             min: 1,
                             max: 2,
@@ -79,21 +61,9 @@ class Scanner extends Component {
         this.props.onDetected(result);
     };
 
-    switchCamera = () => {
-        let num = this.state.usedCamera + 1;
-        if (num >= this.state.devices.length) {
-            num = 0;
-        }
-
-        this.setState({ usedCamera: num });
-    };
-
     render() {
         return (
             <React.Fragment>
-                <button onClick={this.switchCamera}>
-                    Current Camera : {this.state.usedCamera}
-                </button>
                 <div id="interactive" className="viewport" />
             </React.Fragment>
         );

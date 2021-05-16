@@ -6,6 +6,33 @@ class Scan_home extends Component {
         scanning: false,
         status: "",
         results: [],
+        usedCamera: 0,
+        devices: [],
+    };
+
+    componentDidMount = async () => {
+        let a = await navigator.mediaDevices.enumerateDevices().then(function (devices) {
+            return devices;
+        });
+        let cameras = [];
+        a.forEach(function (device) {
+            if (device.kind == "videoinput") {
+                cameras.push(device);
+                if (device.label.match(/back/) != null) {
+                    console.log("found");
+                }
+            }
+        });
+        this.setState({ devices: cameras });
+    };
+
+    switchCamera = () => {
+        let num = this.state.usedCamera + 1;
+        if (num >= this.state.devices.length) {
+            num = 0;
+        }
+
+        this.setState({ usedCamera: num });
     };
 
     _scan = () => {
@@ -40,6 +67,9 @@ class Scan_home extends Component {
                 <div className="header">
                     <div>Status: {this.state.status}</div>
                     <div onClick={this._scan}>{this.state.scanning ? "Stop" : "Start"}</div>
+                    <button onClick={this.switchCamera}>
+                        Current Camera : {this.state.usedCamera}
+                    </button>
                     <ul className="results">
                         {this.state.results.map((result, i) => (
                             <div key={result.codeResult.code + i}>
@@ -48,7 +78,12 @@ class Scan_home extends Component {
                         ))}
                     </ul>
                 </div>
-                {this.state.scanning ? <Scanner onDetected={this._onDetected} /> : null}
+                {this.state.scanning ? (
+                    <Scanner
+                        onDetected={this._onDetected}
+                        deviceId={this.state.devices[this.state.usedCamera].deviceId}
+                    />
+                ) : null}
             </div>
         );
     }
