@@ -14,6 +14,7 @@ class Scan_home extends Component {
         reading: 0,
         barcode: undefined,
         bcProductId: undefined,
+        Quagga: undefined,
     };
 
     componentDidMount = async () => {
@@ -21,15 +22,25 @@ class Scan_home extends Component {
             return devices;
         });
         let cameras = [];
+        let i = 0;
         a.forEach(function (device) {
             if (device.kind == "videoinput") {
                 cameras.push(device);
                 if (device.label.match(/back/) != null) {
-                    console.log("found");
+                    this.setState({ usedCamera: i });
                 }
+                i++;
             }
         });
         this.setState({ devices: cameras });
+    };
+
+    setQuagga = (quagga) => {
+        console.log(quagga);
+        if (this.state.Quagga) {
+            this.state.Quagga.stop();
+        }
+        this.setState({ Quagga: quagga });
     };
 
     switchCamera = () => {
@@ -38,8 +49,9 @@ class Scan_home extends Component {
             num = 0;
         }
 
-        this.setState({ usedCamera: num, scanning: false });
-        this.setState({ scanning: true });
+        this.setState({ usedCamera: num, scanning: false }, () =>
+            this.setState({ scanning: true })
+        );
     };
 
     _scan = () => {
@@ -105,6 +117,7 @@ class Scan_home extends Component {
                     status: "found",
                 });
             }
+            this.state.Quagga.stop();
         }
     };
     handleError = (err) => {
@@ -132,8 +145,6 @@ class Scan_home extends Component {
             return (
                 <React.Fragment>
                     <div className="header">
-                        {/* <div>Status: {this.state.status}</div>
-                        <div onClick={this._scan}>{this.state.scanning ? "Stop" : "Start"}</div> */}
                         {this.state.devices?.length > 1 ? (
                             <button className="code-switch-camera" onClick={this.switchCamera}>
                                 <span className="material-icons">cameraswitch</span>
@@ -159,6 +170,7 @@ class Scan_home extends Component {
                         <Scanner
                             onDetected={this._onDetected}
                             deviceId={this.state.devices[this.state.usedCamera].deviceId}
+                            setQuagga={this.setQuagga}
                         />
                     ) : null}
                 </React.Fragment>

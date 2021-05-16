@@ -628,7 +628,7 @@
 #interactive::after {
     content: "";
     position: absolute;
-    top: 25%;
+    top: 40vh;
     left: 25%;
     width: 50%;
     height: 100px;
@@ -665,6 +665,9 @@
     border-radius: 20px;
 }
 
+.code-reader-container section:nth-child(1) {
+    margin-top: 100px;
+}
 .code-switch {
     position: fixed;
     top: 75vh;

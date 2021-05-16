@@ -50,6 +50,7 @@ class Scanner extends Component {
                 Quagga.start();
             }
         );
+        this.props.setQuagga(Quagga);
         Quagga.onDetected(this._onDetected);
     };
 
