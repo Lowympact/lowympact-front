@@ -8,16 +8,28 @@ class Scanner extends Component {
                 inputStream: {
                     type: "LiveStream",
                     constraints: {
-                        width: 640,
-                        height: 480,
+                        width: { ideal: 4096 },
+                        height: { ideal: 2160 },
                         facingMode: "environment", // or user
+                        aspectRatio: {
+                            min: 1,
+                            max: 2,
+                        },
+                        focusMode: "continuous",
                     },
                 },
                 locator: {
                     patchSize: "medium",
                     halfSample: true,
                 },
-                numOfWorkers: 4,
+                locate: true,
+                area: {
+                    top: "25%",
+                    right: "0%",
+                    left: "0%",
+                    bottom: "25%",
+                },
+                numOfWorkers: window.navigator.hardwareConcurrency || 2,
                 decoder: {
                     readers: ["ean_reader"],
                 },
@@ -28,7 +40,7 @@ class Scanner extends Component {
                     showPattern: true,
                 },
                 multiple: false,
-                locate: true,
+                singleChannel: false,
             },
             function (err) {
                 if (err) {
