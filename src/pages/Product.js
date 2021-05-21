@@ -105,29 +105,15 @@ class Product extends React.Component {
 
     loadAlternatives = (code, score) => {
         this.setState({ alternatives: "loading" });
-        fetch(
-            `https://fr.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories_properties.ciqual_food_code:en&tag_contains_0=contains&tag_0=${code}&tagtype_1=ecoscore_grade&tag_contains_1=contains&tag_1=${score}&json=true`
-        )
+        fetch(`https://api.lowympact.fr/api/v1/alternatives/${code}`)
             .then((response) => response.json())
             .then((res) => {
-                if (res.products[0] == undefined) {
+                if (res.success == false) {
                     this.setState({ alternatives: "" });
                     return;
-
-                    /*console.log("TAILLENULLE");
-                    switch (score) {
-                        case "a":
-                            return this.loadAlternatives(code, "b");
-                        case "b":
-                            return this.loadAlternatives(code, "c");
-                        case "c":
-                            return this.loadAlternatives(code, "d");
-                        default:
-                            break;
-                    }
-                    */
                 }
-                this.setState({ alternatives: res });
+                console.log(res.data.alternativesInfos);
+                this.setState({ alternatives: res.data.alternativesInfos });
             });
     };
 

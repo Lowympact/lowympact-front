@@ -11,10 +11,10 @@ import { Link } from "react-router-dom";
 function RenderColor({ item }) {
     var labelColor;
     var labelLevel;
-    if (item.ecoscore_score <= 33) {
+    if (item.eco_score <= 33) {
         labelColor = "red";
         labelLevel = "Mauvais";
-    } else if (item.ecoscore_score > 33 && item.ecoscore_score < 67) {
+    } else if (item.eco_score > 33 && item.eco_score < 67) {
         labelColor = "yellow";
         labelLevel = "Moyen";
     } else {
@@ -25,7 +25,7 @@ function RenderColor({ item }) {
         <div className="product-alternative-label-position">
             <div className="product-alternative-label">
                 <div style={{ color: labelColor }}>●</div>
-                <div className="product-alternative-label-text">{item.ecoscore_score}/100</div>
+                <div className="product-alternative-label-text">{item.eco_score}/100</div>
             </div>
             <div className="product-alternative-label-level ">{labelLevel}</div>
         </div>
@@ -571,6 +571,43 @@ class Environnement extends React.Component {
         this.setState({ currentIndex: index });
     };
 
+    renderListAlternatives = (listItems) => {
+        var res = <React.Fragment>;</React.Fragment>;
+        res = listItems.map((item) => {
+            var pathProduct = "/products/" + item.id;
+            // Mock Front
+            if (item.id === "8001505005707") {
+                pathProduct += "/24";
+            }
+
+            if (item.id !== this.props.barcode) {
+                return (
+                    <SwiperSlide>
+                        <a href={pathProduct} className="product-alternative">
+                            <div>
+                                <img
+                                    src={item.img_url}
+                                    className="product-alternative-image"
+                                    alt=""
+                                />
+                            </div>
+                            <div className="product-alternative-text">
+                                <label className="product-alternative-title">{item.name}</label>
+                                <label className="product-alternative-brand">{}</label>
+                                <RenderColor item={item} />
+                            </div>
+                            <div className="product-alternative-fleche">{">"}</div>
+                        </a>
+                    </SwiperSlide>
+                );
+            } else {
+                return <React.Fragment></React.Fragment>;
+            }
+        });
+
+        return res;
+    };
+
     alternativesloop = () => {
         var alternativesList = <React.Fragment></React.Fragment>;
 
@@ -579,39 +616,54 @@ class Environnement extends React.Component {
             this.props.alternatives != "loading" &&
             this.props.alternatives != ""
         ) {
-            alternativesList = this.props.alternatives.products.map((item) => {
-                var pathProduct = "/products/" + item.id;
-                // Mock Front
-                if (item.id === "8001505005707") {
-                    pathProduct += "/24";
-                }
+            var alternatives_a = <React.Fragment></React.Fragment>;
+            var alternatives_b = <React.Fragment></React.Fragment>;
+            var alternatives_c = <React.Fragment></React.Fragment>;
+            var alternatives_d = <React.Fragment></React.Fragment>;
 
-                if (item.id !== this.props.barcode) {
-                    return (
-                        <SwiperSlide>
-                            <a href={pathProduct} className="product-alternative">
-                                <div>
-                                    <img
-                                        src={item.image_url}
-                                        className="product-alternative-image"
-                                        alt=""
-                                    />
-                                </div>
-                                <div className="product-alternative-text">
-                                    <label className="product-alternative-title">
-                                        {item.product_name}
-                                    </label>
-                                    <label className="product-alternative-brand">{}</label>
-                                    <RenderColor item={item} />
-                                </div>
-                                <div className="product-alternative-fleche">{">"}</div>
-                            </a>
-                        </SwiperSlide>
-                    );
-                } else {
-                    return <React.Fragment></React.Fragment>;
-                }
+            this.props.alternatives.a.sort(function (a, b) {
+                return b.eco_score - a.eco_score;
             });
+
+            this.props.alternatives.b.sort(function (a, b) {
+                return b.eco_score - a.eco_score;
+            });
+            this.props.alternatives.c.sort(function (a, b) {
+                return b.eco_score - a.eco_score;
+            });
+            this.props.alternatives.d.sort(function (a, b) {
+                return b.eco_score - a.eco_score;
+            });
+
+            switch (this.props.ecoScore) {
+                case "a":
+                    break;
+                case "b":
+                    alternatives_a = this.renderListAlternatives(this.props.alternatives.a);
+                    break;
+                case "c":
+                    alternatives_a = this.renderListAlternatives(this.props.alternatives.a);
+                    alternatives_b = this.renderListAlternatives(this.props.alternatives.b);
+                    break;
+                case "d":
+                    alternatives_a = this.renderListAlternatives(this.props.alternatives.a);
+                    alternatives_b = this.renderListAlternatives(this.props.alternatives.b);
+                    alternatives_c = this.renderListAlternatives(this.props.alternatives.c);
+                    break;
+                case "e":
+                    alternatives_a = this.renderListAlternatives(this.props.alternatives.a);
+                    alternatives_b = this.renderListAlternatives(this.props.alternatives.b);
+                    alternatives_c = this.renderListAlternatives(this.props.alternatives.c);
+                    alternatives_d = this.renderListAlternatives(this.props.alternatives.d);
+                    break;
+                default:
+            }
+
+            alternativesList = (
+                <React.Fragment>
+                    {alternatives_a} {alternatives_b} {alternatives_c} {alternatives_d};
+                </React.Fragment>
+            );
         }
 
         return alternativesList;
