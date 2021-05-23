@@ -1,30 +1,30 @@
 {
   "files": {
-    "main.css": "/static/css/main.3285f35d.chunk.css",
-    "main.js": "/static/js/main.5c4b55f4.chunk.js",
-    "main.js.map": "/static/js/main.5c4b55f4.chunk.js.map",
+    "main.css": "/static/css/main.16fef902.chunk.css",
+    "main.js": "/static/js/main.8ee40008.chunk.js",
+    "main.js.map": "/static/js/main.8ee40008.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.a59e02d3.js",
     "runtime-main.js.map": "/static/js/runtime-main.a59e02d3.js.map",
     "static/css/2.5c793f43.chunk.css": "/static/css/2.5c793f43.chunk.css",
-    "static/js/2.541b7279.chunk.js": "/static/js/2.541b7279.chunk.js",
-    "static/js/2.541b7279.chunk.js.map": "/static/js/2.541b7279.chunk.js.map",
+    "static/js/2.04e4dfbe.chunk.js": "/static/js/2.04e4dfbe.chunk.js",
+    "static/js/2.04e4dfbe.chunk.js.map": "/static/js/2.04e4dfbe.chunk.js.map",
     "static/js/3.5c5f075b.chunk.js": "/static/js/3.5c5f075b.chunk.js",
     "static/js/3.5c5f075b.chunk.js.map": "/static/js/3.5c5f075b.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.5c793f43.chunk.css.map": "/static/css/2.5c793f43.chunk.css.map",
-    "static/css/main.3285f35d.chunk.css.map": "/static/css/main.3285f35d.chunk.css.map",
-    "static/js/2.541b7279.chunk.js.LICENSE.txt": "/static/js/2.541b7279.chunk.js.LICENSE.txt",
+    "static/css/main.16fef902.chunk.css.map": "/static/css/main.16fef902.chunk.css.map",
+    "static/js/2.04e4dfbe.chunk.js.LICENSE.txt": "/static/js/2.04e4dfbe.chunk.js.LICENSE.txt",
     "static/media/index.css": "/static/media/Comfortaa-Medium.7897f745.ttf",
     "static/media/Environnement.css": "/static/media/bitmap.6f490d5b.png",
-    "static/media/fruits-vegetables-basket-by-oblik-studio.9dfc6522.svg": "/static/media/fruits-vegetables-basket-by-oblik-studio.9dfc6522.svg",
-    "static/media/logo.0dcb8e95.svg": "/static/media/logo.0dcb8e95.svg",
+    "static/media/fruits-vegetables-basket-by-oblik-studio.7d5e1c64.svg": "/static/media/fruits-vegetables-basket-by-oblik-studio.7d5e1c64.svg",
+    "static/media/logo.b235ef42.svg": "/static/media/logo.b235ef42.svg",
     "static/media/nutella.14ecd263.png": "/static/media/nutella.14ecd263.png"
   },
   "entrypoints": [
     "static/js/runtime-main.a59e02d3.js",
     "static/css/2.5c793f43.chunk.css",
-    "static/js/2.541b7279.chunk.js",
-    "static/css/main.3285f35d.chunk.css",
-    "static/js/main.5c4b55f4.chunk.js"
+    "static/js/2.04e4dfbe.chunk.js",
+    "static/css/main.16fef902.chunk.css",
+    "static/js/main.8ee40008.chunk.js"
   ]
 }
