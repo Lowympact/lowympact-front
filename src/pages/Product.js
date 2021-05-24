@@ -109,12 +109,20 @@ class Product extends React.Component {
         fetch(`https://api.lowympact.fr/api/v1/alternatives/${code}`)
             .then((response) => response.json())
             .then((res) => {
-                if (res.success == false) {
+                if (res.success && res.data?.alternativesInfos) {
+                    if (
+                        res.data?.alternativesInfos?.a?.length == 0 &&
+                        res.data?.alternativesInfos?.b?.length == 0 &&
+                        res.data?.alternativesInfos?.c?.length == 0 &&
+                        res.data?.alternativesInfos?.d?.length == 0
+                    ) {
+                        this.setState({ alternatives: "" });
+                    } else {
+                        this.setState({ alternatives: res.data.alternativesInfos });
+                    }
+                } else {
                     this.setState({ alternatives: "" });
-                    return;
                 }
-                console.log(res.data.alternativesInfos);
-                this.setState({ alternatives: res.data.alternativesInfos });
             });
     };
 
@@ -131,6 +139,7 @@ class Product extends React.Component {
 
                 dataEcoScore = res?.product?.ecoscore_data;
 
+                console.log(res);
                 let origins = res?.product?.origins_hierarchy;
                 if (origins && origins != "") {
                     this.setState({ origins: origins });

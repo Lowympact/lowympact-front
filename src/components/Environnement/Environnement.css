@@ -552,7 +552,7 @@
 
 .environnement-map-container {
     width: 80vw;
-    height: 60vw;
+    /* height: 60vw; */
     border-radius: 30px;
     overflow: hidden;
     /* border: 2px solid grey; */
@@ -592,4 +592,14 @@
 
 .environnement-map-container .product-co2-impact-header {
     height: 18%;
+    padding-top: 10px;
+}
+
+.environnement-map-container .product-co2-impact-title-label {
+    width: 50vw;
+    height: 15px;
+    margin-top: 2px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

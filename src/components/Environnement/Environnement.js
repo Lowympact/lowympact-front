@@ -1,37 +1,8 @@
 import React from "react";
-import "./Environnement.css";
-import { Swiper, SwiperSlide } from "swiper/react";
-// Import Swiper styles
-import "swiper/swiper-bundle.css";
+import Alternatives from "./Alternatives";
 import { CircleProgress } from "react-gradient-progress";
-//import { PRODUCTS } from "../../assets/alternatives/alternatives";
-import nutella from "../../assets/images/nutella.png";
-import { Link } from "react-router-dom";
 import Origins from "./Origins";
-
-function RenderColor({ item }) {
-    var labelColor;
-    var labelLevel;
-    if (item.eco_score <= 33) {
-        labelColor = "red";
-        labelLevel = "Mauvais";
-    } else if (item.eco_score > 33 && item.eco_score < 67) {
-        labelColor = "yellow";
-        labelLevel = "Moyen";
-    } else {
-        labelColor = "green";
-        labelLevel = "Bonne";
-    }
-    return (
-        <div className="product-alternative-label-position">
-            <div className="product-alternative-label">
-                <div style={{ color: labelColor }}>●</div>
-                <div className="product-alternative-label-text">{item.eco_score}/100</div>
-            </div>
-            <div className="product-alternative-label-level ">{labelLevel}</div>
-        </div>
-    );
-}
+import "./Environnement.css";
 
 class Environnement extends React.Component {
     state = {
@@ -128,74 +99,6 @@ class Environnement extends React.Component {
             return "red";
         }
         return "yellow";
-    };
-
-    displaySlides = () => {
-        let slides = <React.Fragment></React.Fragment>;
-
-        if (
-            this.props.dataEcoScore &&
-            this.props.dataEcoScore?.adjustments?.packaging?.packagings.length >= 1
-        ) {
-            slides = this.props.dataEcoScore?.adjustments?.packaging?.packagings.map((data) => {
-                var recyclable = "";
-                if (data.recycling) {
-                    recyclable = data.recycling.split(":")[1];
-                }
-                if (recyclable && recyclable == "recycle") {
-                    recyclable = "Recyclable";
-                } else if (recyclable && recyclable == "discard") {
-                    recyclable = "Non recyclable";
-                } else {
-                    recyclable = "";
-                }
-
-                return (
-                    <div>
-                        <SwiperSlide>
-                            <div className="env-product-slide-container ">
-                                <div className="env-product-slide-icon">
-                                    <span class="material-icons env-icon-label">
-                                        {this.getMaterialIcon("")}
-                                    </span>
-                                </div>
-                                <div className="env-product-slide-wrapper">
-                                    <div className="product-slide-name">
-                                        {data?.material.split(":")[1]}
-                                    </div>
-                                    <div className="product-ecoscore">
-                                        Ecoscore : {data?.ecoscore_material_score}
-                                    </div>
-
-                                    <div className="env-history-label-container">
-                                        <span
-                                            className="packaging-label-color"
-                                            style={{
-                                                color: this.getColor(data?.ecoscore_material_score),
-                                            }}
-                                        >
-                                            ●
-                                        </span>
-                                        <div className="env-history-label">
-                                            {this.getLabel(data?.ecoscore_material_score)}
-                                        </div>
-                                    </div>
-                                    <div className="product-slide-recyclable">
-                                        {recyclable}
-                                        <div className="material-icons icon-label-recyclable">
-                                            {this.getMaterialIcon(recyclable)}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </SwiperSlide>
-                    </div>
-                );
-            });
-        }
-        return slides;
-
-        // return slides;
     };
 
     componentDidMount() {
@@ -568,152 +471,24 @@ class Environnement extends React.Component {
         }
     };
 
-    onSlideChange = (index) => {
-        this.setState({ currentIndex: index });
-    };
-
-    renderListAlternatives = (listItems) => {
-        var res = <React.Fragment>;</React.Fragment>;
-        res = listItems.map((item) => {
-            var pathProduct = "/products/" + item.id;
-            // Mock Front
-            if (item.id === "8001505005707") {
-                pathProduct += "/24";
-            }
-
-            if (item.id !== this.props.barcode) {
-                return (
-                    <SwiperSlide>
-                        <a href={pathProduct} className="product-alternative">
-                            <div>
-                                <img
-                                    src={item.img_url}
-                                    className="product-alternative-image"
-                                    alt=""
-                                />
-                            </div>
-                            <div className="product-alternative-text">
-                                <label className="product-alternative-title">{item.name}</label>
-                                <label className="product-alternative-brand">{}</label>
-                                <RenderColor item={item} />
-                            </div>
-                            <div className="product-alternative-fleche">{">"}</div>
-                        </a>
-                    </SwiperSlide>
-                );
-            } else {
-                return <React.Fragment></React.Fragment>;
-            }
-        });
-
-        return res;
-    };
-
-    alternativesloop = () => {
-        var alternativesList = <React.Fragment></React.Fragment>;
-
-        if (
-            this.props.alternatives &&
-            this.props.alternatives != "loading" &&
-            this.props.alternatives != ""
-        ) {
-            var alternatives_a = <React.Fragment></React.Fragment>;
-            var alternatives_b = <React.Fragment></React.Fragment>;
-            var alternatives_c = <React.Fragment></React.Fragment>;
-            var alternatives_d = <React.Fragment></React.Fragment>;
-
-            this.props.alternatives.a.sort(function (a, b) {
-                return b.eco_score - a.eco_score;
-            });
-
-            this.props.alternatives.b.sort(function (a, b) {
-                return b.eco_score - a.eco_score;
-            });
-            this.props.alternatives.c.sort(function (a, b) {
-                return b.eco_score - a.eco_score;
-            });
-            this.props.alternatives.d.sort(function (a, b) {
-                return b.eco_score - a.eco_score;
-            });
-
-            switch (this.props.ecoScore) {
-                case "a":
-                    break;
-                case "b":
-                    alternatives_a = this.renderListAlternatives(this.props.alternatives.a);
-                    break;
-                case "c":
-                    alternatives_a = this.renderListAlternatives(this.props.alternatives.a);
-                    alternatives_b = this.renderListAlternatives(this.props.alternatives.b);
-                    break;
-                case "d":
-                    alternatives_a = this.renderListAlternatives(this.props.alternatives.a);
-                    alternatives_b = this.renderListAlternatives(this.props.alternatives.b);
-                    alternatives_c = this.renderListAlternatives(this.props.alternatives.c);
-                    break;
-                case "e":
-                    alternatives_a = this.renderListAlternatives(this.props.alternatives.a);
-                    alternatives_b = this.renderListAlternatives(this.props.alternatives.b);
-                    alternatives_c = this.renderListAlternatives(this.props.alternatives.c);
-                    alternatives_d = this.renderListAlternatives(this.props.alternatives.d);
-                    break;
-                default:
-            }
-
-            alternativesList = (
-                <React.Fragment>
-                    {alternatives_a} {alternatives_b} {alternatives_c} {alternatives_d};
-                </React.Fragment>
-            );
-        }
-
-        return alternativesList;
-    };
-
     render = () => {
-        var hmtl_suggestion = <React.Fragment></React.Fragment>;
-
-        hmtl_suggestion = this.alternativesloop();
-        var alternatives_title = "";
-
-        if (this.props.alternatives === "") {
-            alternatives_title = "Pas d'alternatives disponible";
-        } else {
-            if (this.props.alternatives === "loading") {
-                alternatives_title = "Chargement des alternatives ...";
-            } else {
-                alternatives_title = "Alternatives";
-            }
-        }
-
         if (this.props.barcode) {
             return (
                 <React.Fragment>
                     {this.displayTransportImpact()}
-                    {this.displayPackagingImpact()}
                     {this.props.origins ? (
                         <Origins origins={this.props.origins} />
                     ) : (
                         <React.Fragment />
                     )}
+                    {this.displayPackagingImpact()}
                     {this.displayRepartitionAllItems()}
 
-                    {this.props.ecoScore ? (
-                        <React.Fragment>
-                            <span className="title-part-environnement">{alternatives_title}</span>
-                            <Swiper
-                                spaceBetween={0}
-                                slidesPerView={1}
-                                centeredSlides={true}
-                                onSlideChange={(i) => this.onSlideChange(i.activeIndex)}
-                                onSwiper={(swiper) => this.setState({ swiper: swiper })}
-                            >
-                                {hmtl_suggestion}
-                            </Swiper>{" "}
-                        </React.Fragment>
-                    ) : (
-                        <p>Pas encore de données pour ce produit</p>
-                    )}
+                    <Alternatives
+                        barcode={this.props.barcode}
+                        alternatives={this.props.alternatives}
+                        ecoScore={this.props.ecoScore}
+                    />
                 </React.Fragment>
             );
         } else {
