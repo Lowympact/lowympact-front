@@ -17,28 +17,33 @@ class Scanner extends Component {
 
         // open every video device and dump its characteristics
 
+        let maxResolution = -1;
         for (let i in videoDevices) {
             const device = videoDevices[i];
             // console.log("Opening video device " + device.deviceId + " (" + device.label + ")");
 
-            const stream = await navigator.mediaDevices.getUserMedia({
-                video: { deviceId: { exact: device.deviceId } },
-            });
+            let stream;
+            const streaming = await navigator.mediaDevices
+                .getUserMedia({
+                    video: { deviceId: { exact: device.deviceId } },
+                })
+                .then(
+                    (stream) => {
+                        stream.getVideoTracks().forEach((track) => {
+                            const capabilities = track.getCapabilities();
 
-            let maxResolution = -1;
+                            if (capabilities.height.max >= maxResolution) {
+                                maxResolution = capabilities.height.max;
+                                usedCameraId = device.deviceId;
+                            }
 
-            stream.getVideoTracks().forEach((track) => {
-                const capabilities = track.getCapabilities();
+                            //console.log("Track capabilities: " + JSON.stringify(capabilities));
+                        });
 
-                if (capabilities.height.max >= maxResolution) {
-                    maxResolution = capabilities.height.max;
-                    usedCameraId = device.deviceId;
-                }
-
-                //console.log("Track capabilities: " + JSON.stringify(capabilities));
-            });
-
-            stream.getTracks().forEach((track) => track.stop());
+                        stream.getTracks().forEach((track) => track.stop());
+                    },
+                    (err) => console.log(err)
+                );
         }
 
         Quagga.init(
