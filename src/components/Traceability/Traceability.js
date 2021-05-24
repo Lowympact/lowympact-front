@@ -148,7 +148,7 @@ class Traceability extends React.Component {
         if (elem[0]) {
             elem[0].scrollIntoView({ behavior: "smooth" });
         }
-        console.log(index);
+
         if (index >= this.props.products?.length) {
             this.state.swiper.slideTo(index - 1, 500);
         } else {
@@ -157,16 +157,13 @@ class Traceability extends React.Component {
         let zoom = 5;
         if (this.props.products && this.props.products[index]) {
             let p = this.props.products[index];
-            console.log(
-                [p.buyer.localisation.latitude, p.buyer.localisation.longitude],
-                [p.seller.localisation.latitude, p.seller.localisation.longitude]
-            );
+
             zoom = getZoomRatio(
                 [p.buyer.localisation.latitude, p.buyer.localisation.longitude],
                 [p.seller.localisation.latitude, p.seller.localisation.longitude]
             );
         }
-        console.log(zoom);
+
         this.map.leafletElement.flyTo(latlng, zoom, { duration: 0.5 });
     };
 
@@ -189,7 +186,7 @@ class Traceability extends React.Component {
                 (parseFloat(p.seller.localisation.longitude) +
                     parseFloat(p.buyer.localisation.longitude)) /
                 2;
-            console.log(zoom);
+
             this.map.leafletElement.flyTo([lat, long], zoom, { duration: 0.5 });
         }
     };
@@ -390,7 +387,7 @@ function toRadian(degree) {
 
 function getZoomRatio(origin, destination) {
     var distance = getDistance(origin, destination);
-    console.log(distance);
+
     return 9 - Math.sqrt(distance * 150);
 }
 

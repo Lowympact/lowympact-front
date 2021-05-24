@@ -1,17 +1,3 @@
-.leaflet-tile-container img {
-    filter: invert(100%) contrast(10%) brightness(200%) !important;
-}
-
-.leaflet-container {
-    width: 100vw !important;
-    height: 400px !important;
-    background-color: white;
-}
-
-.leaflet-control-attribution {
-    display: none;
-}
-
 .slider-container {
     margin-top: 50px;
 }
@@ -562,4 +548,48 @@
 .carbon-total-number {
     font-weight: bold;
     color: black;
+}
+
+.environnement-map-container {
+    width: 80vw;
+    height: 60vw;
+    border-radius: 30px;
+    overflow: hidden;
+    /* border: 2px solid grey; */
+    margin-bottom: 5vw;
+    margin-top: 10px;
+    box-shadow: 0px 0px 20px -10px rgb(0 0 0 / 80%);
+}
+
+.environnement-map {
+    width: 80vw !important;
+    margin-top: 10px;
+    height: 50vw !important;
+    margin-bottom: -10px;
+}
+
+.map-country-content div {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    /* text-align: left; */
+    width: 80vw;
+    height: 100%;
+}
+.map-country-content {
+    height: 100px;
+    align-items: center;
+    justify-content: center;
+}
+
+.map-country-content span {
+    margin: 5px;
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.environnement-map-container .product-co2-impact-header {
+    height: 18%;
 }
