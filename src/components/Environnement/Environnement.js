@@ -7,6 +7,7 @@ import { CircleProgress } from "react-gradient-progress";
 //import { PRODUCTS } from "../../assets/alternatives/alternatives";
 import nutella from "../../assets/images/nutella.png";
 import { Link } from "react-router-dom";
+import Origins from "./Origins";
 
 function RenderColor({ item }) {
     var labelColor;
@@ -670,18 +671,6 @@ class Environnement extends React.Component {
     };
 
     render = () => {
-        let displaySugg = true;
-        let arraySuggestion = [
-            "8001505005707",
-            "3560070472888",
-            "3760020500658",
-            "3256226384296",
-            "8001505000061",
-            "3017620424403",
-            "3017620425035",
-            "80135463",
-        ];
-
         var hmtl_suggestion = <React.Fragment></React.Fragment>;
 
         hmtl_suggestion = this.alternativesloop();
@@ -702,6 +691,11 @@ class Environnement extends React.Component {
                 <React.Fragment>
                     {this.displayTransportImpact()}
                     {this.displayPackagingImpact()}
+                    {this.props.origins ? (
+                        <Origins origins={this.props.origins} />
+                    ) : (
+                        <React.Fragment />
+                    )}
                     {this.displayRepartitionAllItems()}
 
                     {this.props.ecoScore ? (
@@ -720,18 +714,6 @@ class Environnement extends React.Component {
                     ) : (
                         <p>Pas encore de données pour ce produit</p>
                     )}
-                    {/* <span className="title-part-environnement">
-                    Impact de l'emballage
-                </span>
-                <Swiper
-                    spaceBetween={10}
-                    slidesPerView={1}
-                    centeredSlides={true}
-                    onSlideChange={(i) => this.onSlideChange(i.activeIndex)}
-                    onSwiper={(swiper) => this.setState({ swiper: swiper })}
-                >
-                    {this.displaySlides()}
-                </Swiper> */}
                 </React.Fragment>
             );
         } else {

@@ -24,6 +24,7 @@ class Product extends React.Component {
         cart: 0,
         totalCO2Traceability: undefined,
         alternatives: undefined,
+        countries: [],
     };
 
     isFlipping = false;
@@ -129,6 +130,11 @@ class Product extends React.Component {
                 let ecoScore = res?.product?.ecoscore_grade;
 
                 dataEcoScore = res?.product?.ecoscore_data;
+
+                let origins = res?.product?.origins_hierarchy;
+                if (origins && origins != "") {
+                    this.setState({ origins: origins });
+                }
 
                 if (res?.product) {
                     this.setState({ productData: res.product });
@@ -525,6 +531,7 @@ class Product extends React.Component {
                         <Environnement
                             dataEcoScore={this.state.dataEcoScore}
                             ecoScore={this.state.ecoScore}
+                            origins={this.state.origins}
                             displayTranportImpact={
                                 this.props.match.params.bcProductId !== null &&
                                 this.props.match.params.bcProductId !== undefined
