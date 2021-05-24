@@ -329,6 +329,7 @@ class Traceability extends React.Component {
                     zoom={1}
                     minZoom={1}
                     scrollWheelZoom={true}
+                    dragging={false}
                     maxBounds={[
                         [-90, -180],
                         [90, 180],
