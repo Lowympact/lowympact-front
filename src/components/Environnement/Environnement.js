@@ -3,6 +3,7 @@ import Alternatives from "./Alternatives";
 import { CircleProgress } from "react-gradient-progress";
 import Origins from "./Origins";
 import "./Environnement.css";
+import EmpreinteCarbone from "./EmpreinteCarbone";
 
 class Environnement extends React.Component {
     state = {
@@ -475,14 +476,15 @@ class Environnement extends React.Component {
         if (this.props.barcode) {
             return (
                 <React.Fragment>
-                    {this.displayTransportImpact()}
+                    <EmpreinteCarbone dataEcoScore={this.props.dataEcoScore} />
+                    {/* {this.displayTransportImpact()} */}
                     {this.props.origins ? (
                         <Origins origins={this.props.origins} />
                     ) : (
                         <React.Fragment />
                     )}
                     {this.displayPackagingImpact()}
-                    {this.displayRepartitionAllItems()}
+                    {/* {this.displayRepartitionAllItems()} */}
 
                     <Alternatives
                         barcode={this.props.barcode}

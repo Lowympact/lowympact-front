@@ -125,10 +125,8 @@ class Alternatives extends React.Component {
                 this.props.alternatives != "" ? (
                     <Swiper
                         spaceBetween={0}
-                        observer={true}
-                        observeParents={true}
                         slidesPerView={1}
-                        // centeredSlides={true}
+                        centeredSlides={true}
                         onSwiper={(swiper) => this.setState({ swiper: swiper })}
                     >
                         {this.alternativesloop()}
