@@ -2,20 +2,58 @@ import React, { Component } from "react";
 import Quagga from "quagga";
 
 class Scanner extends Component {
-    componentDidMount = () => {
+    componentDidMount = async () => {
+        let usedCameraId;
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        let videoDevices = [];
+        devices.forEach((device) => {
+            if (device.kind == "videoinput") {
+                if (device.label.match(/back/) != null) {
+                    //console.log("Found video device: " + JSON.stringify(device));
+                    videoDevices.push(device);
+                }
+            }
+        });
+
+        // open every video device and dump its characteristics
+
+        for (let i in videoDevices) {
+            const device = videoDevices[i];
+            // console.log("Opening video device " + device.deviceId + " (" + device.label + ")");
+
+            const stream = await navigator.mediaDevices.getUserMedia({
+                video: { deviceId: { exact: device.deviceId } },
+            });
+
+            let maxResolution = -1;
+
+            stream.getVideoTracks().forEach((track) => {
+                const capabilities = track.getCapabilities();
+
+                if (capabilities.height.max >= maxResolution) {
+                    maxResolution = capabilities.height.max;
+                    usedCameraId = device.deviceId;
+                }
+
+                //console.log("Track capabilities: " + JSON.stringify(capabilities));
+            });
+
+            stream.getTracks().forEach((track) => track.stop());
+        }
+
         Quagga.init(
             {
                 inputStream: {
                     type: "LiveStream",
                     constraints: {
+                        deviceId: usedCameraId,
+                        focusMode: "continuous",
                         width: { min: 1920 },
                         height: { min: 1080 },
-                        facingMode: "environment", // or user
                         aspectRatio: {
                             min: 1,
                             max: 2,
                         },
-                        focusMode: "continuous",
                     },
                 },
                 locator: {

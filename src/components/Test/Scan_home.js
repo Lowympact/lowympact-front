@@ -9,30 +9,12 @@ class Scan_home extends Component {
         scanning: true,
         status: "",
         results: [],
-        usedCamera: 0,
+        usedCameraId: "3f6fc4177028f25c3e8215f4444838450630b8d656c627ef511346545d37f302",
         devices: [],
         reading: 0,
         barcode: undefined,
         bcProductId: undefined,
         Quagga: undefined,
-    };
-
-    componentDidMount = async () => {
-        let a = await navigator.mediaDevices.enumerateDevices().then(function (devices) {
-            return devices;
-        });
-        let cameras = [];
-        let i = 0;
-        a.forEach(function (device) {
-            if (device.kind == "videoinput") {
-                cameras.push(device);
-                if (device.label.match(/back/) != null) {
-                    this.setState({ usedCamera: i });
-                }
-                i++;
-            }
-        });
-        this.setState({ devices: cameras });
     };
 
     setQuagga = (quagga) => {
@@ -41,17 +23,6 @@ class Scan_home extends Component {
             this.state.Quagga.stop();
         }
         this.setState({ Quagga: quagga });
-    };
-
-    switchCamera = () => {
-        let num = this.state.usedCamera + 1;
-        if (num >= this.state.devices.length) {
-            num = 0;
-        }
-
-        this.setState({ usedCamera: num, scanning: false }, () =>
-            this.setState({ scanning: true })
-        );
     };
 
     _scan = () => {
@@ -168,7 +139,11 @@ class Scan_home extends Component {
                         </ul>
                     </div>
                     {this.state.scanning ? (
-                        <Scanner onDetected={this._onDetected} setQuagga={this.setQuagga} />
+                        <Scanner
+                            onDetected={this._onDetected}
+                            setQuagga={this.setQuagga}
+                            usedCameraId={this.usedCameraId}
+                        />
                     ) : null}
                 </React.Fragment>
             );
