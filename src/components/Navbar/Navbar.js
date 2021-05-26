@@ -14,12 +14,55 @@ class Navbar extends React.Component {
         barcode: undefined,
         bcProductId: undefined,
         height: 0,
+        devices: [],
+        usedCamera: 0,
     };
 
-    componentDidMount() {
+    componentDidMount = async () => {
         this.updateWindowDimensions();
         window.addEventListener("resize", this.updateWindowDimensions);
-    }
+        // We scan the cameras here not to slow down the process when opening the camera
+        const devices = await navigator.mediaDevices.enumerateDevices().then(function (devices) {
+            return devices;
+        });
+        let videoDevices = [];
+        devices.forEach((device) => {
+            if (device.kind === "videoinput") {
+                videoDevices.push(device);
+            }
+        });
+        this.setState({ devices: videoDevices });
+
+        // Open the best camera first
+        let maxResolution = -1;
+        for (let i in videoDevices) {
+            const device = videoDevices[i];
+            await navigator.mediaDevices
+                .getUserMedia({
+                    video: { deviceId: { exact: device.deviceId } },
+                })
+                .then(
+                    (stream) => {
+                        stream.getVideoTracks().forEach((track) => {
+                            const capabilities = track.getCapabilities();
+
+                            if (
+                                capabilities.height.max >= maxResolution &&
+                                device.label.match(/back/) != null
+                            ) {
+                                maxResolution = capabilities.height.max;
+                                this.setState({ usedCamera: i });
+                            }
+
+                            //console.log("Track capabilities: " + JSON.stringify(capabilities));
+                        });
+
+                        stream.getTracks().forEach((track) => track.stop());
+                    },
+                    (err) => console.log(err)
+                );
+        }
+    };
 
     componentWillUnmount() {
         window.removeEventListener("resize", this.updateWindowDimensions);
@@ -139,7 +182,12 @@ class Navbar extends React.Component {
                 //         console.error(error.message);
                 //     }}
                 // />
-                <Scan showScanner={this.handleScannerButton} history={this.props.history} />
+                <Scan
+                    showScanner={this.handleScannerButton}
+                    history={this.props.history}
+                    devices={this.state.devices}
+                    usedCamera={this.state.usedCamera}
+                />
             );
         }
     };

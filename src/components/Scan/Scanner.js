@@ -8,67 +8,8 @@ class Scanner extends Component {
         devices: [],
     };
 
-    switchCamera = () => {
-        let num = this.state.usedCamera + 1;
-        if (num >= this.state.devices.length) {
-            num = 0;
-        }
-        this.setState({ usedCamera: num });
-        Quagga.stop();
-        this.QuaggaInit(this.state.devices[num].deviceId);
-    };
-
-    componentDidMount = async () => {
-        let usedCameraId;
-        const devices = await navigator.mediaDevices.enumerateDevices().then(function (devices) {
-            return devices;
-        });
-        let videoDevices = [];
-        devices.forEach((device) => {
-            if (device.kind === "videoinput") {
-                videoDevices.push(device);
-                // if (device.label.match(/back/) != null) {
-                //     //console.log("Found video device: " + JSON.stringify(device));
-                // }
-            }
-        });
-        // ALL  cameras
-        console.log(videoDevices);
-        this.setState({ devices: videoDevices });
-
-        // open every video device and dump its characteristics
-        let maxResolution = -1;
-        for (let i in videoDevices) {
-            const device = videoDevices[i];
-            // console.log("Opening video device " + device.deviceId + " (" + device.label + ")");
-
-            await navigator.mediaDevices
-                .getUserMedia({
-                    video: { deviceId: { exact: device.deviceId } },
-                })
-                .then(
-                    (stream) => {
-                        stream.getVideoTracks().forEach((track) => {
-                            const capabilities = track.getCapabilities();
-
-                            if (
-                                capabilities.height.max >= maxResolution &&
-                                device.label.match(/back/) != null
-                            ) {
-                                maxResolution = capabilities.height.max;
-                                usedCameraId = device.deviceId;
-                                this.setState({ usedCamera: i });
-                            }
-
-                            //console.log("Track capabilities: " + JSON.stringify(capabilities));
-                        });
-
-                        stream.getTracks().forEach((track) => track.stop());
-                    },
-                    (err) => console.log(err)
-                );
-        }
-        this.QuaggaInit(usedCameraId);
+    componentDidMount = () => {
+        this.QuaggaInit(this.props.usedCameraId);
     };
 
     QuaggaInit = (usedCameraId, width = 1920, height = 1080) => {
@@ -144,14 +85,7 @@ class Scanner extends Component {
         return (
             <React.Fragment>
                 <div id="interactive" className="viewport" />
-                {this.state.devices?.length > 1 ? (
-                    <button className="code-switch-camera" onClick={this.switchCamera}>
-                        <span className="material-icons">cameraswitch</span>
-                        {this.state.usedCamera}
-                    </button>
-                ) : (
-                    <React.Fragment />
-                )}
+
                 {this.state.error ? (
                     <div className="scan-error">
                         Il semblerait que votre caméra ne soit pas détectée. Essayez de changer de

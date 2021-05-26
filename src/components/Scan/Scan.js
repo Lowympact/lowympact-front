@@ -9,12 +9,25 @@ class Scan extends Component {
         scanning: true,
         status: "",
         results: [],
-        usedCameraId: "3f6fc4177028f25c3e8215f4444838450630b8d656c627ef511346545d37f302",
+        usedCamera: 0,
         devices: [],
         reading: 0, //false : barcode - true: qrcode
         barcode: undefined,
         bcProductId: undefined,
         Quagga: undefined,
+    };
+
+    switchCamera = () => {
+        let num = this.state.usedCamera + 1;
+        if (num >= this.state.devices.length) {
+            num = 0;
+        }
+        this.setState({ usedCamera: num });
+        if (this.state.Quagga) this.state.Quagga.stop();
+    };
+
+    componentDidMount = () => {
+        this.setState({ usedCamera: this.props.usedCamera, devices: this.props.devices });
     };
 
     setQuagga = (quagga) => {
@@ -102,6 +115,14 @@ class Scan extends Component {
             return (
                 <React.Fragment>
                     <div className="header">
+                        {this.state.devices?.length > 1 ? (
+                            <button className="code-switch-camera" onClick={this.switchCamera}>
+                                <span className="material-icons">cameraswitch</span>
+                                {this.state.usedCamera}
+                            </button>
+                        ) : (
+                            <React.Fragment />
+                        )}
                         <ul className="results">
                             {this.state.results.map((result, i) => (
                                 <div key={result.codeResult.code + i}>
@@ -115,11 +136,11 @@ class Scan extends Component {
                             ))}
                         </ul>
                     </div>
-                    {this.state.scanning ? (
+                    {this.state.scanning && this.state.devices?.length > 0 ? (
                         <Scanner
                             onDetected={this._onDetected}
                             setQuagga={this.setQuagga}
-                            usedCameraId={this.usedCameraId}
+                            usedCameraId={this.state.devices[this.state.usedCamera].deviceId}
                         />
                     ) : null}
                 </React.Fragment>
