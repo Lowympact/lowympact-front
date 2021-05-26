@@ -127,3 +127,11 @@ video {
     top: 0px;
     left: 0px;
 }
+
+.scan-error a {
+    color: blue;
+}
+
+.scan-error {
+    text-align: center;
+}

@@ -11,7 +11,7 @@ class Scan_home extends Component {
         results: [],
         usedCameraId: "3f6fc4177028f25c3e8215f4444838450630b8d656c627ef511346545d37f302",
         devices: [],
-        reading: 0,
+        reading: 0, //false : barcode - true: qrcode
         barcode: undefined,
         bcProductId: undefined,
         Quagga: undefined,
@@ -49,6 +49,8 @@ class Scan_home extends Component {
                         status: "found",
                         barcode: res.codeResult.code,
                     });
+                    this.props.showScanner(false);
+                    if (this.state.Quagga) this.state.Quagga.stop();
                     return true;
                 } else {
                     this.setState({
@@ -57,22 +59,6 @@ class Scan_home extends Component {
                     });
                     return false;
                 }
-                // .then((response) => response.json())
-                //     .then((result) => {
-                //         console.log(result);
-                //         if (result.status !== 0) {
-                //             this.setState({
-                //                 scanning: false,
-                //                 status: "found",
-                //                 barcode: res.codeResult.code,
-                //             });
-                //         } else {
-                //             this.setState({
-                //                 scanning: true,
-                //                 status: "not found",
-                //             });
-                //         }
-                //     });
             }
         }
     };
@@ -88,7 +74,7 @@ class Scan_home extends Component {
                     status: "found",
                 });
             }
-            this.state.Quagga.stop();
+            if (this.state.Quagga) this.state.Quagga.stop();
         }
     };
     handleError = (err) => {
@@ -116,15 +102,6 @@ class Scan_home extends Component {
             return (
                 <React.Fragment>
                     <div className="header">
-                        {this.state.scanning ? "true" : "false"}
-                        {/* {this.state.devices?.length > 4 ? (
-                            <button className="code-switch-camera" onClick={this.switchCamera}>
-                                <span className="material-icons">cameraswitch</span>
-                                {this.state.usedCamera}
-                            </button>
-                        ) : (
-                            <React.Fragment />
-                        )} */}
                         <ul className="results">
                             {this.state.results.map((result, i) => (
                                 <div key={result.codeResult.code + i}>
@@ -154,7 +131,10 @@ class Scan_home extends Component {
 
     switchReader = () => {
         if (this.state.reading) this.setState({ reading: false });
-        else this.setState({ reading: true });
+        else {
+            if (this.state.Quagga) this.state.Quagga.stop();
+            this.setState({ reading: true });
+        }
     };
 
     render() {
@@ -177,7 +157,9 @@ class Scan_home extends Component {
                     <span
                         class="close"
                         onClick={() => {
-                            this.props?.onCrossClicked(false);
+                            if (this.state.Quagga) this.state.Quagga.stop();
+
+                            this.props.showScanner(false);
                         }}
                     >
                         &times;
