@@ -8,14 +8,8 @@ class Scanner extends Component {
         devices: [],
     };
 
-    switchCamera = () => {
-        let num = this.state.usedCamera + 1;
-        if (num >= this.state.devices.length) {
-            num = 0;
-        }
-        this.setState({ usedCamera: num });
-        Quagga.stop();
-        this.QuaggaInit(this.state.devices[num].deviceId);
+    componentDidMount = () => {
+        this.QuaggaInit(this.props.usedCameraId);
     };
 
     componentDidMount = () => {
