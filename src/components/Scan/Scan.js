@@ -16,15 +16,6 @@ class Scan extends Component {
         Quagga: undefined,
     };
 
-    switchCamera = () => {
-        let num = this.state.usedCamera + 1;
-        if (num >= this.state.devices.length) {
-            num = 0;
-        }
-        this.setState({ usedCamera: num });
-        if (this.state.Quagga) this.state.Quagga.stop();
-    };
-
     componentDidMount = () => {
         this.setState({ usedCamera: this.props.usedCamera, devices: this.props.devices });
     };
@@ -108,14 +99,6 @@ class Scan extends Component {
             return (
                 <React.Fragment>
                     <div className="header">
-                        {this.state.devices?.length > 1 ? (
-                            <button className="code-switch-camera" onClick={this.switchCamera}>
-                                <span className="material-icons">cameraswitch</span>
-                                {this.state.usedCamera}
-                            </button>
-                        ) : (
-                            <React.Fragment />
-                        )}
                         <ul className="results">
                             {this.state.results.map((result, i) => (
                                 <div key={result.codeResult.code + i}>

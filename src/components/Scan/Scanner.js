@@ -8,8 +8,14 @@ class Scanner extends Component {
         devices: [],
     };
 
-    componentDidMount = () => {
-        this.QuaggaInit(this.props.usedCameraId);
+    switchCamera = () => {
+        let num = this.state.usedCamera + 1;
+        if (num >= this.state.devices.length) {
+            num = 0;
+        }
+        this.setState({ usedCamera: num });
+        Quagga.stop();
+        this.QuaggaInit(this.state.devices[this.state.usedCamera].deviceId);
     };
 
     componentDidMount = () => {
@@ -87,7 +93,7 @@ class Scanner extends Component {
         return (
             <React.Fragment>
                 <div id="interactive" className="viewport" />
-                {this.state.devices?.length > 0 ? (
+                {this.state.devices?.length > 1 ? (
                     <button className="code-switch-camera" onClick={this.switchCamera}>
                         <span className="material-icons">cameraswitch</span>
                         {this.state.usedCamera}
