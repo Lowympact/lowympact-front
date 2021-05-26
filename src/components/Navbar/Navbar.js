@@ -14,12 +14,9 @@ class Navbar extends React.Component {
         barcode: undefined,
         bcProductId: undefined,
         height: 0,
+        devices: [],
+        usedCamera: 0,
     };
-
-    componentDidMount() {
-        this.updateWindowDimensions();
-        window.addEventListener("resize", this.updateWindowDimensions);
-    }
 
     componentWillUnmount() {
         window.removeEventListener("resize", this.updateWindowDimensions);
@@ -31,6 +28,58 @@ class Navbar extends React.Component {
 
     handleScannerButton = (bool) => {
         this.setState({ showScanner: bool });
+    };
+
+    componentDidMount = async () => {
+        this.updateWindowDimensions();
+        window.addEventListener("resize", this.updateWindowDimensions);
+
+        const devices = await navigator.mediaDevices.enumerateDevices().then(function (devices) {
+            return devices;
+        });
+        let videoDevices = [];
+        devices.forEach((device) => {
+            if (device.kind === "videoinput") {
+                videoDevices.push(device);
+                // if (device.label.match(/back/) != null) {
+                //     //console.log("Found video device: " + JSON.stringify(device));
+                // }
+            }
+        });
+        // ALL  cameras
+        this.setState({ devices: videoDevices });
+
+        // open every video device and dump its characteristics
+        let maxResolution = -1;
+        for (let i in videoDevices) {
+            const device = videoDevices[i];
+            // console.log("Opening video device " + device.deviceId + " (" + device.label + ")");
+
+            await navigator.mediaDevices
+                .getUserMedia({
+                    video: { deviceId: { exact: device.deviceId } },
+                })
+                .then(
+                    (stream) => {
+                        stream.getVideoTracks().forEach((track) => {
+                            const capabilities = track.getCapabilities();
+
+                            if (
+                                capabilities.height.max >= maxResolution &&
+                                device.label.match(/back/) != null
+                            ) {
+                                maxResolution = capabilities.height.max;
+                                this.setState({ usedCamera: i });
+                            }
+
+                            //console.log("Track capabilities: " + JSON.stringify(capabilities));
+                        });
+
+                        stream.getTracks().forEach((track) => track.stop());
+                    },
+                    (err) => console.log(err)
+                );
+        }
     };
 
     // handleBarcode = (res) => {
@@ -139,7 +188,12 @@ class Navbar extends React.Component {
                 //         console.error(error.message);
                 //     }}
                 // />
-                <Scan showScanner={this.handleScannerButton} history={this.props.history} />
+                <Scan
+                    showScanner={this.handleScannerButton}
+                    history={this.props.history}
+                    devices={this.state.devices}
+                    usedCamera={this.state.usedCamera}
+                />
             );
         }
     };
