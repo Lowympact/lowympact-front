@@ -137,9 +137,16 @@ class BarChartCarbonImpact extends React.Component {
                         xaxis.push((now - i).toString());
                     }
                     break;
+                default:
+                    now = new Date().getFullYear();
+                    for (let i = dataSize - 1; i >= 0; i--) {
+                        xaxis.push((now - i).toString());
+                    }
+                    break;
             }
-
-            this.state.options.xaxis.categories = xaxis;
+            let options = this.state.options;
+            if (options.xaxis) options.xaxis.categories = xaxis;
+            this.setState({ options: options });
 
             let series = [
                 {

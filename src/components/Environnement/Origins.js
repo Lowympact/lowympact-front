@@ -1,6 +1,5 @@
 import React from "react";
-import { Map, TileLayer, Marker, Polygon } from "react-leaflet";
-import L from "leaflet";
+import { Map, TileLayer, Polygon } from "react-leaflet";
 
 class Origins extends React.Component {
     state = {
@@ -19,7 +18,7 @@ class Origins extends React.Component {
 
     getCountries = () => {
         this.props.origins?.map((origin) => {
-            if (origin != "en:ghana") {
+            if (origin !== "en:ghana") {
                 fetch(`https://api.lowympact.fr/api/v1/countries/${origin}`)
                     .then((res) => res.json())
                     .then((res) => {
@@ -38,11 +37,12 @@ class Origins extends React.Component {
                         }
                     });
             }
+            return true;
         });
     };
 
     render = () => {
-        if (this.state.polygon.length == 0) return <React.Fragment />;
+        if (this.state.polygon.length === 0) return <React.Fragment />;
         else {
             return (
                 <div className="environnement-map-container">
@@ -85,13 +85,14 @@ class Origins extends React.Component {
                                         onClick={() => this.setActiveCountry(poly.name)}
                                         color={"color:white"}
                                         fillColor={
-                                            this.activeCountry == poly.name ? "blue" : "green"
+                                            this.activeCountry === poly.name ? "blue" : "green"
                                         }
                                         opacity={"1"}
                                         positions={poly.geo}
                                         key={i}
                                     />
                                 );
+                            else return <React.Fragment />;
                         })}
                     </Map>
                 </div>

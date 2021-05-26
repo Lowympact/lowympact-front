@@ -78,7 +78,7 @@ class Traceability extends React.Component {
                     <SwiperSlide>
                         <div className="product-slide-container">
                             <div className="product-slide-icon">
-                                <span class="material-icons">
+                                <span className="material-icons">
                                     {this.getMaterialIcon(product.transport)}
                                 </span>
 
@@ -378,7 +378,7 @@ function getDistance(origin, destination) {
         Math.pow(Math.sin(deltaLat / 2), 2) +
         Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(deltaLon / 2), 2);
     var c = 2 * Math.asin(Math.sqrt(a));
-    var EARTH_RADIUS = 6371;
+    // var EARTH_RADIUS = 6371;
     return c; //* EARTH_RADIUS * 1000;
 }
 
@@ -415,6 +415,6 @@ function getCurveOptions(lat1, long1, lat2, long2) {
     return ["M", latlng1, "Q", midpointLatLng, latlng2];
 }
 
-function getChildElementIndex(node) {
-    return Array.prototype.indexOf.call(node.parentNode.children, node);
-}
+// function getChildElementIndex(node) {
+//     return Array.prototype.indexOf.call(node.parentNode.children, node);
+// }

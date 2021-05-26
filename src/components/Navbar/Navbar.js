@@ -4,9 +4,9 @@ import ButtonHistory from "../Button/ButtonHistory";
 import ButtonProfil from "../Button/ButtonProfil";
 import ButtonScan from "../Button/ButtonScan";
 // import Scan from "../Scan/Scan";
-import Scan_home from "../Test/Scan_home";
+import Scan from "../Scan/Scan";
 // import { ScanSettings } from "scandit-sdk";
-import { Redirect, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class Navbar extends React.Component {
     state = {
@@ -79,7 +79,7 @@ class Navbar extends React.Component {
                         <Link
                             to="/history"
                             className={
-                                window.location.pathname == "/history"
+                                window.location.pathname === "/history"
                                     ? "navbar-link navbar-text-left navbar-selected"
                                     : "navbar-link navbar-text-left "
                             }
@@ -95,7 +95,7 @@ class Navbar extends React.Component {
                         <Link
                             to="/profil"
                             className={
-                                window.location.pathname == "/profil"
+                                window.location.pathname === "/profil"
                                     ? "navbar-link navbar-text-right navbar-selected"
                                     : "navbar-link navbar-text-right "
                             }
@@ -139,7 +139,7 @@ class Navbar extends React.Component {
                 //         console.error(error.message);
                 //     }}
                 // />
-                <Scan_home showScanner={this.handleScannerButton} history={this.props.history} />
+                <Scan showScanner={this.handleScannerButton} history={this.props.history} />
             );
         }
     };

@@ -5,6 +5,7 @@ import "swiper/swiper-bundle.css";
 class Alternatives extends React.Component {
     state = {
         swiper: undefined,
+        no_alternative: true,
     };
 
     renderListAlternatives = (listItems) => {
@@ -17,6 +18,7 @@ class Alternatives extends React.Component {
             }
 
             if (item.id !== this.props.barcode) {
+                this.setState({ no_alternative: false });
                 return (
                     <SwiperSlide key={item.id}>
                         <a href={pathProduct} className="product-alternative">
@@ -49,8 +51,8 @@ class Alternatives extends React.Component {
 
         if (
             this.props.alternatives &&
-            this.props.alternatives != "loading" &&
-            this.props.alternatives != ""
+            this.props.alternatives !== "loading" &&
+            this.props.alternatives !== ""
         ) {
             var alternatives_a = <React.Fragment></React.Fragment>;
             var alternatives_b = <React.Fragment></React.Fragment>;
@@ -93,6 +95,7 @@ class Alternatives extends React.Component {
                     alternatives_d = this.renderListAlternatives(this.props.alternatives.d);
                     break;
                 default:
+                    this.setState({ no_alternative: true });
             }
 
             alternativesList = (
@@ -121,8 +124,9 @@ class Alternatives extends React.Component {
             <React.Fragment>
                 <span className="title-part-environnement">{alternatives_title}</span>
                 {this.props.alternatives &&
-                this.props.alternatives != "loading" &&
-                this.props.alternatives != "" ? (
+                this.props.alternatives !== "loading" &&
+                this.props.alternatives !== "" &&
+                !this.state.no_alternative ? (
                     <Swiper
                         spaceBetween={0}
                         slidesPerView={1}

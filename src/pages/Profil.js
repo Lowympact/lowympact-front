@@ -77,7 +77,7 @@ class Profil extends React.Component {
                     className="profil-screen"
                 >
                     <div className="profil-picture">
-                        <div class="material-icons">person</div>
+                        <div className="material-icons">person</div>
                     </div>
                     {this.state.connected
                         ? this.displayConnectedProfil()

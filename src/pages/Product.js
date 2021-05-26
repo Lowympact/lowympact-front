@@ -424,14 +424,14 @@ class Product extends React.Component {
                         <span className="cart-count">
                             {this.state.cart > 0 ? this.state.cart : ""}
                         </span>
-                        <span class="material-icons">add_shopping_cart</span>
+                        <span className="material-icons">add_shopping_cart</span>
                     </div>
                 ) : (
                     <React.Fragment />
                 )}
                 {this.state.cart > 0 ? (
                     <div className="remove-from-cart" onClick={this.removeFromCart}>
-                        <span class="material-icons">remove_shopping_cart</span>
+                        <span className="material-icons">remove_shopping_cart</span>
                     </div>
                 ) : (
                     <React.Fragment />

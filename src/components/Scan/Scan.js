@@ -1,121 +1,204 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
-import {
-	configure,
-	BarcodePicker as ScanditSDKBarcodePicker,
-} from "scandit-sdk";
-import "./Scan.css";
-import { motion, AnimatePresence } from "framer-motion";
-
-// Configure the library and activate it with a license key
-const configurationPromise = configure(
-	"ASHf6Cx7DGz5BbkR5RWee94Ezm55DtkCAFB5HoNVQLhPf8gUhk8ypmZ72tbfAdIo33/I2gZR9pcXcdBwQGyYu69PkahqLA0dEEN5WFtpVEjMfQMiBhwmRWIJQgn+E54DiwJm/5CjsV1+Uy7AJWXnvrLiuwxG2D/b7b1QoPFJfkKp2OSreWJXnV/kJ+rtqFyNOu2wQb5Rq5IFXOU/tnjlTvJp8Kxl4jezOVoWlQZreaLKfxfBforPArJErC16cldrqFULYUdsPqb4Vn27hWUmPQTfaX/SbeDCl1h++IPmcvRpzwM9hY0ti7zzfhBKg3TgEYTMiPUipakmM21mU92xYjA9kmKO6bOjzY4XqyrWBUzv/C1TwJfK1aZDDLH8BOmqqJILi2Ty9fN84y09vBgv0dfXhQa3Q0/UW0Hnv0Xge2am3RY5dmE6pfWaxYyA3fDj920DpnlUNcAsfdErnvpZz8H1eftw6D2w3ps6q3jNFc/CTkALFZOk9Sy2u+lOfzvjKrcz5d1yoSo1sVhFsLWNUoaoHTP6NPnQaawC1YwPRp90T+2yNfx+iESAhn3qfn2pOEpBG0rHdZNLLj1yeNJU9Pjt7dznNeCJwG2SzSQvPZU5HzLuIu+siWjUPStB9WWMfVluWN3opv+ReRWBjBsaRFPBmit6LNbRk3QLT6To50yVZg8Zy1NuDFUoE+Ms2ytVn9fs30n1DeNYJLCWjQJ4ktQaz2mIFTOFvRVrJqPkTBwzOaAjWoPxOr097hga8bRhPAqV6ir7ojSffUeCjL/jmp1x1uSE4OaQe3Y32oC0XOVJqA==",
-	{
-		engineLocation: "https://cdn.jsdelivr.net/npm/scandit-sdk@5.x/build/",
-	}
-).catch((error) => {
-	alert(error);
-});
-
-const style = {
-	position: "absolute",
-	top: "0",
-	bottom: "0",
-	left: "0",
-	right: "0",
-	margin: "auto",
-	maxWidth: "1280px",
-	maxHeight: "80%",
-};
+import Scanner from "./Scanner";
+import QrReader from "react-qr-reader";
+import Switch from "react-switch";
+import { Redirect } from "react-router-dom";
 
 class Scan extends Component {
-	static propTypes = {
-		visible: PropTypes.bool,
-		playSoundOnScan: PropTypes.bool,
-		vibrateOnScan: PropTypes.bool,
-		scanningPaused: PropTypes.bool,
-		guiStyle: PropTypes.string,
-		videoFit: PropTypes.string,
-		scanSettings: PropTypes.object,
-		enableCameraSwitcher: PropTypes.bool,
-		enableTorchToggle: PropTypes.bool,
-		enableTapToFocus: PropTypes.bool,
-		enablePinchToZoom: PropTypes.bool,
-		accessCamera: PropTypes.bool,
-		camera: PropTypes.object,
-		cameraSettings: PropTypes.object,
-		targetScanningFPS: PropTypes.number,
-		onScan: PropTypes.func,
-		onError: PropTypes.func,
-	};
+    state = {
+        scanning: true,
+        status: "",
+        results: [],
+        usedCameraId: "3f6fc4177028f25c3e8215f4444838450630b8d656c627ef511346545d37f302",
+        devices: [],
+        reading: 0, //false : barcode - true: qrcode
+        barcode: undefined,
+        bcProductId: undefined,
+        Quagga: undefined,
+    };
 
-	constructor(props) {
-		super(props);
-		this.ref = React.createRef();
-	}
+    setQuagga = (quagga) => {
+        console.log(quagga);
+        if (this.state.Quagga) {
+            this.state.Quagga.stop();
+        }
+        this.setState({ Quagga: quagga });
+    };
 
-	componentDidMount() {
-		configurationPromise.then(() => {
-			ScanditSDKBarcodePicker.create(this.ref.current, this.props).then(
-				(barcodePicker) => {
-					this.barcodePicker = barcodePicker;
+    _scan = () => {
+        this.setState({ scanning: !this.state.scanning, status: "" });
+    };
 
-					if (this.props.onScan != null) {
-						barcodePicker.on("scan", this.props.onScan);
-					}
-					if (this.props.onError != null) {
-						barcodePicker.on("scanError", this.props.onError);
-					}
-				}
-			);
-		});
-	}
+    _onDetected = async (res) => {
+        console.log(res);
+        if (res) {
+            if (res.codeResult && res.codeResult.code) {
+                this.setState({
+                    results: [res],
+                    scanning: true,
+                    status: "waiting",
+                });
+                let response = await fetch(
+                    `https://world.openfoodfacts.org/api/v0/product/${res.codeResult.code}.json/`
+                );
+                let result = await response.json();
+                console.log(result);
+                if (result.status !== 0) {
+                    this.setState({
+                        scanning: false,
+                        status: "found",
+                        barcode: res.codeResult.code,
+                    });
+                    this.props.showScanner(false);
+                    if (this.state.Quagga) this.state.Quagga.stop();
+                    return true;
+                } else {
+                    this.setState({
+                        scanning: true,
+                        status: "not found",
+                    });
+                    return false;
+                }
+            }
+        }
+    };
 
-	componentWillUnmount() {
-		if (this.barcodePicker != null) {
-			this.barcodePicker.destroy();
-		}
-	}
+    handleScan = (data) => {
+        if (data) {
+            let arr = data.split("/");
+            if (arr.length > 1) {
+                this.setState({
+                    scanning: false,
+                    barcode: arr[4],
+                    bcProductId: arr[5],
+                    status: "found",
+                });
+            }
+            if (this.state.Quagga) this.state.Quagga.stop();
+        }
+    };
+    handleError = (err) => {
+        console.error(err);
+    };
 
-	componentDidUpdate(prevProps) {
-		// These are just some examples of how to react to some possible property changes
+    displayQrCode = () => {
+        if (this.state.status !== "found") {
+            return (
+                <QrReader
+                    delay={300}
+                    onError={this.handleError}
+                    onScan={this.handleScan}
+                    style={{ width: "100%" }}
+                    showViewFinder={false}
+                />
+            );
+        } else {
+            return <React.Fragment />;
+        }
+    };
 
-		if (
-			JSON.stringify(prevProps.scanSettings) !==
-			JSON.stringify(this.props.scanSettings)
-		) {
-			this.barcodePicker.applyScanSettings(this.props.scanSettings);
-		}
+    displayBarCode = () => {
+        if (this.state.status !== "found") {
+            return (
+                <React.Fragment>
+                    <div className="header">
+                        <ul className="results">
+                            {this.state.results.map((result, i) => (
+                                <div key={result.codeResult.code + i}>
+                                    {this.state.status === "waiting"
+                                        ? "Vérification du code" + result?.codeResult?.code
+                                        : ""}
+                                    {this.state.status === "not found"
+                                        ? "code non trouvé, merci de réessayer"
+                                        : ""}
+                                </div>
+                            ))}
+                        </ul>
+                    </div>
+                    {this.state.scanning ? (
+                        <Scanner
+                            onDetected={this._onDetected}
+                            setQuagga={this.setQuagga}
+                            usedCameraId={this.usedCameraId}
+                        />
+                    ) : null}
+                </React.Fragment>
+            );
+        } else {
+            return <React.Fragment />;
+        }
+    };
 
-		if (prevProps.visible !== this.props.visible) {
-			this.barcodePicker.setVisible(this.props.visible);
-		}
-	}
+    switchReader = () => {
+        if (this.state.reading) this.setState({ reading: false });
+        else {
+            if (this.state.Quagga) this.state.Quagga.stop();
+            this.setState({ reading: true });
+        }
+    };
 
-	render() {
-		return (
-			<AnimatePresence exitBeforeEnter={true}>
-				<motion.div
-					id="background-scan"
-					initial={{ bottom: "-1000px" }}
-					animate={{ bottom: "0px" }}
-					transition={{ duration: 0.5 }}
-					exit={{ bottom: "-1000px" }}
-				>
-					<div ref={this.ref} style={style} />
-					<span
-						class="close"
-						onClick={() => {
-							this.props.onCrossClicked(false);
-						}}
-					>
-						&times;
-					</span>
-					<div id="scandit-barcode-picker"></div>
-				</motion.div>
-			</AnimatePresence>
-		);
-	}
+    render() {
+        console.log("Results: ", this.state.results, this.state.redirect);
+        if (
+            this.state.barcode &&
+            this.state.bcProductId &&
+            (this.props.barcode !== this.state.barcode ||
+                this.props.bcProductId !== this.state.bcProductId)
+        ) {
+            return (
+                <Redirect to={"/products/" + this.state.barcode + "/" + this.state.bcProductId} />
+            );
+        }
+        if (this.state.barcode && this.props.barcode !== this.state.barcode) {
+            return <Redirect to={"/products/" + this.state.barcode} />;
+        } else {
+            return (
+                <div className="code-reader-container">
+                    <span
+                        className="close"
+                        onClick={() => {
+                            if (this.state.Quagga) this.state.Quagga.stop();
+
+                            this.props.showScanner(false);
+                        }}
+                    >
+                        &times;
+                    </span>
+                    <div className="code-switch" onClick={this.switchReader}>
+                        <div className="span-code-switch">
+                            <span
+                                className={
+                                    this.state.reading ? "material-icons" : "material-icons green"
+                                }
+                            >
+                                view_week
+                            </span>
+                            <span>Barcode</span>
+                        </div>
+                        <Switch
+                            onChange={this.switchReader}
+                            uncheckedIcon={false}
+                            checkedIcon={false}
+                            checked={this.state.reading}
+                            onColor={"#888"}
+                            offColor={"#888"}
+                        />
+                        <div className="span-code-switch">
+                            <span
+                                className={
+                                    !this.state.reading ? "material-icons" : "material-icons green"
+                                }
+                            >
+                                qr_code_scanner
+                            </span>
+                            <span>QR Code</span>
+                        </div>
+                    </div>
+                    {this.state.reading ? this.displayQrCode() : this.displayBarCode()}
+                </div>
+            );
+        }
+    }
 }
 
 export default Scan;

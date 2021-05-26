@@ -10,7 +10,7 @@ class Scanner extends Component {
         const devices = await navigator.mediaDevices.enumerateDevices();
         let videoDevices = [];
         devices.forEach((device) => {
-            if (device.kind == "videoinput") {
+            if (device.kind === "videoinput") {
                 if (device.label.match(/back/) != null) {
                     //console.log("Found video device: " + JSON.stringify(device));
                     videoDevices.push(device);
@@ -27,8 +27,7 @@ class Scanner extends Component {
             const device = videoDevices[i];
             // console.log("Opening video device " + device.deviceId + " (" + device.label + ")");
 
-            let stream;
-            const streaming = await navigator.mediaDevices
+            await navigator.mediaDevices
                 .getUserMedia({
                     video: { deviceId: { exact: device.deviceId } },
                 })
@@ -38,7 +37,6 @@ class Scanner extends Component {
                             const capabilities = track.getCapabilities();
 
                             if (capabilities.height.max >= maxResolution) {
-                                console.log("here");
                                 maxResolution = capabilities.height.max;
                                 usedCameraId = device.deviceId;
                             }

@@ -15,7 +15,6 @@ class EmpreinteCarbone extends React.Component {
 
     render = () => {
         if (this.props.dataEcoScore?.agribalyse?.co2_total) {
-            console.log(this.props.dataEcoScore);
             let repartition = [
                 {
                     image: "agriculture",
@@ -108,7 +107,10 @@ class EmpreinteCarbone extends React.Component {
                         <div className="empreinte-carbone-equivalent">
                             <div className="icon-container">
                                 <div className="material-icons">
-                                    <img src={`/images/alternatives/${equivalent[1]}`} />
+                                    <img
+                                        src={`/images/alternatives/${equivalent[1]}`}
+                                        alt="alternative"
+                                    />
                                 </div>
                             </div>
                             <div className="equivalent-container">
@@ -126,7 +128,7 @@ class EmpreinteCarbone extends React.Component {
                         </div>
                     </div>
 
-                    <div className="empreinte-carbone-container">
+                    <div className="empreinte-carbone-container no-margin-container">
                         <div className="empreinte-carbone-header">
                             <div className="header-text">
                                 <div className="header-main">
