@@ -5,10 +5,11 @@ class EmpreinteCarbone extends React.Component {
         alea: 3,
     };
 
-    setAlea = () => {
+    setAlea = (nb) => {
         // this.setState({ alea: Math.floor(Math.random() * 11) });
-        let alea = this.state.alea + 1;
+        let alea = this.state.alea + nb;
         if (alea > 11) alea = 0;
+        if (alea < 0) alea = 11;
         this.setState({ alea: alea });
     };
 
@@ -115,8 +116,13 @@ class EmpreinteCarbone extends React.Component {
                                 <div className="text-big">{equivalent[0]}</div>
                             </div>
                         </div>
-                        <div className="arrow" onClick={this.setAlea}>
-                            <div className="material-icons">refresh</div>
+                        <div className="arrow">
+                            <div className="material-icons" onClick={() => this.setAlea(1)}>
+                                arrow_back_ios
+                            </div>
+                            <div className="material-icons" onClick={() => this.setAlea(-1)}>
+                                arrow_forward_ios
+                            </div>
                         </div>
                     </div>
 

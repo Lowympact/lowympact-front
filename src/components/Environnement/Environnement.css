@@ -752,9 +752,12 @@
     width: 100%;
     align-items: center;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     font-size: 20px !important;
     position: absolute;
+    /* margin-left: 5vw; */
+    /* margin-right: 5vw; */
+    font-size: 15px !important;
 
     bottom: 3vw;
 }
