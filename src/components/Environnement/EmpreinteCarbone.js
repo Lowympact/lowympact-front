@@ -200,23 +200,23 @@ function getEquivalent(co2, alea) {
         case 7:
             return [
                 "De " +
-                    (co2 / 0.083).toFixed(1) +
-                    " jours d'éclairage d'une ampoule basse consommation",
-                "light.svg",
-            ];
-        case 8:
-            return [
-                "De " +
                     (co2 / 0.24).toFixed(1) +
                     " heures de chauffage au gaz d'un appartement moyen de 70m²",
                 "appartment.svg",
             ];
-        case 9:
+        case 8:
             return [
                 "De la production de " +
-                    ((co2 * 100) / 33.8).toFixed(0) +
+                    ((co2 * 1000) / 33.8).toFixed(0) +
                     " grammes de steak haché de boeuf cru",
                 "steak.png",
+            ];
+        case 9:
+            return [
+                "De " +
+                    (co2 / 0.083).toFixed(1) +
+                    " jours d'éclairage d'une ampoule basse consommation",
+                "light.svg",
             ];
         case 10:
             return [
