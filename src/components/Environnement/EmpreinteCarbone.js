@@ -165,7 +165,7 @@ function getEquivalent(co2, alea) {
             return [
                 "De la production de " +
                     (co2 / 0.6).toFixed(1) +
-                    " kg de pomme de terres en France",
+                    " kg de pommes de terre en France",
                 "potatoe.png",
             ];
         case 2:
