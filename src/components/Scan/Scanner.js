@@ -12,6 +12,12 @@ class Scanner extends Component {
         this.QuaggaInit(this.props.usedCameraId);
     };
 
+    componentDidUpdate = (prevProps) => {
+        console.log(prevProps);
+        if (prevProps.usedCameraId != this.props.usedCameraId)
+            this.QuaggaInit(this.props.usedCameraId);
+    };
+
     QuaggaInit = (usedCameraId, width = 1920, height = 1080) => {
         Quagga.init(
             {

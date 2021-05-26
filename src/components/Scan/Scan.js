@@ -115,7 +115,7 @@ class Scan extends Component {
             return (
                 <React.Fragment>
                     <div className="header">
-                        {this.state.devices?.length > 1 ? (
+                        {this.state.devices?.length > 0 ? (
                             <button className="code-switch-camera" onClick={this.switchCamera}>
                                 <span className="material-icons">cameraswitch</span>
                                 {this.state.usedCamera}
