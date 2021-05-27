@@ -9,6 +9,7 @@ class Scan extends Component {
         scanning: true,
         status: "",
         results: [],
+        usedCameraId: "3f6fc4177028f25c3e8215f4444838450630b8d656c627ef511346545d37f302",
         devices: [],
         reading: 0, //false : barcode - true: qrcode
         barcode: undefined,
@@ -16,11 +17,8 @@ class Scan extends Component {
         Quagga: undefined,
     };
 
-    componentDidMount = () => {
-        this.setState({ usedCamera: this.props.usedCamera, devices: this.props.devices });
-    };
-
     setQuagga = (quagga) => {
+        console.log(quagga);
         if (this.state.Quagga) {
             this.state.Quagga.stop();
         }
@@ -32,6 +30,7 @@ class Scan extends Component {
     };
 
     _onDetected = async (res) => {
+        console.log(res);
         if (res) {
             if (res.codeResult && res.codeResult.code) {
                 this.setState({
@@ -43,6 +42,7 @@ class Scan extends Component {
                     `https://world.openfoodfacts.org/api/v0/product/${res.codeResult.code}.json/`
                 );
                 let result = await response.json();
+                console.log(result);
                 if (result.status !== 0) {
                     this.setState({
                         scanning: false,
@@ -76,6 +76,9 @@ class Scan extends Component {
             }
             if (this.state.Quagga) this.state.Quagga.stop();
         }
+    };
+    handleError = (err) => {
+        console.error(err);
     };
 
     displayQrCode = () => {
@@ -112,12 +115,11 @@ class Scan extends Component {
                             ))}
                         </ul>
                     </div>
-                    {this.state.scanning && this.state.devices?.length > 0 ? (
+                    {this.state.scanning ? (
                         <Scanner
                             onDetected={this._onDetected}
                             setQuagga={this.setQuagga}
-                            usedCamera={this.props.usedCamera}
-                            devices={this.props.devices}
+                            usedCameraId={this.usedCameraId}
                         />
                     ) : null}
                 </React.Fragment>
@@ -136,6 +138,7 @@ class Scan extends Component {
     };
 
     render() {
+        console.log("Results: ", this.state.results, this.state.redirect);
         if (
             this.state.barcode &&
             this.state.bcProductId &&
