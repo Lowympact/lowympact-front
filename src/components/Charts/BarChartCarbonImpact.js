@@ -144,9 +144,7 @@ class BarChartCarbonImpact extends React.Component {
                     }
                     break;
             }
-            let options = this.state.options;
-            if (options.xaxis) options.xaxis.categories = xaxis;
-            this.setState({ options: options });
+            this.state.options.xaxis.categories = xaxis;
 
             let series = [
                 {
@@ -156,9 +154,7 @@ class BarChartCarbonImpact extends React.Component {
             ];
 
             let sortedData = this.props.carbonImpactData.data;
-            console.log(sortedData);
             sortedData.sort((a, b) => (a.offset > b.offset ? 1 : -1));
-            console.log(sortedData);
 
             for (let i = 0; i < sortedData.length; i++) {
                 let finalValue =

@@ -60,7 +60,7 @@ class DoughnutChartEcoScore extends React.Component {
                     animationDuration={700}
                     label={({ dataEntry }) => `${Math.round(dataEntry.percentage)}%`}
                     labelStyle={(index) =>
-                        index === this.state.selectedSegment
+                        index == this.state.selectedSegment
                             ? {
                                   fontSize: "6px",
                                   fontFamily: "comfortaa",
@@ -77,9 +77,9 @@ class DoughnutChartEcoScore extends React.Component {
                         transition: "stroke .3s ease-out",
                         cursor: "pointer",
                     }}
-                    segmentsShift={(index) => (index === this.state.selectedSegment ? 3 : 0)}
+                    segmentsShift={(index) => (index == this.state.selectedSegment ? 3 : 0)}
                     onClick={(event, index) => {
-                        if (index === this.state.selectedSegment) {
+                        if (index == this.state.selectedSegment) {
                             this.setState({ selectedSegment: undefined });
                             this.state.swiper.slideTo(0, 500);
                         } else {
@@ -108,7 +108,7 @@ class DoughnutChartEcoScore extends React.Component {
     };
 
     onSlideChange = (index) => {
-        if (index === 0) {
+        if (index == 0) {
             this.setState({ selectedSegment: undefined });
         } else {
             this.setState({ selectedSegment: index - 1 });
