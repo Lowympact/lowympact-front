@@ -107,7 +107,7 @@ class Environnement extends React.Component {
                         separator = " ; ";
                     }
                     return (
-                        <React.Fragment>
+                        <React.Fragment key={data}>
                             <span>
                                 {data} {separator}
                             </span>

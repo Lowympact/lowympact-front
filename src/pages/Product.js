@@ -240,7 +240,6 @@ class Product extends React.Component {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         const add = urlParams.get("cart");
-        console.log(add);
         if (add !== "no") {
             await delay(2000);
 
