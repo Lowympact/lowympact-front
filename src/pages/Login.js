@@ -16,7 +16,7 @@ class Login extends React.Component {
         const urlParams = new URLSearchParams(queryString);
 
         if (window.innerWidth > 1200 && urlParams.get("from") != "website") {
-            window.location.assign("https://web.lowympact.fr");
+            window.location.assign("https://lowympact.fr");
         }
     };
 
