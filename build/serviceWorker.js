@@ -45,7 +45,6 @@ self.addEventListener("install", (event) => {
 // Cache and update with stale-while-revalidate policy.
 self.addEventListener("fetch", (event) => {
     const { request } = event;
-
     // Prevent Chrome Developer Tools error:
     // Failed to execute 'fetch' on 'ServiceWorkerGlobalScope': 'only-if-cached' can be set only with 'same-origin' mode
     //

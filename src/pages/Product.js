@@ -181,7 +181,7 @@ class Product extends React.Component {
 
     // Get if a connected user already added this item in this cart in the past 2 hours
     loadCartInfo = (userId) => {
-        if (userId && this.state.barcode && this.state.bcProductId) {
+        if (userId && this.state.barcode) {
             fetch(
                 `https://api.lowympact.fr/api/v1/users/${userId}/cart/${this.state.barcode}?bcProductAddress=${this.state.bcProductId}`,
                 // `http://localhost:8080/api/v1/users/${this.state.userId}/history`,
@@ -197,6 +197,7 @@ class Product extends React.Component {
             )
                 .then((response) => response.json())
                 .then((res) => {
+                    console.log(res);
                     if (res.success) {
                         this.setState({ cart: res.data?.quantity });
                     }

@@ -1,4 +1,4 @@
-let CACHE_NAME = "lowympact-cache-v1.0.2";
+let CACHE_NAME = "lowympact-cache-v1.0.3";
 const CACHED_URLS = [
     "/",
     "/index.html",
@@ -45,7 +45,7 @@ self.addEventListener("install", (event) => {
 // Cache and update with stale-while-revalidate policy.
 self.addEventListener("fetch", (event) => {
     const { request } = event;
-
+    let url = request.url.split("/");
     // Prevent Chrome Developer Tools error:
     // Failed to execute 'fetch' on 'ServiceWorkerGlobalScope': 'only-if-cached' can be set only with 'same-origin' mode
     //
@@ -53,22 +53,23 @@ self.addEventListener("fetch", (event) => {
     // if (request.cache === "only-if-cached" && request.mode !== "same-origin") {
     //     return;
     // }
-
+    console.log(request.url, !url[5] || url[5] !== "users");
     event.respondWith(
         (async function () {
             const cache = await caches.open(CACHE_NAME);
 
             const cachedResponsePromise = await cache.match(request);
             const networkResponsePromise = fetch(request);
-            // if (request.url.startsWith(self.location.origin)) {
-            event.waitUntil(
-                (async function () {
-                    const networkResponse = await networkResponsePromise;
+            // cache everything but user centered requests
+            if (!url[5] || url[5] !== "users") {
+                event.waitUntil(
+                    (async function () {
+                        const networkResponse = await networkResponsePromise;
 
-                    await cache.put(request, networkResponse.clone());
-                })()
-            );
-            // }
+                        await cache.put(request, networkResponse.clone());
+                    })()
+                );
+            }
             return cachedResponsePromise || networkResponsePromise;
         })()
     );

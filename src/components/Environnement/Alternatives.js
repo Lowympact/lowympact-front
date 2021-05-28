@@ -145,7 +145,6 @@ class Alternatives extends React.Component {
 
     render = () => {
         var alternatives_title = "";
-        console.log(this.state.alternatives);
         if (!this.state.alternatives) {
             alternatives_title = "Pas d'alternatives disponible";
         } else {
