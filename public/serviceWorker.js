@@ -60,17 +60,15 @@ self.addEventListener("fetch", (event) => {
 
             const cachedResponsePromise = await cache.match(request);
             const networkResponsePromise = fetch(request);
+            // if (request.url.startsWith(self.location.origin)) {
+            event.waitUntil(
+                (async function () {
+                    const networkResponse = await networkResponsePromise;
 
-            if (request.url.startsWith(self.location.origin)) {
-                event.waitUntil(
-                    (async function () {
-                        const networkResponse = await networkResponsePromise;
-
-                        await cache.put(request, networkResponse.clone());
-                    })()
-                );
-            }
-            console.log((cachedResponsePromise || networkResponsePromise) == cachedResponsePromise);
+                    await cache.put(request, networkResponse.clone());
+                })()
+            );
+            // }
             return cachedResponsePromise || networkResponsePromise;
         })()
     );
