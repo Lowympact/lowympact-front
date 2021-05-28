@@ -19,7 +19,7 @@ jobs:
         KEY: ${{ secrets.SSHKEY }}
       with:
         source: "build"
-        target: "/var/www/html/app.corentinbranchereau.com"
+        target: "/var/www/html/app.lowympact.fr"
 
     - name: Executing remote command
       uses: appleboy/ssh-action@master
