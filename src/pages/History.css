@@ -13,11 +13,11 @@
 
 .screen-title {
     color: rgb(41, 72, 102);
-    text-decoration: underline;
+    /* text-decoration: underline; */
     margin-left: 10vw;
     margin-right: auto;
     margin-top: 5px;
-    margin-bottom: 45px;
+    margin-bottom: 55px;
 }
 
 .history-item {

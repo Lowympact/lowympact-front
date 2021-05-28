@@ -5,7 +5,44 @@ import "swiper/swiper-bundle.css";
 class Alternatives extends React.Component {
     state = {
         swiper: undefined,
-        no_alternative: true,
+    };
+
+    componentDidMount = () => {
+        if (this.props.ecoScore) {
+            this.loadAlternatives(this.props.ecoScore);
+        }
+    };
+
+    componentDidUpdate = (lastProps) => {
+        if (lastProps.ciqual_code !== this.props.ciqual_code) {
+            if (this.props.ciqual_code) {
+                this.loadAlternatives(this.props.ciqual_code);
+            }
+        }
+    };
+
+    loadAlternatives = (code) => {
+        console.log(code);
+        this.setState({ alternatives: "loading" });
+        fetch(`https://api.lowympact.fr/api/v1/alternatives/${code}`)
+            .then((response) => response.json())
+            .then((res) => {
+                console.log(res);
+                if (res.success && res.data?.alternativesInfos) {
+                    if (
+                        res.data?.alternativesInfos?.a?.length == 0 &&
+                        res.data?.alternativesInfos?.b?.length == 0 &&
+                        res.data?.alternativesInfos?.c?.length == 0 &&
+                        res.data?.alternativesInfos?.d?.length == 0
+                    ) {
+                        this.setState({ alternatives: undefined });
+                    } else {
+                        this.setState({ alternatives: res.data.alternativesInfos });
+                    }
+                } else {
+                    this.setState({ alternatives: undefined });
+                }
+            });
     };
 
     renderListAlternatives = (listItems) => {
@@ -18,7 +55,6 @@ class Alternatives extends React.Component {
             }
 
             if (item.id !== this.props.barcode) {
-                this.setState({ no_alternative: false });
                 return (
                     <SwiperSlide key={item.id}>
                         <a href={pathProduct} className="product-alternative">
@@ -48,28 +84,27 @@ class Alternatives extends React.Component {
 
     alternativesloop = () => {
         var alternativesList = <React.Fragment></React.Fragment>;
-
         if (
-            this.props.alternatives &&
-            this.props.alternatives !== "loading" &&
-            this.props.alternatives !== ""
+            this.state.alternatives &&
+            this.state.alternatives !== "loading" &&
+            this.state.alternatives !== ""
         ) {
             var alternatives_a = <React.Fragment></React.Fragment>;
             var alternatives_b = <React.Fragment></React.Fragment>;
             var alternatives_c = <React.Fragment></React.Fragment>;
             var alternatives_d = <React.Fragment></React.Fragment>;
 
-            this.props.alternatives.a.sort(function (a, b) {
+            this.state.alternatives.a.sort(function (a, b) {
                 return b.eco_score - a.eco_score;
             });
 
-            this.props.alternatives.b.sort(function (a, b) {
+            this.state.alternatives.b.sort(function (a, b) {
                 return b.eco_score - a.eco_score;
             });
-            this.props.alternatives.c.sort(function (a, b) {
+            this.state.alternatives.c.sort(function (a, b) {
                 return b.eco_score - a.eco_score;
             });
-            this.props.alternatives.d.sort(function (a, b) {
+            this.state.alternatives.d.sort(function (a, b) {
                 return b.eco_score - a.eco_score;
             });
 
@@ -77,25 +112,25 @@ class Alternatives extends React.Component {
                 case "a":
                     break;
                 case "b":
-                    alternatives_a = this.renderListAlternatives(this.props.alternatives.a);
+                    alternatives_a = this.renderListAlternatives(this.state.alternatives.a);
                     break;
                 case "c":
-                    alternatives_a = this.renderListAlternatives(this.props.alternatives.a);
-                    alternatives_b = this.renderListAlternatives(this.props.alternatives.b);
+                    alternatives_a = this.renderListAlternatives(this.state.alternatives.a);
+                    alternatives_b = this.renderListAlternatives(this.state.alternatives.b);
                     break;
                 case "d":
-                    alternatives_a = this.renderListAlternatives(this.props.alternatives.a);
-                    alternatives_b = this.renderListAlternatives(this.props.alternatives.b);
-                    alternatives_c = this.renderListAlternatives(this.props.alternatives.c);
+                    alternatives_a = this.renderListAlternatives(this.state.alternatives.a);
+                    alternatives_b = this.renderListAlternatives(this.state.alternatives.b);
+                    alternatives_c = this.renderListAlternatives(this.state.alternatives.c);
                     break;
                 case "e":
-                    alternatives_a = this.renderListAlternatives(this.props.alternatives.a);
-                    alternatives_b = this.renderListAlternatives(this.props.alternatives.b);
-                    alternatives_c = this.renderListAlternatives(this.props.alternatives.c);
-                    alternatives_d = this.renderListAlternatives(this.props.alternatives.d);
+                    alternatives_a = this.renderListAlternatives(this.state.alternatives.a);
+                    alternatives_b = this.renderListAlternatives(this.state.alternatives.b);
+                    alternatives_c = this.renderListAlternatives(this.state.alternatives.c);
+                    alternatives_d = this.renderListAlternatives(this.state.alternatives.d);
                     break;
                 default:
-                    this.setState({ no_alternative: true });
+                    break;
             }
 
             alternativesList = (
@@ -110,11 +145,11 @@ class Alternatives extends React.Component {
 
     render = () => {
         var alternatives_title = "";
-
-        if (this.props.alternatives === "") {
+        console.log(this.state.alternatives);
+        if (!this.state.alternatives) {
             alternatives_title = "Pas d'alternatives disponible";
         } else {
-            if (this.props.alternatives === "loading") {
+            if (this.state.alternatives === "loading") {
                 alternatives_title = "Chargement des alternatives ...";
             } else {
                 alternatives_title = "Alternatives";
@@ -123,10 +158,9 @@ class Alternatives extends React.Component {
         return (
             <React.Fragment>
                 <span className="title-part-environnement">{alternatives_title}</span>
-                {this.props.alternatives &&
-                this.props.alternatives !== "loading" &&
-                this.props.alternatives !== "" &&
-                !this.state.no_alternative ? (
+                {this.state.alternatives &&
+                this.state.alternatives !== "loading" &&
+                this.state.alternatives !== "" ? (
                     <Swiper
                         spaceBetween={0}
                         slidesPerView={1}

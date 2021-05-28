@@ -167,8 +167,7 @@ class History extends Component {
                 return (
                     <div>
                         <div className="screen">
-                            <div className="screen-title"></div>
-                            {itemList}
+                            <div className="screen-title">{itemList}</div>
                         </div>
                         <Header />
                         <Navbar />

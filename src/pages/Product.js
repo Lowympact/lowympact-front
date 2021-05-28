@@ -23,7 +23,6 @@ class Product extends React.Component {
         userId: undefined,
         cart: 0,
         totalCO2Traceability: undefined,
-        alternatives: undefined,
         countries: [],
     };
 
@@ -104,28 +103,6 @@ class Product extends React.Component {
             });
     };
 
-    loadAlternatives = (code, score) => {
-        this.setState({ alternatives: "loading" });
-        fetch(`https://api.lowympact.fr/api/v1/alternatives/${code}`)
-            .then((response) => response.json())
-            .then((res) => {
-                if (res.success && res.data?.alternativesInfos) {
-                    if (
-                        res.data?.alternativesInfos?.a?.length == 0 &&
-                        res.data?.alternativesInfos?.b?.length == 0 &&
-                        res.data?.alternativesInfos?.c?.length == 0 &&
-                        res.data?.alternativesInfos?.d?.length == 0
-                    ) {
-                        this.setState({ alternatives: "" });
-                    } else {
-                        this.setState({ alternatives: res.data.alternativesInfos });
-                    }
-                } else {
-                    this.setState({ alternatives: "" });
-                }
-            });
-    };
-
     loadFromOpenFoodFacts = (barcode) => {
         let dataEcoScore;
 
@@ -198,15 +175,6 @@ class Product extends React.Component {
 
                     default:
                         break;
-                }
-
-                if (res.product?.ecoscore_grade != "a") {
-                    this.loadAlternatives(
-                        res.product.categories_properties["ciqual_food_code:en"],
-                        scoreSearch
-                    );
-                } else {
-                    this.setState({ alternatives: "" });
                 }
             });
     };
@@ -553,7 +521,6 @@ class Product extends React.Component {
                                 this.props.match.params.bcProductId !== undefined
                             }
                             barcode={this.props.match.params.barcode}
-                            alternatives={this.state.alternatives}
                         ></Environnement>
                     ) : (
                         <div className="product-bottom-container">

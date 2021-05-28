@@ -195,8 +195,8 @@ class Environnement extends React.Component {
 
                     <Alternatives
                         barcode={this.props.barcode}
-                        alternatives={this.props.alternatives}
                         ecoScore={this.props.ecoScore}
+                        ciqual_code={this.props.dataEcoScore?.agribalyse?.code}
                     />
                 </React.Fragment>
             );
