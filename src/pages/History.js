@@ -21,6 +21,7 @@ function RenderHistoryItem({ item }) {
     if (item.bcProductId) {
         pathProduct += "/" + item.bcProductId;
     }
+    pathProduct += "?cart=no";
 
     // Mock Soutenance
     if (item.barcode === "80135463") {
@@ -61,13 +62,12 @@ class History extends Component {
     }
 
     componentDidMount = () => {
+        this.loadLocalStorageHistory();
         let userId = localStorage.getItem("userId");
         let token = localStorage.getItem("token");
         if (userId && token) {
             this.setState({ userId: userId });
-            this.loadHistoryInformations(userId);
-        } else {
-            this.loadLocalStorageHistory(userId);
+            // this.loadHistoryInformations(userId);
         }
     };
 
@@ -94,6 +94,7 @@ class History extends Component {
                     items: res?.data,
                     loading: false,
                 });
+                localStorage.setItem("local_history", JSON.stringify(res?.data));
             });
     };
 
@@ -103,19 +104,39 @@ class History extends Component {
             items: history,
             loading: false,
         });
+
+        if (!history) {
+            let userId = localStorage.getItem("userId");
+            let token = localStorage.getItem("token");
+            if (userId && token) {
+                this.setState({
+                    loading: true,
+                });
+                this.loadHistoryInformations(userId);
+            }
+        }
     };
 
     render() {
         if (this.state.items) {
             let itemList = <Fragment />;
             if (!this.loading) {
-                itemList = this.state.items.map((item) => {
-                    return (
-                        <div key={item.id}>
-                            <RenderHistoryItem item={item} />
-                        </div>
-                    );
-                });
+                itemList = this.state.items
+                    .sort((a, b) => {
+                        if (Date.parse(new Date(a.date)) < Date.parse(new Date(b.date))) {
+                            return 1;
+                        } else {
+                            return -1;
+                        }
+                        // else return true;
+                    })
+                    .map((item) => {
+                        return (
+                            <div key={item.id}>
+                                <RenderHistoryItem item={item} />
+                            </div>
+                        );
+                    });
             } else {
                 itemList = (
                     <div className="loader">

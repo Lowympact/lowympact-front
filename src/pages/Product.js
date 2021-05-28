@@ -39,7 +39,7 @@ class Product extends React.Component {
         let userId = localStorage.getItem("userId");
         if (userId) {
             this.setState({ userId: userId });
-            this.loadHistory(userId);
+            this.loadCartInfo(userId);
         }
         this.loadFromOpenFoodFacts(this.props.match.params.barcode);
         if (this.props.match.params.bcProductId) {
@@ -211,7 +211,8 @@ class Product extends React.Component {
             });
     };
 
-    loadHistory = (userId) => {
+    // Get if a connected user already added this item in this cart in the past 2 hours
+    loadCartInfo = (userId) => {
         if (userId && this.state.barcode && this.state.bcProductId) {
             fetch(
                 `https://api.lowympact.fr/api/v1/users/${userId}/cart/${this.state.barcode}?bcProductAddress=${this.state.bcProductId}`,
@@ -236,54 +237,61 @@ class Product extends React.Component {
     };
 
     saveHistory = async () => {
-        await delay(2000);
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const add = urlParams.get("cart");
+        console.log(add);
+        if (add !== "no") {
+            await delay(2000);
 
-        if (!this.state.connected) {
             let history = JSON.parse(localStorage.getItem("local_history"));
             let exist = null;
             if (history) {
-                exist = history?.find(
+                history = history?.filter(
                     (element) =>
-                        element.barcode === this.state.barcode &&
-                        element.bcProductId == this.state.bcProductId
+                        !(
+                            element.barcode == this.state.barcode &&
+                            element.bcProductId == this.state.bcProductId
+                        )
                 );
             } else {
                 history = [];
             }
 
-            if (!exist || exist?.length === 0) {
-                history.push({
-                    barcode: this.state.barcode,
-                    bcProductId: this.state.bcProductId,
-                    brand: this.state.productData.brands,
-                    image: this.state.productImageUrl,
-                    label: this.state.ecoScore,
-                    name: this.state.productName,
-                });
-                localStorage.setItem("local_history", JSON.stringify(history));
+            history.push({
+                barcode: this.state.barcode,
+                bcProductId: this.state.bcProductId,
+                brand: this.state.productData.brands,
+                image: this.state.productImageUrl,
+                label: this.state.ecoScore,
+                name: this.state.productName,
+                date: Date.now(),
+            });
+            localStorage.setItem("local_history", JSON.stringify(history));
+
+            if (this.state.userId) {
+                fetch(
+                    `https://api.lowympact.fr/api/v1/users/${this.state.userId}/history`,
+                    // `http://localhost:8080/api/v1/users/${this.state.userId}/history`,
+                    {
+                        method: "put",
+                        credentials: "include",
+                        headers: new Headers({
+                            Authorization: localStorage.getItem("token"),
+                            "api-key": "99d8fb95-abdd-4885-bf6c-3a81d8874043",
+                            "Content-Type": "application/json",
+                        }),
+                        body: JSON.stringify({
+                            barcode: this.state.barcode,
+                            bcProductAddress: this.state.bcProductId,
+                        }),
+                    }
+                )
+                    .then((response) => response.json())
+                    .then((res) => {
+                        console.log(res);
+                    });
             }
-        } else if (this.state.userId) {
-            fetch(
-                `https://api.lowympact.fr/api/v1/users/${this.state.userId}/history`,
-                // `http://localhost:8080/api/v1/users/${this.state.userId}/history`,
-                {
-                    method: "put",
-                    credentials: "include",
-                    headers: new Headers({
-                        Authorization: localStorage.getItem("token"),
-                        "api-key": "99d8fb95-abdd-4885-bf6c-3a81d8874043",
-                        "Content-Type": "application/json",
-                    }),
-                    body: JSON.stringify({
-                        barcode: this.state.barcode,
-                        bcProductAddress: this.state.bcProductId,
-                    }),
-                }
-            )
-                .then((response) => response.json())
-                .then((res) => {
-                    console.log(res);
-                });
         }
     };
 
