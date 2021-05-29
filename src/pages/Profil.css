@@ -1,42 +1,43 @@
 .profil-screen {
-  text-align: center;
-  height: calc(100vh - 140px);
-  margin-top: 70px;
-  margin-bottom: 70px;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  overflow-y: auto;
+    text-align: center;
+    height: calc(100vh - 140px);
+    margin-top: 70px;
+    margin-bottom: 70px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    animation: fadeInAppear 0.5s ease;
 }
 
 .profil-picture {
-  width: 150px;
-  position: relative;
-  height: 150px;
-  border-radius: 75px;
-  box-shadow: 0px 0px 8px grey;
-  background-color: white;
-  color: rgb(41, 72, 102);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    width: 150px;
+    position: relative;
+    height: 150px;
+    border-radius: 75px;
+    box-shadow: 0px 0px 8px grey;
+    background-color: white;
+    color: rgb(41, 72, 102);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .profil-title {
-  color: rgb(41, 72, 102);
+    color: rgb(41, 72, 102);
 }
 
 .profil-button {
-  width: 50vw;
-  height: 50px;
-  border-radius: 25px;
-  box-shadow: 0px 0px 8px grey;
-  color: rgb(41, 72, 102);
-  display: inherit;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  margin-top: 5px;
-  margin-bottom: 5px;
+    width: 50vw;
+    height: 50px;
+    border-radius: 25px;
+    box-shadow: 0px 0px 8px grey;
+    color: rgb(41, 72, 102);
+    display: inherit;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }

@@ -548,6 +548,7 @@
     margin-bottom: 5vw;
     margin-top: 10px;
     box-shadow: 0px 0px 20px -10px rgb(0 0 0 / 80%);
+    animation: fadeInAppear 0.5s ease;
 }
 
 .environnement-map {

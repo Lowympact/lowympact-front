@@ -30,6 +30,19 @@
     position: absolute;
     z-index: 999;
     top: 0px;
+    animation: appearFromBottom 0.5s ease;
+}
+
+@keyframes appearFromBottom {
+    from {
+        transform: translateY(500px) scale(0, 0);
+        border-radius: 1000px;
+    }
+    to {
+        transform: translateY(0px) scale(1, 1);
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+    }
 }
 
 .code-reader-container section:nth-child(1)::after {

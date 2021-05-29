@@ -9,6 +9,7 @@ app
 gradle.properties
 gradlew
 gradlew.bat
+android/
 
 #### VSCode ####
 .vscode

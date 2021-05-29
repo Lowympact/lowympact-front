@@ -5,7 +5,6 @@ import Header from "../components/Header/Header";
 import "./History.css";
 // import { ITEMS } from "../assets/scanned/items";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
 
 function RenderHistoryItem({ item }) {
     var labelColor;
@@ -29,7 +28,7 @@ function RenderHistoryItem({ item }) {
     }
 
     return (
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+        <div>
             <Link className="history-item" to={pathProduct}>
                 <div className="history-img-container">
                     <img src={item.image} alt="" />
@@ -46,7 +45,7 @@ function RenderHistoryItem({ item }) {
                 </div>
                 <div style={{ marginRight: "10px", color: "rgb(41,72,102)" }}>{">"}</div>
             </Link>
-        </motion.div>
+        </div>
     );
 }
 
@@ -150,17 +149,12 @@ class History extends Component {
                     <div>
                         <Header />
                         <Navbar />
-                        <motion.div
-                            className="App"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                        >
+                        <div className="App">
                             <div>
                                 <img src={fruits} className="logo" alt="Fruits" />
                                 <p className="logo-text">Commence à scanner des produits !</p>
                             </div>
-                        </motion.div>
+                        </div>
                     </div>
                 );
             else
@@ -191,14 +185,7 @@ class History extends Component {
                 <div>
                     <Header />
                     <Navbar />
-                    <motion.div
-                        className="App"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                    >
-                        {image}
-                    </motion.div>
+                    <div className="App">{image}</div>
                 </div>
             );
         }

@@ -7,7 +7,6 @@ import "swiper/swiper-bundle.css";
 import { PieChart } from "react-minimal-pie-chart";
 
 import fruits from "../../assets/images/fruits-vegetables-basket-by-oblik-studio.svg";
-import { motion } from "framer-motion";
 
 class DoughnutChartEcoScore extends React.Component {
     state = {
@@ -91,17 +90,12 @@ class DoughnutChartEcoScore extends React.Component {
             );
         } else {
             chart = (
-                <motion.div
-                    className="stats-no-product"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                >
+                <div className="stats-no-product">
                     <div>
                         <img src={fruits} className="logo" alt="Fruits" />
                         <p className="logo-text">Commence à scanner des produits !</p>
                     </div>
-                </motion.div>
+                </div>
             );
         }
         return chart;

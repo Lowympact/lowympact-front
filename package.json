@@ -4,7 +4,6 @@
 	"private": true,
 	"dependencies": {
 		"apexcharts": "^3.26.1",
-		"framer-motion": "^4.1.11",
 		"jsonwebtoken": "^8.5.1",
 		"leaflet": "^1.7.1",
 		"quagga": "^0.12.1",
