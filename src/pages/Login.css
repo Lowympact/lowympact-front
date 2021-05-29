@@ -115,12 +115,28 @@
     display: flex;
     justify-content: center;
     vertical-align: middle;
-    background-color: #78be95;
+    background-color: #65a896;
     top: 55%;
     font-family: "Comfortaa";
     color: white;
     font-size: 14px;
     text-decoration: none;
+    font-weight: bold;
+}
+
+.skip-link {
+    color: white;
+    text-decoration: none;
+    background-color: white;
+}
+.skip-link:focus {
+    top: 0;
+    color: white;
+}
+
+.skip-link:visited {
+    top: 0;
+    color: white;
 }
 
 .button-connect {
@@ -134,7 +150,8 @@
     display: flex;
     justify-content: center;
     vertical-align: middle;
-    background-color: #78be95;
+    background-color: #65a896;
+    font-weight: bold;
     top: 65%;
     font-family: "Comfortaa";
     color: white;
@@ -207,4 +224,16 @@
     -webkit-flex-direction: column;
     flex-direction: column;
     text-align: center;
+}
+
+@keyframes fadeInAppear {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+.login-container {
+    animation: fadeInAppear 0.6s ease;
 }

@@ -7,7 +7,6 @@ import ButtonLogin from "../components/Button/ButtonLogin";
 import { Link } from "react-router-dom";
 import ButtonNoAccount from "../components/Button/ButtonNoAccount";
 import jwt from "jsonwebtoken";
-import { motion } from "framer-motion";
 
 class Login extends React.Component {
     componentDidMount = () => {
@@ -38,11 +37,16 @@ class Login extends React.Component {
     };
     render = () => {
         return (
-            <motion.div exit={{ opacity: 0 }}>
+            <div className="login-container">
+                <a class="skip-link" href="#main">
+                    Skip to main
+                </a>
                 <div className="login-logo">
                     <img src={logo} className="logo" alt="Logo" />
                 </div>
-                <div className="login-lowympact">Lowympact</div>
+                <main id="main" className="login-lowympact">
+                    Lowympact
+                </main>
                 <Link to="/signup" className="button-account">
                     <ButtonCreateAccount />
                 </Link>
@@ -55,7 +59,7 @@ class Login extends React.Component {
                 <div className="logo-fruits">
                     <img src={fruits} className="logo" alt="Fruits" />
                 </div>
-            </motion.div>
+            </div>
         );
     };
 }

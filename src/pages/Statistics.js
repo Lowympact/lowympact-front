@@ -5,6 +5,7 @@ import BarChartCarbonImpact from "../components/Charts/BarChartCarbonImpact";
 import "./Product.css";
 import { Link } from "react-router-dom";
 import jwt from "jsonwebtoken";
+import "./Statistics.css";
 
 class Statistics extends React.Component {
     state = {

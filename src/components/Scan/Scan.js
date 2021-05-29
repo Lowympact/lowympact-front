@@ -3,6 +3,7 @@ import Scanner from "./Scanner";
 import QrReader from "react-qr-reader";
 import Switch from "react-switch";
 import { Redirect } from "react-router-dom";
+import "./Scan.css";
 
 class Scan extends Component {
     state = {
