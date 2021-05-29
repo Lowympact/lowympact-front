@@ -132,7 +132,7 @@ class History extends Component {
                     })
                     .map((item) => {
                         return (
-                            <div key={item.id}>
+                            <div key={item.barcode + item.bcProductId}>
                                 <RenderHistoryItem item={item} />
                             </div>
                         );
