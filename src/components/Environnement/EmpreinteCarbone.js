@@ -68,7 +68,7 @@ class EmpreinteCarbone extends React.Component {
             ];
             repartition = repartition.map((i) => {
                 return (
-                    <div className="empreinte-single">
+                    <div className="empreinte-single" key={i.name}>
                         <div className="material-icons">{i.image}</div>
                         <div className="name">{i.name} : </div>
                         <div className="pourcent">{i.percent} %</div>

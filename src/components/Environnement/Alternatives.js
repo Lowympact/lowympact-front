@@ -1,6 +1,8 @@
 import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/swiper-bundle.css";
+// import { Swiper, SwiperSlide } from "swiper/react";
+// import "swiper/swiper-bundle.css";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from "react-responsive-carousel";
 
 class Alternatives extends React.Component {
     state = {
@@ -9,7 +11,7 @@ class Alternatives extends React.Component {
 
     componentDidMount = () => {
         if (this.props.ecoScore) {
-            this.loadAlternatives(this.props.ecoScore);
+            this.loadAlternatives(this.props.ciqual_code);
         }
     };
 
@@ -22,12 +24,10 @@ class Alternatives extends React.Component {
     };
 
     loadAlternatives = (code) => {
-        console.log(code);
         this.setState({ alternatives: "loading" });
         fetch(`https://api.lowympact.fr/api/v1/alternatives/${code}`)
             .then((response) => response.json())
             .then((res) => {
-                console.log(res);
                 if (res.success && res.data?.alternativesInfos) {
                     if (
                         res.data?.alternativesInfos?.a?.length == 0 &&
@@ -46,9 +46,9 @@ class Alternatives extends React.Component {
     };
 
     renderListAlternatives = (listItems) => {
-        var res = <React.Fragment></React.Fragment>;
+        let res = <React.Fragment></React.Fragment>;
         res = listItems.map((item) => {
-            var pathProduct = "/products/" + item.id;
+            let pathProduct = "/products/" + item.id;
             // Mock Front
             if (item.id === "8001505005707") {
                 pathProduct += "/24";
@@ -56,7 +56,7 @@ class Alternatives extends React.Component {
 
             if (item.id !== this.props.barcode) {
                 return (
-                    <SwiperSlide key={item.id}>
+                    <div className="carousel" key={item.id}>
                         <a href={pathProduct} className="product-alternative">
                             <div>
                                 <img
@@ -72,7 +72,7 @@ class Alternatives extends React.Component {
                             </div>
                             <div className="product-alternative-fleche">{">"}</div>
                         </a>
-                    </SwiperSlide>
+                    </div>
                 );
             } else {
                 return <React.Fragment></React.Fragment>;
@@ -83,17 +83,12 @@ class Alternatives extends React.Component {
     };
 
     alternativesloop = () => {
-        var alternativesList = <React.Fragment></React.Fragment>;
+        let alternativesList = <React.Fragment></React.Fragment>;
         if (
             this.state.alternatives &&
             this.state.alternatives !== "loading" &&
             this.state.alternatives !== ""
         ) {
-            var alternatives_a = <React.Fragment></React.Fragment>;
-            var alternatives_b = <React.Fragment></React.Fragment>;
-            var alternatives_c = <React.Fragment></React.Fragment>;
-            var alternatives_d = <React.Fragment></React.Fragment>;
-
             this.state.alternatives.a.sort(function (a, b) {
                 return b.eco_score - a.eco_score;
             });
@@ -108,43 +103,62 @@ class Alternatives extends React.Component {
                 return b.eco_score - a.eco_score;
             });
 
+            let tab;
             switch (this.props.ecoScore) {
                 case "a":
+                    return undefined;
+
                     break;
                 case "b":
-                    alternatives_a = this.renderListAlternatives(this.state.alternatives.a);
+                    tab = this.state.alternatives.a;
+                    if (tab.length == 0) {
+                        return undefined;
+                    } else {
+                        alternativesList = this.renderListAlternatives(tab);
+                    }
                     break;
                 case "c":
-                    alternatives_a = this.renderListAlternatives(this.state.alternatives.a);
-                    alternatives_b = this.renderListAlternatives(this.state.alternatives.b);
+                    tab = this.state.alternatives.a.concat(this.state.alternatives.b);
+
+                    if (tab.length == 0) {
+                        return undefined;
+                    } else {
+                        alternativesList = this.renderListAlternatives(tab);
+                    }
                     break;
                 case "d":
-                    alternatives_a = this.renderListAlternatives(this.state.alternatives.a);
-                    alternatives_b = this.renderListAlternatives(this.state.alternatives.b);
-                    alternatives_c = this.renderListAlternatives(this.state.alternatives.c);
+                    tab = this.state.alternatives.a
+                        .concat(this.state.alternatives.b)
+                        .concat(this.state.alternatives.c);
+
+                    if (tab.length == 0) {
+                        return undefined;
+                    } else {
+                        alternativesList = this.renderListAlternatives(tab);
+                    }
                     break;
                 case "e":
-                    alternatives_a = this.renderListAlternatives(this.state.alternatives.a);
-                    alternatives_b = this.renderListAlternatives(this.state.alternatives.b);
-                    alternatives_c = this.renderListAlternatives(this.state.alternatives.c);
-                    alternatives_d = this.renderListAlternatives(this.state.alternatives.d);
+                    tab = this.state.alternatives.a
+                        .concat(this.state.alternatives.b)
+                        .concat(this.state.alternatives.c)
+                        .concat(this.state.alternatives.d);
+                    if (tab.length == 0) {
+                        return undefined;
+                    } else {
+                        alternativesList = this.renderListAlternatives(tab);
+                    }
                     break;
                 default:
                     break;
             }
-
-            alternativesList = (
-                <React.Fragment>
-                    {alternatives_a} {alternatives_b} {alternatives_c} {alternatives_d}
-                </React.Fragment>
-            );
         }
 
         return alternativesList;
     };
 
     render = () => {
-        var alternatives_title = "";
+        console.log(this.state.alternatives);
+        let alternatives_title = "";
         if (!this.state.alternatives) {
             alternatives_title = "Pas d'alternatives disponible";
         } else {
@@ -154,33 +168,40 @@ class Alternatives extends React.Component {
                 alternatives_title = "Alternatives";
             }
         }
-        return (
-            <React.Fragment>
-                <span className="title-part-environnement">{alternatives_title}</span>
-                {this.state.alternatives &&
-                this.state.alternatives !== "loading" &&
-                this.state.alternatives !== "" ? (
-                    <Swiper
-                        spaceBetween={0}
-                        slidesPerView={1}
-                        centeredSlides={true}
-                        onSwiper={(swiper) => this.setState({ swiper: swiper })}
+        let alternatives = this.alternativesloop();
+        if (
+            this.state.alternatives &&
+            this.state.alternatives !== "loading" &&
+            this.state.alternatives !== "" &&
+            alternatives
+        ) {
+            return (
+                <React.Fragment>
+                    <span className="title-part-environnement">{alternatives_title}</span>
+                    <Carousel
+                        autoPlay={false}
+                        interval={100000}
+                        centerMode={true}
+                        centerSlidePercentage={90}
+                        showThumbs={false}
+                        showIndicators={false}
+                        showStatus={false}
                     >
-                        {this.alternativesloop()}
-                    </Swiper>
-                ) : (
-                    <React.Fragment />
-                )}
-            </React.Fragment>
-        );
+                        {alternatives}
+                    </Carousel>
+                </React.Fragment>
+            );
+        } else {
+            return <React.Fragment />;
+        }
     };
 }
 
 export default Alternatives;
 
 function RenderColor({ item }) {
-    var labelColor;
-    var labelLevel;
+    let labelColor;
+    let labelLevel;
     if (item.eco_score <= 33) {
         labelColor = "red";
         labelLevel = "Mauvais";
