@@ -26,7 +26,8 @@
     display: flex;
     align-items: center;
     background-color: white;
-    box-shadow: 0px 0px 8px grey;
+    /* box-shadow: 0px 0px 8px grey; */
+    box-shadow: 0px 0px 34px -10px gainsboro;
     border-radius: 20px;
     margin-top: 25px;
     margin-bottom: 5px;
@@ -61,13 +62,15 @@
 
 .history-name {
     font-size: medium;
-    display: flex;
-    align-items: flex-start;
+    /* display: flex; */
+    /* align-items: flex-start; */
     width: 36vw;
     text-align: left;
-    height: 36px;
+    height: 26px;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    text-transform: capitalize;
 }
 
 .history-brand {
@@ -76,6 +79,7 @@
     display: flex;
     align-items: flex-start;
     text-align: left;
+    text-transform: capitalize;
 }
 
 .history-label-container {

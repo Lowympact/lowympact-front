@@ -59,7 +59,7 @@ class Statistics extends React.Component {
         )
             .then((response) => response.json())
             .then((res) => {
-                console.log(res);
+                //console.log(res);
                 this.setState({
                     username: res?.data?.username,
                     scannedProduct: res?.scannedProduct,
@@ -84,7 +84,7 @@ class Statistics extends React.Component {
         )
             .then((response) => response.json())
             .then((res) => {
-                console.log(res);
+                //console.log(res);
                 this.setState({
                     ecoScoreData: res?.statistics?.ecoscore,
                 });
@@ -107,7 +107,7 @@ class Statistics extends React.Component {
         )
             .then((response) => response.json())
             .then((res) => {
-                console.log(res);
+                //console.log(res);
                 this.setState({
                     carbonImpactData: res?.statistics?.carbonImpact,
                 });

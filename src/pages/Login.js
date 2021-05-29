@@ -26,13 +26,13 @@ class Login extends React.Component {
         if (token) {
             var decodedToken = jwt.decode(token, { complete: true });
             var dateNow = new Date();
-            console.log(decodedToken, dateNow.getTime() / 1000);
+            //console.log(decodedToken, dateNow.getTime() / 1000);
             if (decodedToken.payload.exp >= dateNow.getTime() / 1000) {
                 isExpired = false;
             }
         }
         if (isExpired === false) {
-            console.log("here");
+            //console.log("here");
             this.props.history.push(`/history`); // redirection vers la page login
         }
     };

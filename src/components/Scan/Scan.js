@@ -18,7 +18,6 @@ class Scan extends Component {
     };
 
     setQuagga = (quagga) => {
-        console.log(quagga);
         if (this.state.Quagga) {
             this.state.Quagga.stop();
         }
@@ -30,7 +29,6 @@ class Scan extends Component {
     };
 
     _onDetected = async (res) => {
-        console.log(res);
         if (res) {
             if (res.codeResult && res.codeResult.code) {
                 this.setState({
@@ -42,7 +40,6 @@ class Scan extends Component {
                     `https://world.openfoodfacts.org/api/v0/product/${res.codeResult.code}.json/`
                 );
                 let result = await response.json();
-                console.log(result);
                 if (result.status !== 0) {
                     this.setState({
                         scanning: false,
@@ -138,7 +135,6 @@ class Scan extends Component {
     };
 
     render() {
-        console.log("Results: ", this.state.results, this.state.redirect);
         if (
             this.state.barcode &&
             this.state.bcProductId &&

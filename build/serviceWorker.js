@@ -53,7 +53,7 @@ self.addEventListener("fetch", (event) => {
     // if (request.cache === "only-if-cached" && request.mode !== "same-origin") {
     //     return;
     // }
-    console.log(request.url, !url[5] || url[5] !== "users");
+    //console.log(request.url, !url[5] || url[5] !== "users");
     event.respondWith(
         (async function () {
             const cache = await caches.open(CACHE_NAME);

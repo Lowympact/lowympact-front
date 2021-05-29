@@ -116,7 +116,7 @@ class Product extends React.Component {
 
                 dataEcoScore = res?.product?.ecoscore_data;
 
-                console.log(res);
+                //console.log(res);
                 let origins = res?.product?.origins_hierarchy;
                 if (origins && origins != "") {
                     this.setState({ origins: origins });
@@ -197,7 +197,7 @@ class Product extends React.Component {
             )
                 .then((response) => response.json())
                 .then((res) => {
-                    console.log(res);
+                    //console.log(res);
                     if (res.success) {
                         this.setState({ cart: res.data?.quantity });
                     }
@@ -257,7 +257,7 @@ class Product extends React.Component {
                 )
                     .then((response) => response.json())
                     .then((res) => {
-                        console.log(res);
+                        //console.log(res);
                     });
             }
         }
@@ -297,7 +297,7 @@ class Product extends React.Component {
             )
                 .then((response) => response.json())
                 .then((res) => {
-                    console.log(res);
+                    //console.log(res);
                     if (res.success) {
                         this.setState({ cart: this.state.cart + 1 });
                     }
@@ -338,7 +338,7 @@ class Product extends React.Component {
             )
                 .then((response) => response.json())
                 .then((res) => {
-                    console.log(res);
+                    //console.log(res);
                     if (res.success) {
                         this.setState({ cart: this.state.cart - 1 });
                     }
@@ -350,7 +350,7 @@ class Product extends React.Component {
         // if (!this.isFlipping) {
         // 	this.isFlipping = true;
         // 	await delay(500);
-        console.log(this.imageFlip.style.transform);
+        //console.log(this.imageFlip.style.transform);
         if (this.imageFlip && !this.state.isFlipping) {
             if (this.imageFlip.style.transform === "rotateY(360deg)") {
                 this.imageFlip.style.transform = "rotateY(0deg)";

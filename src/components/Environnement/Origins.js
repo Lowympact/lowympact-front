@@ -12,7 +12,6 @@ class Origins extends React.Component {
     };
 
     setActiveCountry = (country) => {
-        console.log(country);
         this.setState({ activeCountry: country });
     };
 
@@ -23,7 +22,6 @@ class Origins extends React.Component {
                     .then((res) => res.json())
                     .then((res) => {
                         let polygon = this.state.polygon;
-                        console.log(res);
                         if (res.success && res.data?.country) {
                             polygon.push({
                                 geo: res.data.country.coordinates,

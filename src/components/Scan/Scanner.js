@@ -28,19 +28,19 @@ class Scanner extends Component {
             if (device.kind === "videoinput") {
                 videoDevices.push(device);
                 // if (device.label.match(/back/) != null) {
-                //     //console.log("Found video device: " + JSON.stringify(device));
+                //     ////console.log("Found video device: " + JSON.stringify(device));
                 // }
             }
         });
         // ALL  cameras
-        console.log(videoDevices);
+        //console.log(videoDevices);
         this.setState({ devices: videoDevices });
 
         // open every video device and dump its characteristics
         let maxResolution = -1;
         for (let i in videoDevices) {
             const device = videoDevices[i];
-            // console.log("Opening video device " + device.deviceId + " (" + device.label + ")");
+            // //console.log("Opening video device " + device.deviceId + " (" + device.label + ")");
 
             await navigator.mediaDevices
                 .getUserMedia({
@@ -60,7 +60,7 @@ class Scanner extends Component {
                                 this.setState({ usedCamera: i });
                             }
 
-                            //console.log("Track capabilities: " + JSON.stringify(capabilities));
+                            ////console.log("Track capabilities: " + JSON.stringify(capabilities));
                         });
 
                         stream.getTracks().forEach((track) => track.stop());
@@ -113,7 +113,7 @@ class Scanner extends Component {
             },
             (err) => {
                 if (err) {
-                    console.log(err);
+                    //console.log(err);
                     if (width != 960 && height != 540) {
                         this.QuaggaInit(usedCameraId, 960, 540);
                     } else {
@@ -134,7 +134,7 @@ class Scanner extends Component {
 
     _onDetected = async (result) => {
         let stop = await this.props.onDetected(result);
-        console.log(stop);
+        //console.log(stop);
         if (stop) {
             Quagga.stop();
         }

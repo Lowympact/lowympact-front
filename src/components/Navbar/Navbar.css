@@ -1,95 +1,95 @@
 .navbar-container {
-	width: 100vw;
-	height: 70px;
-	position: fixed;
-	bottom: 0px;
-	background-color: white;
-	text-align: center;
-	align-items: center;
-	display: flex;
-	justify-content: space-between;
-	color: grey;
-	border-top-left-radius: 30px;
-	border-top-right-radius: 30px;
-	box-shadow: 0px 0px 8px grey;
-	z-index: 1000;
-	padding-bottom: 10px;
+    width: 100vw;
+    height: 70px;
+    position: fixed;
+    bottom: 0px;
+    background-color: white;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    color: grey;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    box-shadow: 0px 0px 8px #aaaa;
+    z-index: 1000;
+    padding-bottom: 10px;
 }
 .navbar-text-right {
-	margin-right: 3%;
+    margin-right: 3%;
 }
 .navbar-text-left {
-	margin-left: 3%;
+    margin-left: 3%;
 }
 
 .navbar-link {
-	width: 100px;
-	height: 100px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	color: grey;
-	text-decoration: none;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: grey;
+    text-decoration: none;
 }
 
 .navbar-selected {
-	color: #78be95 !important;
+    color: #78be95 !important;
 }
 
 .navbar-circle {
-	width: 80px;
-	position: relative;
-	height: 80px;
-	border-radius: 50px;
-	box-shadow: 0px 0px 8px grey;
-	background-color: white;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin-bottom: 70px;
-	overflow: hidden;
+    width: 80px;
+    position: relative;
+    height: 80px;
+    border-radius: 50px;
+    box-shadow: 0px 0px 8px #aaaa;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 70px;
+    overflow: hidden;
 }
 
 .navbar-scan-text {
-	position: absolute;
-	bottom: 15px;
-	width: 50px;
-	left: calc(50vw - 25px);
+    position: absolute;
+    bottom: 15px;
+    width: 50px;
+    left: calc(50vw - 25px);
 }
 
 .navbar-scan-icon span {
-	font-size: 50px;
-	color: #78be95;
+    font-size: 50px;
+    color: #78be95;
 }
 
 .navbar-circle:after {
-	position: absolute;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	top: -1px;
-	content: "";
-	background: -50px no-repeat;
-	background-image: linear-gradient(
-		125deg,
-		hsla(0, 0%, 100%, 0) 30%,
-		#fff 0,
-		#fff 50%,
-		hsla(0, 0%, 100%, 0) 0
-	);
-	background-clip: padding-box;
-	opacity: 0.3;
-	animation: shine 5s infinite;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    top: -1px;
+    content: "";
+    background: -50px no-repeat;
+    background-image: linear-gradient(
+        125deg,
+        hsla(0, 0%, 100%, 0) 30%,
+        #fff 0,
+        #fff 50%,
+        hsla(0, 0%, 100%, 0) 0
+    );
+    background-clip: padding-box;
+    opacity: 0.3;
+    animation: shine 5s infinite;
 }
 
 @keyframes shine {
-	0% {
-		background-position: -90px -50px;
-	}
-	100% {
-		background-position: 200px 120px;
-	}
-	100% {
-		background-position: 200px 120px;
-	}
+    0% {
+        background-position: -90px -50px;
+    }
+    100% {
+        background-position: 200px 120px;
+    }
+    100% {
+        background-position: 200px 120px;
+    }
 }

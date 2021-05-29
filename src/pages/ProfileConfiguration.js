@@ -37,7 +37,7 @@ class ProfileConfiguration extends Component {
         e.preventDefault();
         const { currentPassword, newPassword, confirmPassword } = this.state;
         const errors = validate(newPassword, confirmPassword);
-        console.log(this.state.user.email, currentPassword, newPassword, confirmPassword, errors);
+        //console.log(this.state.user.email, currentPassword, newPassword, confirmPassword, errors);
         this.setState({ errors });
         if (errors.length === 0) {
             this.changeUserInfo(this.state.user._id, currentPassword, newPassword);
@@ -45,7 +45,7 @@ class ProfileConfiguration extends Component {
     };
 
     changeUserInfo = (userId, currentPassword, newPassword) => {
-        console.log("hey");
+        //console.log("hey");
         fetch(
             `https://api.lowympact.fr/api/v1/users/${userId}`,
             // `http://localhost:8080/api/v1/users/login`,
@@ -64,7 +64,7 @@ class ProfileConfiguration extends Component {
         )
             .then((response) => response.json())
             .then((res) => {
-                console.log(res);
+                //console.log(res);
                 if (res.success === false) {
                     this.setState({
                         errors: [...this.state.errors, res.error],
@@ -113,7 +113,7 @@ class ProfileConfiguration extends Component {
         )
             .then((response) => response.json())
             .then((res) => {
-                console.log(res);
+                //console.log(res);
 
                 this.setState({ user: res.data });
             });
@@ -123,7 +123,7 @@ class ProfileConfiguration extends Component {
         if (this.state.redirect) {
             return <Redirect to="/profil" />;
         }
-        console.log(this.state.redirect);
+        //console.log(this.state.redirect);
         return (
             <div className="screen">
                 <Link to="/">

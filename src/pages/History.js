@@ -41,7 +41,7 @@ function RenderHistoryItem({ item }) {
                 <div className="history-label-container">
                     <div style={{ color: labelColor }}>●</div>
                     <div className="history-label">
-                        {item.label == "not-applicable" ? "" : item.label}
+                        {["a", "b", "c", "d", "e"].indexOf(item.label) == -1 ? "" : item.label}
                     </div>
                 </div>
                 <div style={{ marginRight: "10px", color: "rgb(41,72,102)" }}>{">"}</div>
@@ -88,7 +88,7 @@ class History extends Component {
         )
             .then((response) => response.json())
             .then((res) => {
-                console.log(res);
+                //console.log(res);
 
                 this.setState({
                     items: res?.data,

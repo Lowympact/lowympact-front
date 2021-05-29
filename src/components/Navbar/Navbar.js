@@ -132,7 +132,7 @@ class Navbar extends React.Component {
                 //         })
                 //     }
                 //     onScan={(scanResult) => {
-                //         console.log(scanResult.barcodes[0].data);
+                //         //console.log(scanResult.barcodes[0].data);
                 //         this.handleBarcode(scanResult.barcodes[0].data);
                 //     }}
                 //     onError={(error) => {

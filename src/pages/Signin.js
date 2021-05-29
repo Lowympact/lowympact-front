@@ -36,7 +36,7 @@ class Signin extends Component {
         e.preventDefault();
         const { email, password } = this.state;
         const errors = validate(email, password);
-        //console.log(email, password, errors);
+        ////console.log(email, password, errors);
         this.setState({ errors });
         if (errors.length === 0) {
             this.Connect();
@@ -78,7 +78,7 @@ class Signin extends Component {
         })
             .then((response) => response.json())
             .then((data) => {
-                //console.log(data);
+                ////console.log(data);
                 if (data.error === "No user found") {
                     this.setState({ loginSuccessful: false });
                     let err = this.state.errors;
@@ -90,7 +90,7 @@ class Signin extends Component {
                     err.push(<p>Mot de passe Incorrect</p>);
                     this.setState({ errors: err });
                 } else {
-                    // console.log(data);
+                    // //console.log(data);
                     localStorage.setItem("token", data.token);
                     localStorage.setItem("userId", data._id);
                     this.setState({ loginSuccessful: true, redirect: true });

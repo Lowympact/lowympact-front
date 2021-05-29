@@ -56,7 +56,7 @@ class Signup extends Component {
         })
             .then((response) => response.json())
             .then((res) => {
-                console.log(res);
+                //console.log(res);
                 let errors = [];
 
                 if (!res.success) {
@@ -75,7 +75,7 @@ class Signup extends Component {
     handleSubmit = async (e) => {
         e.preventDefault();
         let errors = this.validate();
-        //console.log("errors: " + errors);
+        ////console.log("errors: " + errors);
         if (errors.length === 0) {
             errors = await this.signUser();
         }
@@ -96,7 +96,7 @@ class Signup extends Component {
         if (this.state.redirect) {
             return <Redirect to="/history" />;
         }
-        //console.log("render");
+        ////console.log("render");
         return (
             <React.Fragment>
                 <Link to="/login">
