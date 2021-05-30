@@ -22,6 +22,7 @@ const Signup = React.lazy(() => import("./pages/Signup"));
 const Signin = React.lazy(() => import("./pages/Signin"));
 const ProfileConfiguration = React.lazy(() => import("./pages/ProfileConfiguration"));
 const Statistics = React.lazy(() => import("./pages/Statistics"));
+const Debug = React.lazy(() => import("./pages/Debug"));
 
 class App extends Component {
     render() {
@@ -30,8 +31,8 @@ class App extends Component {
                 <Suspense
                     fallback={
                         <div className="loading">
-                            <div class="loadingio-spinner-ripple-4o0kkyduuq4">
-                                <div class="ldio-44krslet1tn">
+                            <div className="loadingio-spinner-ripple-4o0kkyduuq4">
+                                <div className="ldio-44krslet1tn">
                                     <div></div>
                                     <div></div>
                                 </div>
@@ -51,6 +52,7 @@ class App extends Component {
                         <Route path="/signin" component={Signin} exact />
                         <Route path="/configuration" component={ProfileConfiguration} exact />
                         <Route path="/stats" component={Statistics} exact />
+                        <Route path="/debug" component={Debug} exact />
                         {/* Errors Pages */}
                         <Route path="/error404" component={Error404} />
                         <Redirect to="/error404" />

@@ -191,7 +191,7 @@ class Environnement extends React.Component {
                     ) : (
                         <React.Fragment />
                     )}
-                    {this.displayPackagingImpact()}
+                    {/* {this.displayPackagingImpact()} */}
 
                     <Alternatives
                         barcode={this.props.barcode}

@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import Quagga from "quagga";
+import Quagga from "@ericblade/quagga2";
+import ImageUploader from "react-images-upload";
 
 class Scanner extends Component {
     state = {
         error: false,
         usedCamera: 0,
         devices: [],
+        processingImage: false,
     };
 
     switchCamera = () => {
@@ -19,56 +21,72 @@ class Scanner extends Component {
     };
 
     componentDidMount = async () => {
-        let usedCameraId;
-        const devices = await navigator.mediaDevices.enumerateDevices().then(function (devices) {
-            return devices;
-        });
-        let videoDevices = [];
-        devices.forEach((device) => {
-            if (device.kind === "videoinput") {
-                videoDevices.push(device);
-                // if (device.label.match(/back/) != null) {
-                //     ////console.log("Found video device: " + JSON.stringify(device));
-                // }
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const camera = urlParams.get("camera");
+        if (camera == "false") {
+            this.setState({ error: true });
+        } else if (
+            navigator.getUserMedia ||
+            navigator.webkitGetUserMedia ||
+            navigator.mozGetUserMedia ||
+            navigator.msGetUserMedia
+        ) {
+            let usedCameraId;
+            const devices = await navigator.mediaDevices
+                .enumerateDevices()
+                .then(function (devices) {
+                    return devices;
+                });
+            let videoDevices = [];
+            devices.forEach((device) => {
+                if (device.kind === "videoinput") {
+                    videoDevices.push(device);
+                    // if (device.label.match(/back/) != null) {
+                    //     ////console.log("Found video device: " + JSON.stringify(device));
+                    // }
+                }
+            });
+            // ALL  cameras
+            //console.log(videoDevices);
+            this.setState({ devices: videoDevices });
+
+            // open every video device and dump its characteristics
+            let maxResolution = -1;
+            for (let i in videoDevices) {
+                const device = videoDevices[i];
+                // //console.log("Opening video device " + device.deviceId + " (" + device.label + ")");
+
+                await navigator.mediaDevices
+                    .getUserMedia({
+                        video: { deviceId: { exact: device.deviceId } },
+                    })
+                    .then(
+                        (stream) => {
+                            stream.getVideoTracks().forEach((track) => {
+                                const capabilities = track.getCapabilities();
+
+                                if (
+                                    capabilities.height.max >= maxResolution &&
+                                    device.label.match(/back/) != null
+                                ) {
+                                    maxResolution = capabilities.height.max;
+                                    usedCameraId = device.deviceId;
+                                    this.setState({ usedCamera: i });
+                                }
+
+                                ////console.log("Track capabilities: " + JSON.stringify(capabilities));
+                            });
+
+                            stream.getTracks().forEach((track) => track.stop());
+                        },
+                        (err) => console.log(err)
+                    );
             }
-        });
-        // ALL  cameras
-        //console.log(videoDevices);
-        this.setState({ devices: videoDevices });
-
-        // open every video device and dump its characteristics
-        let maxResolution = -1;
-        for (let i in videoDevices) {
-            const device = videoDevices[i];
-            // //console.log("Opening video device " + device.deviceId + " (" + device.label + ")");
-
-            await navigator.mediaDevices
-                .getUserMedia({
-                    video: { deviceId: { exact: device.deviceId } },
-                })
-                .then(
-                    (stream) => {
-                        stream.getVideoTracks().forEach((track) => {
-                            const capabilities = track.getCapabilities();
-
-                            if (
-                                capabilities.height.max >= maxResolution &&
-                                device.label.match(/back/) != null
-                            ) {
-                                maxResolution = capabilities.height.max;
-                                usedCameraId = device.deviceId;
-                                this.setState({ usedCamera: i });
-                            }
-
-                            ////console.log("Track capabilities: " + JSON.stringify(capabilities));
-                        });
-
-                        stream.getTracks().forEach((track) => track.stop());
-                    },
-                    (err) => console.log(err)
-                );
+            this.QuaggaInit(usedCameraId);
+        } else {
+            this.setState({ error: true });
         }
-        this.QuaggaInit(usedCameraId);
     };
 
     QuaggaInit = (usedCameraId, width = 1920, height = 1080) => {
@@ -93,10 +111,10 @@ class Scanner extends Component {
                 },
                 locate: false,
                 area: {
-                    top: "25%",
+                    top: "30%",
                     right: "25%",
                     left: "25%",
-                    bottom: "25%",
+                    bottom: "30%",
                 },
                 numOfWorkers: window.navigator.hardwareConcurrency || 2,
                 decoder: {
@@ -116,6 +134,7 @@ class Scanner extends Component {
                     //console.log(err);
                     if (width != 960 && height != 540) {
                         this.QuaggaInit(usedCameraId, 960, 540);
+                        // console.log("here");
                     } else {
                         this.setState({ error: true });
                     }
@@ -134,9 +153,40 @@ class Scanner extends Component {
 
     _onDetected = async (result) => {
         let stop = await this.props.onDetected(result);
-        //console.log(stop);
+        console.log(stop);
         if (stop) {
             Quagga.stop();
+        }
+    };
+
+    onDrop = (image) => {
+        try {
+            this.setState({ processingImage: true });
+            console.log(image[image.length - 1]);
+            let reader = new FileReader();
+            reader.readAsDataURL(image[image.length - 1]);
+            reader.onloadend = () => {
+                Quagga.decodeSingle(
+                    {
+                        decoder: {
+                            readers: ["ean_reader"], // List of active readers
+                        },
+                        locate: true, // try to locate the barcode in the image
+                        src: reader.result, //image[image.length - 1], // or 'data:image/jpg;base64,' + data
+                    },
+                    (result) => {
+                        console.log(result);
+                        if (result) {
+                            this._onDetected(result);
+                            console.log("result", result.codeResult?.code);
+                        } else {
+                            console.log("not detected");
+                        }
+                    }
+                );
+            };
+        } catch (err) {
+            console.log(err);
         }
     };
 
@@ -144,6 +194,7 @@ class Scanner extends Component {
         return (
             <React.Fragment>
                 <div id="interactive" className="viewport" />
+
                 {this.state.devices?.length > 1 ? (
                     <button className="code-switch-camera" onClick={this.switchCamera}>
                         <span className="material-icons">cameraswitch</span>
@@ -154,11 +205,22 @@ class Scanner extends Component {
                 )}
                 {this.state.error ? (
                     <div className="scan-error">
-                        Il semblerait que votre caméra ne soit pas détectée. Essayez de changer de
-                        navigateur. Si le problème persiste, contactez-nous{" "}
-                        <a href="mailto:corentin.branchereau@insa-lyon.fr?Subject=Lowympact-camera not working">
-                            via ce lien
-                        </a>
+                        <ImageUploader
+                            withIcon={true}
+                            withPreview={false}
+                            buttonText="Importer une image"
+                            onChange={this.onDrop}
+                            imgExtension={[".jpg", ".gif", ".png", ".jpeg"]}
+                            maxFileSize={5242880}
+                        />
+                        <p>
+                            Il semblerait que votre caméra ne soit pas détectée. Vous pouvez
+                            importer une photo de votre bibliothèque, ou essayer un autre
+                            navigateur. Si le problème persiste, contactez-nous{" "}
+                            <a href="mailto:contact@lowympact.fr?Subject=Lowympact-camera not working">
+                                via ce lien
+                            </a>
+                        </p>
                     </div>
                 ) : (
                     <React.Fragment />

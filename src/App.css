@@ -8,11 +8,6 @@
     align-items: center;
 }
 
-#interactive video {
-    width: 500px;
-    z-index: -1;
-}
-
 .App-logo {
     height: 40vmin;
     pointer-events: none;

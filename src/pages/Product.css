@@ -448,6 +448,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     /* border: 1px solid black; */
     border-radius: 20px;
     width: 200px;
+    margin-bottom: 10px;
     overflow: hidden;
     left: calc(50vw - 100px);
     display: flex;

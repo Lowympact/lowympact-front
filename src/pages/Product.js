@@ -116,7 +116,7 @@ class Product extends React.Component {
 
                 dataEcoScore = res?.product?.ecoscore_data;
 
-                //console.log(res);
+                console.log(res);
                 let origins = res?.product?.origins_hierarchy;
                 if (origins && origins != "") {
                     this.setState({ origins: origins });

@@ -12,7 +12,7 @@ class Scan extends Component {
         results: [],
         usedCameraId: "3f6fc4177028f25c3e8215f4444838450630b8d656c627ef511346545d37f302",
         devices: [],
-        reading: 0, //false : barcode - true: qrcode
+        reading: false, //false : barcode - true: qrcode
         barcode: undefined,
         bcProductId: undefined,
         Quagga: undefined,
@@ -104,10 +104,10 @@ class Scan extends Component {
                             {this.state.results.map((result, i) => (
                                 <div key={result.codeResult.code + i}>
                                     {this.state.status === "waiting"
-                                        ? "Vérification du code" + result?.codeResult?.code
+                                        ? "Vérification du code : " + result?.codeResult?.code
                                         : ""}
                                     {this.state.status === "not found"
-                                        ? "code non trouvé, merci de réessayer"
+                                        ? "Code non trouvé, merci de réessayer"
                                         : ""}
                                 </div>
                             ))}
@@ -161,7 +161,7 @@ class Scan extends Component {
                     >
                         &times;
                     </span>
-                    <div className="code-switch" onClick={this.switchReader}>
+                    {/* <div className="code-switch" onClick={this.switchReader}>
                         <div className="span-code-switch">
                             <span
                                 className={
@@ -190,8 +190,9 @@ class Scan extends Component {
                             </span>
                             <span>QR Code</span>
                         </div>
-                    </div>
-                    {this.state.reading ? this.displayQrCode() : this.displayBarCode()}
+                    </div> */}
+                    {/* {this.state.reading ? this.displayQrCode() : this.displayBarCode()} */}
+                    {this.displayBarCode()}
                 </div>
             );
         }
