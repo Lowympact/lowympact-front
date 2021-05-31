@@ -8,6 +8,7 @@ class Scanner extends Component {
         usedCamera: 0,
         devices: [],
         processingImage: false,
+        text: 0,
     };
 
     switchCamera = () => {
@@ -25,7 +26,7 @@ class Scanner extends Component {
         const urlParams = new URLSearchParams(queryString);
         const camera = urlParams.get("camera");
         if (camera == "false") {
-            this.setState({ error: true });
+            this.setState({ error: true, text: 1 });
         } else if (
             navigator.getUserMedia ||
             navigator.webkitGetUserMedia ||
@@ -41,10 +42,10 @@ class Scanner extends Component {
             let videoDevices = [];
             devices.forEach((device) => {
                 if (device.kind === "videoinput") {
-                    videoDevices.push(device);
-                    // if (device.label.match(/back/) != null) {
-                    //     ////console.log("Found video device: " + JSON.stringify(device));
-                    // }
+                    if (device.label.match(/back/) != null) {
+                        videoDevices.push(device);
+                        //     ////console.log("Found video device: " + JSON.stringify(device));
+                    }
                 }
             });
             // ALL  cameras
@@ -83,9 +84,13 @@ class Scanner extends Component {
                         (err) => console.log(err)
                     );
             }
-            this.QuaggaInit(usedCameraId);
+            if (videoDevices.length > 0) {
+                this.QuaggaInit(usedCameraId);
+            } else {
+                this.setState({ error: true, text: 2 });
+            }
         } else {
-            this.setState({ error: true });
+            this.setState({ error: true, text: 3 });
         }
     };
 
@@ -136,7 +141,7 @@ class Scanner extends Component {
                         this.QuaggaInit(usedCameraId, 960, 540);
                         // console.log("here");
                     } else {
-                        this.setState({ error: true });
+                        this.setState({ error: true, text: 4 });
                     }
                     return false;
                 }
@@ -220,6 +225,8 @@ class Scanner extends Component {
                             <a href="mailto:contact@lowympact.fr?Subject=Lowympact-camera not working">
                                 via ce lien
                             </a>
+                            <br />
+                            {"code d'erreur : " + this.state.text}
                         </p>
                     </div>
                 ) : (
