@@ -116,7 +116,7 @@ class Product extends React.Component {
 
                 dataEcoScore = res?.product?.ecoscore_data;
 
-                console.log(res);
+                // console.log(res);
                 let origins = res?.product?.origins_hierarchy;
                 if (origins && origins != "") {
                     this.setState({ origins: origins });
@@ -197,7 +197,7 @@ class Product extends React.Component {
             )
                 .then((response) => response.json())
                 .then((res) => {
-                    //console.log(res);
+                    console.log(res);
                     if (res.success) {
                         this.setState({ cart: res.data?.quantity });
                     }
@@ -270,7 +270,7 @@ class Product extends React.Component {
                 co2 = parseFloat(this.state.dataEcoScore?.agribalyse?.co2_total);
             }
 
-            let ecoscore = "unkown";
+            let ecoscore = "unknown";
             if (this.state.ecoScore) {
                 ecoscore = this.state.ecoScore;
             }
