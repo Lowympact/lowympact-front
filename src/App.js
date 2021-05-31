@@ -23,6 +23,7 @@ const Signin = React.lazy(() => import("./pages/Signin"));
 const ProfileConfiguration = React.lazy(() => import("./pages/ProfileConfiguration"));
 const Statistics = React.lazy(() => import("./pages/Statistics"));
 const Debug = React.lazy(() => import("./pages/Debug"));
+const Avis = React.lazy(() => import("./pages/Avis"));
 
 class App extends Component {
     render() {
@@ -53,6 +54,7 @@ class App extends Component {
                         <Route path="/configuration" component={ProfileConfiguration} exact />
                         <Route path="/stats" component={Statistics} exact />
                         <Route path="/debug" component={Debug} exact />
+                        <Route path="/avis" component={Avis} exact />
                         {/* Errors Pages */}
                         <Route path="/error404" component={Error404} />
                         <Redirect to="/error404" />
