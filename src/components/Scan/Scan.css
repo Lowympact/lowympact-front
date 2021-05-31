@@ -147,9 +147,57 @@
 
 .fileContainer {
     width: 50vw;
-    color: black;
+    /* color: black; */
+    background: none !important;
 }
 
 .scan-error p {
     margin-top: 50px;
+}
+
+.import-label {
+    color: white;
+}
+
+.fileContainer .chooseFileButton {
+    padding: 6px 23px;
+    background: #3f4257;
+    border-radius: 30px;
+    color: white;
+    width: 50vw;
+    height: 200px;
+    font-weight: 300;
+    font-size: 14px;
+    margin: 10px 0;
+    transition: all 0.2s ease-in;
+    cursor: pointer;
+    outline: none;
+    border: none;
+}
+
+.fileContainer img {
+    display: none;
+}
+
+.button-import .material-icons {
+    font-size: 40px;
+}
+
+.error-message-import {
+    position: absolute;
+    bottom: 100px;
+    width: 80vw;
+    margin-left: 10vw;
+    font-size: 11px;
+}
+.red {
+    color: red;
+}
+
+.debug {
+    font-size: 9px;
+    color: white;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
 }

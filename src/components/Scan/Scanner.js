@@ -7,7 +7,7 @@ class Scanner extends Component {
         error: false,
         usedCamera: 0,
         devices: [],
-        processingImage: false,
+        processingImage: 0,
         text: 0,
     };
 
@@ -33,7 +33,7 @@ class Scanner extends Component {
             navigator.mozGetUserMedia ||
             navigator.msGetUserMedia
         ) {
-            let usedCameraId;
+            let usedCameraId = undefined;
             const devices = await navigator.mediaDevices
                 .enumerateDevices()
                 .then(function (devices) {
@@ -42,14 +42,13 @@ class Scanner extends Component {
             let videoDevices = [];
             devices.forEach((device) => {
                 if (device.kind === "videoinput") {
+                    videoDevices.push(device);
                     if (device.label.match(/back/) != null) {
-                        videoDevices.push(device);
                         //     ////console.log("Found video device: " + JSON.stringify(device));
                     }
                 }
             });
             // ALL  cameras
-            //console.log(videoDevices);
             this.setState({ devices: videoDevices });
 
             // open every video device and dump its characteristics
@@ -84,11 +83,7 @@ class Scanner extends Component {
                         (err) => console.log(err)
                     );
             }
-            if (videoDevices.length > 0) {
-                this.QuaggaInit(usedCameraId);
-            } else {
-                this.setState({ error: true, text: 2 });
-            }
+            this.QuaggaInit(usedCameraId);
         } else {
             this.setState({ error: true, text: 3 });
         }
@@ -108,10 +103,10 @@ class Scanner extends Component {
                         focusMode: "continuous",
                         width: { min: width },
                         height: { min: height },
-                        aspectRatio: {
-                            min: 1,
-                            max: 2,
-                        },
+                        // aspectRatio: {
+                        //     min: 1,
+                        //     max: 2,
+                        // },
                     },
                 },
                 locator: {
@@ -170,36 +165,75 @@ class Scanner extends Component {
 
     onDrop = (image) => {
         try {
-            this.setState({ processingImage: true });
-            console.log(image[image.length - 1]);
-            let reader = new FileReader();
-            reader.readAsDataURL(image[image.length - 1]);
-            reader.onloadend = () => {
-                Quagga.decodeSingle(
-                    {
-                        decoder: {
-                            readers: ["ean_reader"], // List of active readers
+            if (this.state.processingImage != 1) {
+                this.setState({ processingImage: 1 });
+                console.log(image[image.length - 1]);
+                let reader = new FileReader();
+                reader.readAsDataURL(image[image.length - 1]);
+                reader.onloadend = () => {
+                    Quagga.decodeSingle(
+                        {
+                            decoder: {
+                                readers: ["ean_reader"], // List of active readers
+                            },
+                            locate: true, // try to locate the barcode in the image
+                            src: reader.result, //image[image.length - 1], // or 'data:image/jpg;base64,' + data
                         },
-                        locate: true, // try to locate the barcode in the image
-                        src: reader.result, //image[image.length - 1], // or 'data:image/jpg;base64,' + data
-                    },
-                    (result) => {
-                        console.log(result);
-                        if (result) {
-                            this._onDetected(result);
-                            console.log("result", result.codeResult?.code);
-                        } else {
-                            console.log("not detected");
+                        (result) => {
+                            console.log(result);
+                            if (result) {
+                                this._onDetected(result);
+                                this.setState({ processingImage: 2 });
+                                console.log("result", result.codeResult?.code);
+                            } else {
+                                console.log("not detected");
+                                this.setState({ processingImage: 3 });
+                            }
                         }
-                    }
-                );
-            };
+                    );
+                };
+            }
         } catch (err) {
             console.log(err);
+            this.setState({ processingImage: 4 });
         }
     };
 
     render() {
+        let textImage = <React.Fragment></React.Fragment>;
+
+        if (this.state.processingImage == 1) {
+            textImage = (
+                <React.Fragment>
+                    <p>Chargement en cours...</p>
+                </React.Fragment>
+            );
+        }
+        if (this.state.processingImage == 2) {
+            textImage = (
+                <React.Fragment>
+                    <p>Ce produit n'existe pas dans la base de données</p>
+                </React.Fragment>
+            );
+        }
+        if (this.state.processingImage == 3) {
+            textImage = (
+                <React.Fragment>
+                    <p>Code barre non trouvé sur l'image, merci de réessayer</p>
+                </React.Fragment>
+            );
+        }
+        if (this.state.processingImage == 4) {
+            textImage = (
+                <React.Fragment>
+                    <p>
+                        Mauvais format ou fichier trop grand, merci de réessayer. <br />
+                        Taille max : 5mb <br />
+                        Formats: jpg, png, gif
+                    </p>
+                </React.Fragment>
+            );
+        }
         return (
             <React.Fragment>
                 <div id="interactive" className="viewport" />
@@ -217,25 +251,40 @@ class Scanner extends Component {
                         <ImageUploader
                             withIcon={true}
                             withPreview={false}
-                            buttonText="Importer une image"
+                            buttonText={
+                                <div className="button-import">
+                                    <div className="material-icons">add_a_photo</div>
+                                    <p>Prendre une photo</p>
+                                </div>
+                            }
                             onChange={this.onDrop}
+                            label={""}
                             imgExtension={[".jpg", ".gif", ".png", ".jpeg"]}
                             maxFileSize={5242880}
+                            labelClass={"import-label"}
                         />
-                        <p>
-                            Il semblerait que votre caméra ne soit pas détectée. Vous pouvez
+                        <p className="red">{textImage}</p>
+                        <p className="error-message-import">
+                            {/* Il semblerait que votre caméra ne soit pas détectée. Vous pouvez
                             importer une photo de votre bibliothèque, ou essayer un autre
-                            navigateur. Si le problème persiste, contactez-nous{" "}
+                            navigateur. <br />
+                            <br /> */}
+                            {/* Si le problème persiste, contactez-nous{" "}
                             <a href="mailto:contact@lowympact.fr?Subject=Lowympact-camera not working">
                                 via ce lien
-                            </a>
-                            <br />
+                            </a> */}
                             {"code d'erreur : " + this.state.text}
+                            <br />
                         </p>
                     </div>
                 ) : (
                     <React.Fragment />
                 )}
+                {
+                    <p className="debug">
+                        {this.state?.devices[this.state.usedCamera]?.deviceId + "-"}
+                    </p>
+                }
             </React.Fragment>
         );
     }
