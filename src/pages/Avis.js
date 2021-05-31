@@ -68,7 +68,6 @@ class Avis extends React.Component {
     };
 
     render = () => {
-        console.log(this.state.value);
         let button = <React.Fragment />;
         if (this.state.sent == 0) {
             button = <button onClick={this.send}>Envoyer ! </button>;

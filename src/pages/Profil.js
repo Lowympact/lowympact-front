@@ -41,11 +41,15 @@ class Profil extends React.Component {
                 <Link to="/stats" className="profil-button">
                     Statistiques
                 </Link>
+                <Link to="/avis" className="profil-button">
+                    Donnez votre avis !
+                </Link>
                 <Link to="/configuration" className="profil-button">
                     Configuration
                 </Link>
-                <div onClick={this.disconnect} className="profil-button">
-                    Déconnecter
+                <div onClick={this.disconnect} className="profil-button-disconnect">
+                    <div className="material-icons">logout</div>
+                    <p>Déconnexion</p>
                 </div>
             </React.Fragment>
         );
