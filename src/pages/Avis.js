@@ -71,7 +71,7 @@ class Avis extends React.Component {
         console.log(this.state.value);
         let button = <React.Fragment />;
         if (this.state.sent == 0) {
-            button = <button onClick={this.send}>Envoyez ! </button>;
+            button = <button onClick={this.send}>Envoyer ! </button>;
         }
         if (this.state.sent == 1) {
             button = <div>Envoi en cours ...</div>;
@@ -80,7 +80,7 @@ class Avis extends React.Component {
             button = <div> Message bien envoyé ! </div>;
         }
         if (this.state.sent == 3) {
-            button = <div>Erreur de réseau, vous pouvez réessayer plus tard :/</div>;
+            button = <div>Erreur de réseau, merci de réessayer plus tard :/</div>;
         }
         return (
             <div>
@@ -97,8 +97,7 @@ class Avis extends React.Component {
                             Lyonnais, et à besoin de nombreuses améliorations !
                         </p>
                         <p>
-                            Nous avons besoin de vos retours pour nous améliorer, n'hésitez pas à
-                            nous écrire !{" "}
+                            Vos retours nous aident à nous améliorer, n'hésitez pas à nous écrire !{" "}
                         </p>
                         <textarea
                             placeholder=" Donnez-nous votre avis ! "

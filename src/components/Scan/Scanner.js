@@ -95,12 +95,16 @@ class Scanner extends Component {
     };
 
     QuaggaInit = (usedCameraId, width = 1920, height = 1080) => {
+        let deviceId = { deviceId: usedCameraId };
+        if (!deviceId.deviceId) {
+            deviceId = {};
+        }
         Quagga.init(
             {
                 inputStream: {
                     type: "LiveStream",
                     constraints: {
-                        deviceId: usedCameraId,
+                        ...deviceId,
                         focusMode: "continuous",
                         width: { min: width },
                         height: { min: height },
