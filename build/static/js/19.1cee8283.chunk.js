@@ -1,0 +1,2 @@
+(this.webpackJsonplowympact=this.webpackJsonplowympact||[]).push([[19],{325:function(e,c,s){"use strict";s.r(c);var t=s(38),a=s(15),r=s(1);c.default=function(){return Object(r.jsx)("div",{className:"App",children:Object(r.jsxs)("header",{className:"App-header",children:[Object(r.jsx)("img",{src:t.a,className:"logo",alt:"logo"}),Object(r.jsx)("h1",{children:"Erreur 404"}),Object(r.jsx)(a.b,{to:"/",children:"Retourner \xe0 l'accueil"})]})})}},38:function(e,c,s){"use strict";c.a=s.p+"static/media/logo.b235ef42.svg"}}]);
+//# sourceMappingURL=19.1cee8283.chunk.js.map
