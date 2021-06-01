@@ -5,10 +5,12 @@ import ImageUploader from "react-images-upload";
 class Scanner extends Component {
     state = {
         error: false,
+        noBackCamera: false,
         usedCamera: 0,
         devices: [],
         processingImage: 0,
         text: 0,
+        mutlipleTracks: false,
     };
 
     switchCamera = () => {
@@ -33,80 +35,60 @@ class Scanner extends Component {
             navigator.mozGetUserMedia ||
             navigator.msGetUserMedia
         ) {
-            let usedCameraId = undefined;
-            const devices = await navigator.mediaDevices
-                .enumerateDevices()
-                .then(function (devices) {
-                    return devices;
-                });
-            let videoDevices = [];
-            devices.forEach((device) => {
-                if (device.kind === "videoinput") {
-                    videoDevices.push(device);
-                    if (device.label.match(/back/) != null) {
-                        //     ////console.log("Found video device: " + JSON.stringify(device));
-                    }
-                }
+            // On vient récupérer les flux vidéo existants
+            let devices = await navigator.mediaDevices.enumerateDevices().then(function (devices) {
+                return devices.filter((d) => d.kind === "videoinput");
             });
-            // ALL  cameras
-            this.setState({ devices: videoDevices });
+            this.setState({ devices: devices });
 
-            // open every video device and dump its characteristics
-            let maxResolution = -1;
-            for (let i in videoDevices) {
-                const device = videoDevices[i];
-                // //console.log("Opening video device " + device.deviceId + " (" + device.label + ")");
+            //On prend seulement les caméras arrière
+            //(toutes les caméra si caméra arrière non existante)
+            let videoDevices = devices.filter((d) => d.label.match(/back/) != null);
+            if (videoDevices.length === 0) {
+                this.setState({ noBackCamera: true });
+                videoDevices = devices;
+            }
 
-                await navigator.mediaDevices
+            // Get all camera capabilities
+            let capabilities = videoDevices.map(async (device) => {
+                return await navigator.mediaDevices
                     .getUserMedia({
                         video: { deviceId: { exact: device.deviceId } },
                     })
                     .then(
                         (stream) => {
-                            stream.getVideoTracks().forEach((track) => {
-                                const capabilities = track.getCapabilities();
-
-                                if (
-                                    capabilities.height.max >= maxResolution &&
-                                    device.label.match(/back/) != null
-                                ) {
-                                    maxResolution = capabilities.height.max;
-                                    usedCameraId = device.deviceId;
-                                    this.setState({ usedCamera: i });
-                                }
-
-                                ////console.log("Track capabilities: " + JSON.stringify(capabilities));
+                            let a = stream.getVideoTracks().map((track) => {
+                                return track.getCapabilities();
                             });
-
                             stream.getTracks().forEach((track) => track.stop());
+                            if (a.length > 1) this.setState({ mutlipleTracks: true });
+                            return a[0];
                         },
                         (err) => console.log(err)
                     );
-            }
-            this.QuaggaInit(usedCameraId);
+            });
+            let capa = await Promise.all(capabilities);
+
+            //On trie les capabilities pour mettre les meilleurs résolutions en premier
+            capa.sort((a, b) => {
+                if ((a.width.max + a.height.max) / 2 > (b.width.max + b.height.max) / 2) return -1;
+                else return 1;
+            });
+
+            if (capa[0]) this.QuaggaInit(capa[0]);
+            else this.QuaggaInit({});
         } else {
             this.setState({ error: true, text: 3 });
         }
     };
 
-    QuaggaInit = (usedCameraId, width = 1920, height = 1080) => {
-        let deviceId = { deviceId: usedCameraId };
-        if (!deviceId.deviceId) {
-            deviceId = {};
-        }
+    QuaggaInit = (capabilities) => {
         Quagga.init(
             {
                 inputStream: {
                     type: "LiveStream",
                     constraints: {
-                        ...deviceId,
-                        focusMode: "continuous",
-                        width: { min: width },
-                        height: { min: height },
-                        // aspectRatio: {
-                        //     min: 1,
-                        //     max: 2,
-                        // },
+                        ...capabilities,
                     },
                 },
                 locator: {
@@ -115,33 +97,21 @@ class Scanner extends Component {
                 },
                 locate: false,
                 area: {
-                    top: "30%",
+                    top: "40%",
                     right: "25%",
                     left: "25%",
-                    bottom: "30%",
+                    bottom: "40%",
                 },
                 numOfWorkers: window.navigator.hardwareConcurrency || 2,
                 decoder: {
                     readers: ["ean_reader"],
-                },
-                debug: {
-                    drawBoundingBox: true,
-                    showFrequency: true,
-                    drawScanline: true,
-                    showPattern: true,
                 },
                 multiple: false,
                 singleChannel: false,
             },
             (err) => {
                 if (err) {
-                    //console.log(err);
-                    if (width != 960 && height != 540) {
-                        this.QuaggaInit(usedCameraId, 960, 540);
-                        // console.log("here");
-                    } else {
-                        this.setState({ error: true, text: 4 });
-                    }
+                    this.setState({ error: true, text: 4 });
                     return false;
                 }
                 Quagga.start();
@@ -199,6 +169,10 @@ class Scanner extends Component {
         }
     };
 
+    setImport = () => {
+        this.setState({ error: !this.state.error });
+    };
+
     render() {
         let textImage = <React.Fragment></React.Fragment>;
 
@@ -236,16 +210,23 @@ class Scanner extends Component {
         }
         return (
             <React.Fragment>
-                <div id="interactive" className="viewport" />
+                <div id="interactive" className={this.state.error ? "hidden" : "viewport"} />
 
-                {this.state.devices?.length > 1 ? (
+                {/* {this.state.devices?.length > 1 ? (
                     <button className="code-switch-camera" onClick={this.switchCamera}>
                         <span className="material-icons">cameraswitch</span>
                         {this.state.usedCamera}
                     </button>
                 ) : (
                     <React.Fragment />
-                )}
+                )} */}
+                {/* {!this.state.error ? (
+                    <button className="code-switch-camera" onClick={this.setImport}>
+                        clique ici si tu souhaite importer une image
+                    </button>
+                ) : (
+                    ""
+                )} */}
                 {this.state.error ? (
                     <div className="scan-error">
                         <ImageUploader
@@ -280,11 +261,11 @@ class Scanner extends Component {
                 ) : (
                     <React.Fragment />
                 )}
-                {
-                    <p className="debug">
-                        {this.state?.devices[this.state.usedCamera]?.deviceId + "-"}
-                    </p>
-                }
+                {this.state.mutlipleTracks ? (
+                    <h1 className="debug">If you see this, tell me</h1>
+                ) : (
+                    ""
+                )}
             </React.Fragment>
         );
     }
