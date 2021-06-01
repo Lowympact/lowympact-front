@@ -111,7 +111,7 @@ class Scanner extends Component {
             },
             (err) => {
                 if (err) {
-                    this.setState({ error: true, text: 4 });
+                    this.setState({ error: true, text: err + " " + JSON.stringify(capabilities) });
                     return false;
                 }
                 Quagga.start();
