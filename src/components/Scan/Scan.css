@@ -206,3 +206,7 @@
 .hidden {
     display: none;
 }
+
+.no-permission {
+    font-size: 15px;
+}

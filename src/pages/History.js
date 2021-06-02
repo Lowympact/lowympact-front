@@ -5,6 +5,7 @@ import Header from "../components/Header/Header";
 import "./History.css";
 // import { ITEMS } from "../assets/scanned/items";
 import { Link } from "react-router-dom";
+import InstallPWA from "../components/Install/InstallPWA";
 
 function RenderHistoryItem({ item }) {
     var labelColor;
@@ -165,6 +166,7 @@ class History extends Component {
                         </div>
                         <Header />
                         <Navbar />
+                        {this.state.items.length > 1 ? <InstallPWA /> : <Fragment />}
                     </div>
                 );
         } else {

@@ -5,6 +5,7 @@ import fruits from "../assets/images/fruits-vegetables-basket-by-oblik-studio.sv
 import Header from "../components/Header/Header";
 import "./Login.css";
 import { Link } from "react-router-dom";
+import InstallPWA from "../components/Install/InstallPWA";
 
 export const validEmail = new RegExp("^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+.[a-zA-Z]$");
 
@@ -164,6 +165,7 @@ class Signup extends Component {
                         <ButtonSignup />
                     </div>
                 </div>
+                <InstallPWA />
             </React.Fragment>
         );
     }

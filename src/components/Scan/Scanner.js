@@ -11,6 +11,7 @@ class Scanner extends Component {
         processingImage: 0,
         text: 0,
         mutlipleTracks: false,
+        no_permission: false,
     };
 
     switchCamera = () => {
@@ -58,7 +59,12 @@ class Scanner extends Component {
                     .then(
                         (stream) => {
                             let a = stream.getVideoTracks().map((track) => {
-                                return track.getCapabilities();
+                                console.log(track);
+                                if (track.getCapabilities) {
+                                    return track.getCapabilities();
+                                } else {
+                                    return [{}];
+                                }
                             });
                             stream.getTracks().forEach((track) => track.stop());
                             if (a.length > 1) this.setState({ mutlipleTracks: true });
@@ -111,6 +117,10 @@ class Scanner extends Component {
             },
             (err) => {
                 if (err) {
+                    console.log(err);
+                    if (err == "NotAllowedError: Permission denied") {
+                        this.setState({ no_permission: true });
+                    }
                     this.setState({ error: true, text: err + " " + JSON.stringify(capabilities) });
                     return false;
                 }
@@ -254,7 +264,15 @@ class Scanner extends Component {
                             <a href="mailto:contact@lowympact.fr?Subject=Lowympact-camera not working">
                                 via ce lien
                             </a> */}
-                            {"code d'erreur : " + this.state.text}
+                            {/* {"code d'erreur : " + this.state.text} */}
+                            {this.state.no_permission ? (
+                                <div className="no-permission">
+                                    L'accès à votre caméra est bloqué : Vous pouvez l'autoriser dans
+                                    les paramètres de votre navigateur pour accéder au scanner
+                                </div>
+                            ) : (
+                                <React.Fragment />
+                            )}
                             <br />
                         </p>
                     </div>
