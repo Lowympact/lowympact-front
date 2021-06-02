@@ -8,9 +8,9 @@ const InstallPWA = () => {
     const [webInstallPrompt, handleWebInstallDeclined, handleWebInstallAccepted] =
         useWebInstallPrompt();
 
-    // if (!iosInstallPrompt && !webInstallPrompt) {
-    //     return null;
-    // }
+    if (!iosInstallPrompt && !webInstallPrompt) {
+        return null;
+    }
     return (
         <div className="install-popup">
             <div className="install-popup-wrapper">
