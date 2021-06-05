@@ -3,6 +3,8 @@ import fruits from "../assets/images/fruits-vegetables-basket-by-oblik-studio.sv
 import Navbar from "../components/Navbar/Navbar";
 import Header from "../components/Header/Header";
 import "./History.css";
+import Product from "./Product";
+import Profil from "./Profil";
 // import { ITEMS } from "../assets/scanned/items";
 import { Link } from "react-router-dom";
 import InstallPWA from "../components/Install/InstallPWA";
