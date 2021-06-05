@@ -8,6 +8,21 @@ const UseWebInstallPrompt = () => {
     const [userShouldBePromptedToInstall, handleUserSeeingInstallPrompt] =
         useShouldShowPrompt(webInstallPromptedAt);
 
+    useEffect(() => {
+        const beforeInstallPromptHandler = (event) => {
+            event.preventDefault();
+
+            // check if user has already been asked
+            if (userShouldBePromptedToInstall) {
+                // store the event for later use
+                setInstallPromptEvent(event);
+                localStorage.setItem("installPrompt", event);
+            }
+        };
+        window.addEventListener("beforeinstallprompt", beforeInstallPromptHandler);
+        return () => window.removeEventListener("beforeinstallprompt", beforeInstallPromptHandler);
+    }, [userShouldBePromptedToInstall]);
+
     const handleInstallDeclined = () => {
         handleUserSeeingInstallPrompt();
         setInstallPromptEvent(null);

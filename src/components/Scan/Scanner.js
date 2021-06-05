@@ -49,7 +49,7 @@ class Scanner extends Component {
                 this.setState({ noBackCamera: true });
                 videoDevices = devices;
             }
-
+            console.log(videoDevices);
             // Get all camera capabilities
             let capabilities = videoDevices.map(async (device) => {
                 return await navigator.mediaDevices
@@ -81,8 +81,12 @@ class Scanner extends Component {
                 else return 1;
             });
 
-            if (capa[0]) this.QuaggaInit(capa[0]);
-            else this.QuaggaInit({});
+            if (capa[0]) {
+                this.QuaggaInit(capa[0]);
+            } else if (videoDevices.length > 0) {
+                this.QuaggaInit({ deviceId: videoDevices[0].deviceId });
+            }
+            this.QuaggaInit({});
         } else {
             this.setState({ error: true, text: 3 });
         }
