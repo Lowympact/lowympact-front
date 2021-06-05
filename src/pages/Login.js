@@ -60,7 +60,6 @@ class Login extends React.Component {
                 <div className="logo-fruits">
                     <img src={fruits} className="logo" alt="Fruits" />
                 </div>
-                <InstallPWA />
             </div>
         );
     };
