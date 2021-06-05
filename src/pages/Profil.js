@@ -11,7 +11,8 @@ class Profil extends React.Component {
     };
 
     disconnect = () => {
-        localStorage.clear();
+        localStorage.removeItem("token");
+        localStorage.removeItem("userId");
         this.props.history.push("/login");
     };
 

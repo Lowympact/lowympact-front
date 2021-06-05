@@ -8,20 +8,6 @@ const UseWebInstallPrompt = () => {
     const [userShouldBePromptedToInstall, handleUserSeeingInstallPrompt] =
         useShouldShowPrompt(webInstallPromptedAt);
 
-    useEffect(() => {
-        const beforeInstallPromptHandler = (event) => {
-            event.preventDefault();
-
-            // check if user has already been asked
-            if (userShouldBePromptedToInstall) {
-                // store the event for later use
-                setInstallPromptEvent(event);
-            }
-        };
-        window.addEventListener("beforeinstallprompt", beforeInstallPromptHandler);
-        return () => window.removeEventListener("beforeinstallprompt", beforeInstallPromptHandler);
-    }, [userShouldBePromptedToInstall]);
-
     const handleInstallDeclined = () => {
         handleUserSeeingInstallPrompt();
         setInstallPromptEvent(null);
@@ -29,15 +15,16 @@ const UseWebInstallPrompt = () => {
 
     const handleInstallAccepted = () => {
         // show native prompt
-        installPromptEvent.prompt();
+        prompt = localStorage.getItem("installPrompt");
+        prompt.prompt();
 
         // decide what to do after the user chooses
-        installPromptEvent.userChoice.then((choice) => {
+        prompt.userChoice.then((choice) => {
             // if the user declined, we don't want to show the prompt again
             if (choice.outcome !== "accepted") {
                 handleUserSeeingInstallPrompt();
             }
-            setInstallPromptEvent(null);
+            localStorage.getItem("installPrompt", null);
         });
     };
     return [installPromptEvent, handleInstallDeclined, handleInstallAccepted];

@@ -7,7 +7,7 @@ import blob from "../assets/images/bitmap.png";
 import "./Login.css";
 import { Link } from "react-router-dom";
 import jwt from "jsonwebtoken";
-import InstallPwa from "../components/Install/InstallPWA";
+import InstallPWA from "../components/Install/InstallPWA";
 
 function validate(email, password) {
     const errors = [];
@@ -153,7 +153,7 @@ class Signin extends Component {
                         <ButtonSignin />
                     </div>
                 </div>
-                <InstallPwa />
+                <InstallPWA />
             </React.Fragment>
         );
     }

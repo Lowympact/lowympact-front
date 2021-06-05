@@ -7,6 +7,7 @@ import ButtonLogin from "../components/Button/ButtonLogin";
 import { Link } from "react-router-dom";
 import ButtonNoAccount from "../components/Button/ButtonNoAccount";
 import jwt from "jsonwebtoken";
+import InstallPWA from "../components/Install/InstallPWA";
 
 class Login extends React.Component {
     componentDidMount = () => {
@@ -59,6 +60,7 @@ class Login extends React.Component {
                 <div className="logo-fruits">
                     <img src={fruits} className="logo" alt="Fruits" />
                 </div>
+                <InstallPWA />
             </div>
         );
     };
