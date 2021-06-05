@@ -83,10 +83,7 @@ class Scanner extends Component {
 
             if (capa[0]) {
                 this.QuaggaInit(capa[0]);
-            } else if (videoDevices.length > 0) {
-                this.QuaggaInit({ deviceId: videoDevices[0].deviceId });
-            }
-            this.QuaggaInit({});
+            } else this.QuaggaInit({});
         } else {
             this.setState({ error: true, text: 3 });
         }
