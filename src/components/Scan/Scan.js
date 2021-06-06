@@ -118,6 +118,7 @@ class Scan extends Component {
                             onDetected={this._onDetected}
                             setQuagga={this.setQuagga}
                             usedCameraId={this.usedCameraId}
+                            capabilities={this.props.capabilities}
                         />
                     ) : null}
                 </React.Fragment>

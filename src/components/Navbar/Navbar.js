@@ -14,12 +14,79 @@ class Navbar extends React.Component {
         barcode: undefined,
         bcProductId: undefined,
         height: 0,
+        capabilities: { facingMode: "environment" },
     };
 
-    componentDidMount() {
+    componentDidMount = async () => {
         this.updateWindowDimensions();
         window.addEventListener("resize", this.updateWindowDimensions);
-    }
+        try {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const camera = urlParams.get("camera");
+            if (
+                navigator.getUserMedia ||
+                navigator.webkitGetUserMedia ||
+                navigator.mozGetUserMedia ||
+                navigator.msGetUserMedia
+            ) {
+                // On vient récupérer les flux vidéo existants
+                let devices = await navigator.mediaDevices
+                    .enumerateDevices()
+                    .then(function (devices) {
+                        return devices.filter((d) => d.kind === "videoinput");
+                    });
+
+                //On prend seulement les caméras arrière
+                //(toutes les caméra si caméra arrière non existante)
+                let videoDevices = devices.filter((d) => d.label.match(/back/) != null);
+                if (videoDevices.length === 0) {
+                    videoDevices = devices;
+                }
+                console.log(videoDevices);
+                // Get all camera capabilities
+                let capabilities = videoDevices.map(async (device) => {
+                    return await navigator.mediaDevices
+                        .getUserMedia({
+                            video: { deviceId: { exact: device.deviceId } },
+                        })
+                        .then(
+                            (stream) => {
+                                let a = stream.getVideoTracks().map((track) => {
+                                    console.log(track);
+                                    if (track.getCapabilities) {
+                                        return track.getCapabilities();
+                                    } else {
+                                        return [{}];
+                                    }
+                                });
+                                stream.getTracks().forEach((track) => track.stop());
+                                if (a && a.length > 0) return a[0];
+                                else return {};
+                            },
+                            (err) => console.log(err)
+                        );
+                });
+                let capa = await Promise.all(capabilities);
+                if (capa && capa.length > 0) {
+                    //On trie les capabilities pour mettre les meilleurs résolutions en premier
+                    capa.sort((a, b) => {
+                        if ((a.width.max + a.height.max) / 2 > (b.width.max + b.height.max) / 2)
+                            return -1;
+                        else return 1;
+                    });
+                }
+
+                if (capa[0]) {
+                    this.setState({ capabilities: capa[0] });
+                } else this.setState({ capabilities: { facingMode: "environment" } });
+            } else {
+                this.setState({ capabilities: { facingMode: "environment" } });
+            }
+        } catch (err) {
+            this.setState({ capabilities: { facingMode: "environment" } });
+        }
+    };
 
     componentWillUnmount() {
         window.removeEventListener("resize", this.updateWindowDimensions);
@@ -139,7 +206,11 @@ class Navbar extends React.Component {
                 //         console.error(error.message);
                 //     }}
                 // />
-                <Scan showScanner={this.handleScannerButton} history={this.props.history} />
+                <Scan
+                    showScanner={this.handleScannerButton}
+                    history={this.props.history}
+                    capabilities={this.state.capabilities}
+                />
             );
         }
     };
