@@ -177,7 +177,9 @@ class Scanner extends Component {
                 )} */}
 
                     <button className="code-switch-camera" onClick={this.setImport}>
-                        <span className="material-icons green">cameraswitch</span>
+                        <span className="material-icons green">
+                            {!this.state.error ? "upload_file" : "flip"}
+                        </span>
                     </button>
 
                     {this.state.error ? (
@@ -188,7 +190,7 @@ class Scanner extends Component {
                                 buttonText={
                                     <div className="button-import">
                                         <div className="material-icons">add_a_photo</div>
-                                        <p>Prendre une photo</p>
+                                        <p>Importer une photo</p>
                                     </div>
                                 }
                                 onChange={this.onDrop}
