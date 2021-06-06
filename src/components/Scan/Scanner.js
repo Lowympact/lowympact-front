@@ -88,13 +88,13 @@ class Scanner extends Component {
                 }
 
                 if (capa[0]) {
-                    this.QuaggaInit({});
-                } else this.QuaggaInit({});
+                    this.QuaggaInit(capa[0]);
+                } else this.QuaggaInit({ facingMode: "environment" });
             } else {
                 this.setState({ error: true, text: 3 });
             }
         } catch (err) {
-            this.QuaggaInit({});
+            this.QuaggaInit({ facingMode: "environment" });
         }
     };
 
@@ -109,7 +109,6 @@ class Scanner extends Component {
                     type: "LiveStream",
                     constraints: {
                         ...capabilities,
-                        facingMode: "environment",
                     },
                 },
                 locator: {
@@ -143,6 +142,7 @@ class Scanner extends Component {
             }
         );
         this.props.setQuagga(Quagga);
+        console.log(Quagga.CameraAccess);
         Quagga.onDetected(this._onDetected);
     };
 
@@ -235,71 +235,71 @@ class Scanner extends Component {
         }
         return (
             <React.Fragment>
-                <div id="interactive" className={this.state.error ? "hidden" : "viewport"} />
-
-                {this.state.devices?.length > 1 ? (
+                <div className="interactive-wrapper">
+                    <div id="interactive" className={this.state.error ? "hidden" : "viewport"} />
+                    {/* {this.state.devices?.length > 1 ? (
                     <button className="code-switch-camera" onClick={this.switchCamera}>
                         <span className="material-icons">cameraswitch</span>
                         {this.state.usedCamera}
                     </button>
                 ) : (
                     <React.Fragment />
-                )}
-                {/* {!this.state.error ? (
-                    <button className="code-switch-camera" onClick={this.setImport}>
-                        clique ici si tu souhaite importer une image
-                    </button>
-                ) : (
-                    ""
                 )} */}
-                {this.state.error ? (
-                    <div className="scan-error">
-                        <ImageUploader
-                            withIcon={true}
-                            withPreview={false}
-                            buttonText={
-                                <div className="button-import">
-                                    <div className="material-icons">add_a_photo</div>
-                                    <p>Prendre une photo</p>
-                                </div>
-                            }
-                            onChange={this.onDrop}
-                            label={""}
-                            imgExtension={[".jpg", ".gif", ".png", ".jpeg"]}
-                            maxFileSize={5242880}
-                            labelClass={"import-label"}
-                        />
-                        <p className="red">{textImage}</p>
-                        <p className="error-message-import">
-                            {/* Il semblerait que votre caméra ne soit pas détectée. Vous pouvez
+
+                    <button className="code-switch-camera" onClick={this.setImport}>
+                        <span className="material-icons green">cameraswitch</span>
+                    </button>
+
+                    {this.state.error ? (
+                        <div className="scan-error">
+                            <ImageUploader
+                                withIcon={true}
+                                withPreview={false}
+                                buttonText={
+                                    <div className="button-import">
+                                        <div className="material-icons">add_a_photo</div>
+                                        <p>Prendre une photo</p>
+                                    </div>
+                                }
+                                onChange={this.onDrop}
+                                label={""}
+                                imgExtension={[".jpg", ".gif", ".png", ".jpeg"]}
+                                maxFileSize={5242880}
+                                labelClass={"import-label"}
+                            />
+                            <p className="red">{textImage}</p>
+                            <p className="error-message-import">
+                                {/* Il semblerait que votre caméra ne soit pas détectée. Vous pouvez
                             importer une photo de votre bibliothèque, ou essayer un autre
                             navigateur. <br />
                             <br /> */}
-                            {/* Si le problème persiste, contactez-nous{" "}
+                                {/* Si le problème persiste, contactez-nous{" "}
                             <a href="mailto:contact@lowympact.fr?Subject=Lowympact-camera not working">
                                 via ce lien
                             </a> */}
-                            {/* {"code d'erreur : " + this.state.text} */}
-                            {this.state.no_permission ? (
-                                <div className="no-permission">
-                                    L'accès à votre caméra est bloqué : Vous pouvez l'autoriser dans
-                                    les paramètres de votre navigateur pour accéder au scanner
-                                </div>
-                            ) : (
-                                <React.Fragment />
-                            )}
-                            <br />
-                        </p>
-                    </div>
-                ) : (
-                    <React.Fragment />
-                )}
-                {this.state.mutlipleTracks ? (
-                    <h1 className="debug">If you see this, tell me</h1>
-                ) : (
-                    ""
-                )}
-                <div className="debug">{this.state.text}</div>
+                                {/* {"code d'erreur : " + this.state.text} */}
+                                {this.state.no_permission ? (
+                                    <div className="no-permission">
+                                        L'accès à votre caméra est bloqué : Vous pouvez l'autoriser
+                                        dans les paramètres de votre navigateur pour accéder au
+                                        scanner
+                                    </div>
+                                ) : (
+                                    <React.Fragment />
+                                )}
+                                <br />
+                            </p>
+                        </div>
+                    ) : (
+                        <React.Fragment />
+                    )}
+                    {this.state.mutlipleTracks ? (
+                        <h1 className="debug">If you see this, tell me</h1>
+                    ) : (
+                        ""
+                    )}
+                    <div className="debug">{this.state.text}</div>
+                </div>
             </React.Fragment>
         );
     }
