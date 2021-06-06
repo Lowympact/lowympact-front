@@ -25,71 +25,84 @@ class Scanner extends Component {
     };
 
     componentDidMount = async () => {
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const camera = urlParams.get("camera");
-        if (camera == "false") {
-            this.setState({ error: true, text: 1 });
-        } else if (
-            navigator.getUserMedia ||
-            navigator.webkitGetUserMedia ||
-            navigator.mozGetUserMedia ||
-            navigator.msGetUserMedia
-        ) {
-            // On vient récupérer les flux vidéo existants
-            let devices = await navigator.mediaDevices.enumerateDevices().then(function (devices) {
-                return devices.filter((d) => d.kind === "videoinput");
-            });
-            this.setState({ devices: devices });
+        try {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const camera = urlParams.get("camera");
+            if (camera == "false") {
+                this.setState({ error: true, text: 1 });
+            } else if (
+                navigator.getUserMedia ||
+                navigator.webkitGetUserMedia ||
+                navigator.mozGetUserMedia ||
+                navigator.msGetUserMedia
+            ) {
+                // On vient récupérer les flux vidéo existants
+                let devices = await navigator.mediaDevices
+                    .enumerateDevices()
+                    .then(function (devices) {
+                        return devices.filter((d) => d.kind === "videoinput");
+                    });
+                this.setState({ devices: devices });
 
-            //On prend seulement les caméras arrière
-            //(toutes les caméra si caméra arrière non existante)
-            let videoDevices = devices.filter((d) => d.label.match(/back/) != null);
-            if (videoDevices.length === 0) {
-                this.setState({ noBackCamera: true });
-                videoDevices = devices;
+                //On prend seulement les caméras arrière
+                //(toutes les caméra si caméra arrière non existante)
+                let videoDevices = devices.filter((d) => d.label.match(/back/) != null);
+                if (videoDevices.length === 0) {
+                    this.setState({ noBackCamera: true });
+                    videoDevices = devices;
+                }
+                console.log(videoDevices);
+                // Get all camera capabilities
+                let capabilities = videoDevices.map(async (device) => {
+                    return await navigator.mediaDevices
+                        .getUserMedia({
+                            video: { deviceId: { exact: device.deviceId } },
+                        })
+                        .then(
+                            (stream) => {
+                                let a = stream.getVideoTracks().map((track) => {
+                                    console.log(track);
+                                    if (track.getCapabilities) {
+                                        return track.getCapabilities();
+                                    } else {
+                                        return [{}];
+                                    }
+                                });
+                                stream.getTracks().forEach((track) => track.stop());
+                                if (a.length > 1) this.setState({ mutlipleTracks: true });
+                                if (a && a.length > 0) return a[0];
+                                else return {};
+                            },
+                            (err) => console.log(err)
+                        );
+                });
+                let capa = await Promise.all(capabilities);
+                if (capa && capa.length > 0) {
+                    //On trie les capabilities pour mettre les meilleurs résolutions en premier
+                    capa.sort((a, b) => {
+                        if ((a.width.max + a.height.max) / 2 > (b.width.max + b.height.max) / 2)
+                            return -1;
+                        else return 1;
+                    });
+                }
+
+                if (capa[0]) {
+                    this.QuaggaInit({});
+                } else this.QuaggaInit({});
+            } else {
+                this.setState({ error: true, text: 3 });
             }
-            console.log(videoDevices);
-            // Get all camera capabilities
-            let capabilities = videoDevices.map(async (device) => {
-                return await navigator.mediaDevices
-                    .getUserMedia({
-                        video: { deviceId: { exact: device.deviceId } },
-                    })
-                    .then(
-                        (stream) => {
-                            let a = stream.getVideoTracks().map((track) => {
-                                console.log(track);
-                                if (track.getCapabilities) {
-                                    return track.getCapabilities();
-                                } else {
-                                    return [{}];
-                                }
-                            });
-                            stream.getTracks().forEach((track) => track.stop());
-                            if (a.length > 1) this.setState({ mutlipleTracks: true });
-                            return a[0];
-                        },
-                        (err) => console.log(err)
-                    );
-            });
-            let capa = await Promise.all(capabilities);
-
-            //On trie les capabilities pour mettre les meilleurs résolutions en premier
-            capa.sort((a, b) => {
-                if ((a.width.max + a.height.max) / 2 > (b.width.max + b.height.max) / 2) return -1;
-                else return 1;
-            });
-
-            if (capa[0]) {
-                this.QuaggaInit(capa[0]);
-            } else this.QuaggaInit({});
-        } else {
-            this.setState({ error: true, text: 3 });
+        } catch (err) {
+            this.QuaggaInit({});
         }
     };
 
     QuaggaInit = (capabilities) => {
+        console.log(capabilities);
+        if (Object.keys(capabilities).length == 0) {
+            this.setState({ text: "vide" });
+        }
         Quagga.init(
             {
                 inputStream: {
@@ -223,14 +236,14 @@ class Scanner extends Component {
             <React.Fragment>
                 <div id="interactive" className={this.state.error ? "hidden" : "viewport"} />
 
-                {/* {this.state.devices?.length > 1 ? (
+                {this.state.devices?.length > 1 ? (
                     <button className="code-switch-camera" onClick={this.switchCamera}>
                         <span className="material-icons">cameraswitch</span>
                         {this.state.usedCamera}
                     </button>
                 ) : (
                     <React.Fragment />
-                )} */}
+                )}
                 {/* {!this.state.error ? (
                     <button className="code-switch-camera" onClick={this.setImport}>
                         clique ici si tu souhaite importer une image
@@ -285,6 +298,7 @@ class Scanner extends Component {
                 ) : (
                     ""
                 )}
+                <div className="debug">{this.state.text}</div>
             </React.Fragment>
         );
     }
