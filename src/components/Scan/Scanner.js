@@ -109,6 +109,7 @@ class Scanner extends Component {
                     type: "LiveStream",
                     constraints: {
                         ...capabilities,
+                        facingMode: "environment",
                     },
                 },
                 locator: {
