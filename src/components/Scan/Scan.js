@@ -193,7 +193,13 @@ class Scan extends Component {
 
     render() {
         return (
-            <div className="code-reader-container">
+            <div
+                className={
+                    this.props.hideScannerAnimation
+                        ? "code-reader-container hide-scanner"
+                        : "code-reader-container"
+                }
+            >
                 {!this.state.online ? (
                     <div className="offline-container">
                         {" "}

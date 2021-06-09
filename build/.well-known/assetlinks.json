@@ -1,0 +1,12 @@
+[
+    {
+        "relation": ["delegate_permission/common.handle_all_urls"],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "app.vercel.lowympact_app.twa",
+            "sha256_cert_fingerprints": [
+                "61:A1:98:7E:81:AE:98:B1:E9:D6:FA:49:AF:C2:BA:B8:09:75:71:2C:B2:9A:E2:AE:3F:D2:78:D8:96:98:BA:90"
+            ]
+        }
+    }
+]

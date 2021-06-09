@@ -81,6 +81,24 @@
     top: 0px;
     animation: appearFromBottom 0.5s ease;
 }
+.hide-scanner {
+    position: absolute;
+    top: 0px;
+    animation: disappearFromBottom 1s ease;
+    transition: all 0.3s ease-in;
+}
+
+@keyframes disappearFromBottom {
+    from {
+        transform: translateY(0px) scale(1, 1);
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+    }
+    to {
+        transform: translateY(1000px) scale(0, 0);
+        border-radius: 1000px;
+    }
+}
 
 @keyframes appearFromBottom {
     from {

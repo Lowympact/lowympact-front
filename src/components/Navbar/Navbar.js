@@ -15,6 +15,7 @@ class Navbar extends React.Component {
         bcProductId: undefined,
         height: 0,
         capabilities: undefined,
+        hideScannerAnimation: false,
     };
 
     componentDidMount = async () => {
@@ -97,7 +98,14 @@ class Navbar extends React.Component {
     };
 
     handleScannerButton = (bool) => {
-        this.setState({ showScanner: bool });
+        if (bool === false) {
+            this.setState({ hideScannerAnimation: true }, async () => {
+                await delay(300);
+                this.setState({ showScanner: bool, hideScannerAnimation: false });
+            });
+        } else {
+            this.setState({ showScanner: bool });
+        }
     };
 
     // handleBarcode = (res) => {
@@ -207,6 +215,7 @@ class Navbar extends React.Component {
                 //     }}
                 // />
                 <Scan
+                    hideScannerAnimation={this.state.hideScannerAnimation}
                     showScanner={this.handleScannerButton}
                     history={this.props.history}
                     capabilities={this.state.capabilities}
@@ -217,3 +226,5 @@ class Navbar extends React.Component {
 }
 
 export default Navbar;
+
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));
