@@ -13,6 +13,7 @@ import "./App.css";
 // import Signin from "./pages/Signin";
 // import ProfileConfiguration from "./pages/ProfileConfiguration";
 // import Statistics from "./pages/Statistics";
+import Header from "./components/Header/Header";
 const Login = React.lazy(() => import("./pages/Login"));
 const History = React.lazy(() => import("./pages/History"));
 const Profil = React.lazy(() => import("./pages/Profil"));
@@ -32,6 +33,7 @@ class App extends Component {
                 <Suspense
                     fallback={
                         <div className="loading">
+                            <Header />
                             <div className="loadingio-spinner-ripple-4o0kkyduuq4">
                                 <div className="ldio-44krslet1tn">
                                     <div></div>

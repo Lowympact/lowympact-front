@@ -6,20 +6,35 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 90vh;
+    /* height: 90vh; */
 }
-
-#interactive::after {
-    content: "";
+#interactive div {
     position: absolute;
-    top: 40%;
-    height: 20%;
-    left: 25%;
-    width: 50%;
-    /* height: 100px; */
-    border: 2px dotted white;
+    height: 30px;
+    width: 30px;
+    border-color: white;
+    border: 1px solid white;
     z-index: 999999;
-    border-radius: 20px;
+}
+.interactive-wrapper .a {
+    bottom: 40%;
+    left: 25%;
+    border-width: 0px 0px 1px 1px !important;
+}
+.interactive-wrapper .b {
+    top: 40%;
+    left: 25%;
+    border-width: 1px 0px 0 1px !important;
+}
+.interactive-wrapper .c {
+    bottom: 40%;
+    right: 25%;
+    border-width: 0px 1px 1px 0px !important;
+}
+.interactive-wrapper .d {
+    top: 40%;
+    right: 25%;
+    border-width: 1px 1px 0px 0px !important;
 }
 
 .results {
@@ -41,12 +56,17 @@
 #interactive {
     position: relative;
     z-index: 9;
-    max-height: calc(100vh - 100px);
-    overflow: hidden;
+    /* max-height: calc(100vh - 100px); */
+    /* overflow: hidden; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 #interactive video {
-    width: 100vw;
+    /* width: 100vw; */
+    height: 100vh;
     z-index: -1;
 }
 
@@ -116,30 +136,34 @@
 
 .code-switch-camera {
     position: absolute;
-    top: 100px;
+    top: 50px;
     right: 50px;
-    color: white;
-    background-color: unset;
+    color: #1b3044;
     border-radius: 20px;
     z-index: 100;
     padding: 10px;
     border: none;
+    background-color: rgba(255, 255, 255, 0.3);
 }
 
 .code-switch-camera .material-icons {
     font-size: 30px;
+    color: #1b3044;
 }
 
 /* The Close Button */
 .close {
-    color: #78be95;
+    color: #1b3044;
     float: left;
-    font-size: 60px;
+    font-size: 30px;
     font-weight: bold;
     position: absolute;
-    top: 100px;
+    top: 50px;
     left: 40px;
     z-index: 102;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.3);
 }
 
 .close:hover,
@@ -220,4 +244,80 @@
 
 .no-permission {
     font-size: 15px;
+}
+
+.scan-result-container {
+    position: absolute;
+    bottom: 100px;
+    width: 80vw;
+    left: 10vw;
+    z-index: 100;
+    height: 100px;
+    /* background-color: white; */
+    border-radius: 20px;
+    /* box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.1); */
+}
+
+.grey-square {
+    background-color: rgb(197, 195, 195);
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.grey-text {
+    width: 100%;
+    height: 12px;
+    background-color: rgb(197, 195, 195);
+}
+
+.grey-text.main-text {
+    width: 50%;
+}
+
+.results .history-item {
+    box-shadow: none;
+}
+.skeleton-8wwpnkj1sj9:empty {
+    box-sizing: content-box;
+    height: 90%;
+    width: 90%;
+    margin-left: 10px;
+    background-color: #ffffff;
+    border-radius: 0px 0px 0px 0px;
+    background-image: linear-gradient(
+            100deg,
+            rgba(255, 255, 255, 0),
+            rgba(255, 255, 255, 0.5) 50%,
+            rgba(255, 255, 255, 0) 80%
+        ),
+        linear-gradient(#cccccc 60px, transparent 0), linear-gradient(#cccccc 20px, transparent 0),
+        linear-gradient(#cccccc 20px, transparent 0);
+    background-repeat: repeat-y;
+    background-size: 50px 290px, 60px 290px, 200px 290px, 100px 290px;
+    background-position: 0 0, 20px 10px, 111px 50px, 112px 10px;
+    animation: shineForSkeleton-8wwpnkj1sj9 1.1s infinite;
+}
+@keyframes shineForSkeleton-8wwpnkj1sj9 {
+    to {
+        background-position: 100% 0, 20px 10px, 111px 50px, 112px 10px;
+    }
+}
+
+.hidden {
+    display: none !important;
+}
+
+.offline-container {
+    position: absolute;
+    top: 20px;
+    width: 140px;
+    text-align: center;
+    /* height: 20px; */
+    font-size: 12px;
+    padding: 5px;
+    z-index: 1000;
+    border-radius: 10px;
+    left: calc(50vw - 70px);
+    background-color: rgba(255, 255, 255, 0.3);
 }

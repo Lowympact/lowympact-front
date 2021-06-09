@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Scanner from "./Scanner";
 import QrReader from "react-qr-reader";
-import Switch from "react-switch";
-import { Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./Scan.css";
+import "../../pages/History.css";
 
 class Scan extends Component {
     state = {
@@ -16,6 +16,17 @@ class Scan extends Component {
         barcode: undefined,
         bcProductId: undefined,
         Quagga: undefined,
+        product: undefined,
+        online: window.navigator.onLine,
+    };
+
+    componentDidMount = () => {
+        window.addEventListener("offline", this.updateNetwork);
+        window.addEventListener("online", this.updateNetwork);
+    };
+
+    updateNetwork = () => {
+        this.setState({ online: window.navigator.onLine });
     };
 
     setQuagga = (quagga) => {
@@ -25,12 +36,9 @@ class Scan extends Component {
         this.setState({ Quagga: quagga });
     };
 
-    _scan = () => {
-        this.setState({ scanning: !this.state.scanning, status: "" });
-    };
-
     _onDetected = async (res) => {
         if (res) {
+            console.log(res);
             if (res.codeResult && res.codeResult.code) {
                 this.setState({
                     results: [res],
@@ -41,26 +49,38 @@ class Scan extends Component {
                     `https://world.openfoodfacts.org/api/v0/product/${res.codeResult.code}.json/`
                 );
                 let result = await response.json();
+                console.log(result);
                 if (result.status !== 0) {
                     this.setState({
-                        scanning: false,
+                        scanning: true,
                         status: "found",
+                        product: result,
                         barcode: res.codeResult.code,
                     });
-                    this.props.showScanner(false);
-                    if (this.state.Quagga) this.state.Quagga.stop();
+                    // this.props.showScanner(false);
+                    // if (this.state.Quagga) this.state.Quagga.stop();
                     return true;
                 } else {
-                    this.setState({
-                        scanning: true,
-                        status: "not found",
-                    });
+                    this.setState(
+                        {
+                            scanning: true,
+                            status: "not found",
+                        },
+                        async () => {
+                            await delay(3000);
+                            this.setState({
+                                scanning: true,
+                                status: undefined,
+                            });
+                        }
+                    );
+
                     return false;
                 }
             }
         }
     };
-
+    // For QR CODE Scanner, not used
     handleScan = (data) => {
         if (data) {
             let arr = data.split("/");
@@ -72,7 +92,7 @@ class Scan extends Component {
                     status: "found",
                 });
             }
-            if (this.state.Quagga) this.state.Quagga.stop();
+            // if (this.state.Quagga) this.state.Quagga.stop();
         }
     };
     handleError = (err) => {
@@ -96,36 +116,22 @@ class Scan extends Component {
     };
 
     displayBarCode = () => {
-        if (this.state.status !== "found") {
-            return (
-                <React.Fragment>
-                    <div className="header">
-                        <ul className="results">
-                            {this.state.results.map((result, i) => (
-                                <div key={result.codeResult.code + i}>
-                                    {this.state.status === "waiting"
-                                        ? "Vérification du code : " + result?.codeResult?.code
-                                        : ""}
-                                    {this.state.status === "not found"
-                                        ? "Code non trouvé, merci de réessayer"
-                                        : ""}
-                                </div>
-                            ))}
-                        </ul>
-                    </div>
-                    {this.state.scanning ? (
-                        <Scanner
-                            onDetected={this._onDetected}
-                            setQuagga={this.setQuagga}
-                            usedCameraId={this.usedCameraId}
-                            capabilities={this.props.capabilities}
-                        />
-                    ) : null}
-                </React.Fragment>
-            );
-        } else {
-            return <React.Fragment />;
-        }
+        // if (this.state.status !== "found") {
+        return (
+            <React.Fragment>
+                {this.state.scanning ? (
+                    <Scanner
+                        onDetected={this._onDetected}
+                        setQuagga={this.setQuagga}
+                        usedCameraId={this.usedCameraId}
+                        capabilities={this.props.capabilities}
+                    />
+                ) : null}
+            </React.Fragment>
+        );
+        // } else {
+        //     return <React.Fragment />;
+        // }
     };
 
     switchReader = () => {
@@ -136,33 +142,115 @@ class Scan extends Component {
         }
     };
 
-    render() {
-        if (
-            this.state.barcode &&
-            this.state.bcProductId &&
-            (this.props.barcode !== this.state.barcode ||
-                this.props.bcProductId !== this.state.bcProductId)
-        ) {
-            return (
-                <Redirect to={"/products/" + this.state.barcode + "/" + this.state.bcProductId} />
+    displayPopup = () => {
+        console.log(this.state.product);
+        let retour = <React.Fragment />;
+        let item = this.state.product?.product;
+        if (item) {
+            retour = (
+                <Link className="history-item" to={"/products/" + this.state.product.code}>
+                    <div className="history-img-container">
+                        <img src={item.image_url} alt="" />
+                    </div>
+                    <div className="history-name-container">
+                        <div className="history-name">{item.product_name}</div>
+                        <div className="history-brand">{item.brands}</div>
+                    </div>
+                    <div className="history-label-container">
+                        <div style={{ color: getColor(item.ecoscore_score) }}>●</div>
+                        <div className="history-label">
+                            {["a", "b", "c", "d", "e"].indexOf(item.ecoscore_grade) == -1
+                                ? ""
+                                : item.ecoscore_grade}
+                        </div>
+                    </div>
+                    <div style={{ marginRight: "10px", color: "rgb(41,72,102)" }}>{">"}</div>
+                </Link>
+            );
+        } else if (this.state.status == "waiting") {
+            retour = (
+                <div className="history-item">
+                    <div class="skeleton-8wwpnkj1sj9"></div>
+                </div>
+            );
+        } else if (this.state.status == "not found") {
+            retour = (
+                <div className="history-item">
+                    <div className="history-img-container">
+                        <div className="grey-square"></div>
+                    </div>
+                    <div className="history-name-container">
+                        <div className="history-name">Article non trouvé</div>
+                        <div className="history-brand"></div>
+                    </div>
+                    <div className="history-label-container"></div>
+                    <div style={{ marginRight: "10px", color: "rgb(41,72,102)" }}>{">"}</div>
+                </div>
             );
         }
-        if (this.state.barcode && this.props.barcode !== this.state.barcode) {
-            return <Redirect to={"/products/" + this.state.barcode} />;
-        } else {
-            return (
-                <div className="code-reader-container">
-                    <span
-                        className="close"
-                        onClick={() => {
-                            if (this.state.Quagga) this.state.Quagga.stop();
+        return retour;
+    };
 
-                            this.props.showScanner(false);
-                        }}
-                    >
-                        &times;
-                    </span>
-                    {/* <div className="code-switch" onClick={this.switchReader}>
+    render() {
+        return (
+            <div className="code-reader-container">
+                {!this.state.online ? (
+                    <div className="offline-container">
+                        {" "}
+                        <span style={{ color: "red" }}>●</span> Pas de connexion
+                    </div>
+                ) : (
+                    <React.Fragment />
+                )}
+                <span
+                    className="close material-icons"
+                    onClick={() => {
+                        if (this.state.Quagga) this.state.Quagga.stop();
+
+                        this.props.showScanner(false);
+                    }}
+                >
+                    close
+                </span>
+                {this.displayBarCode()}
+                <div className="scan-result-container">
+                    <div className="results">{this.displayPopup()}</div>
+                </div>
+            </div>
+        );
+        //}
+    }
+}
+
+export default Scan;
+
+function getColor(note) {
+    if (note > 67) {
+        return "green";
+    }
+    if (note <= 33) {
+        return "red";
+    }
+    return "yellow";
+}
+
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+
+// if (
+//     this.state.barcode &&
+//     this.state.bcProductId &&
+//     (this.props.barcode !== this.state.barcode ||
+//         this.props.bcProductId !== this.state.bcProductId)
+// ) {
+//     return (
+//         <Redirect to={"/products/" + this.state.barcode + "/" + this.state.bcProductId} />
+//     );
+// }
+// if (this.state.barcode && this.props.barcode !== this.state.barcode) {
+//     return <Redirect to={"/products/" + this.state.barcode} />;
+// } else {
+{
+    /* <div className="code-switch" onClick={this.switchReader}>
                         <div className="span-code-switch">
                             <span
                                 className={
@@ -191,13 +279,8 @@ class Scan extends Component {
                             </span>
                             <span>QR Code</span>
                         </div>
-                    </div> */}
-                    {/* {this.state.reading ? this.displayQrCode() : this.displayBarCode()} */}
-                    {this.displayBarCode()}
-                </div>
-            );
-        }
-    }
+                    </div> */
 }
-
-export default Scan;
+{
+    /* {this.state.reading ? this.displayQrCode() : this.displayBarCode()} */
+}

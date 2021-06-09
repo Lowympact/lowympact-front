@@ -12,20 +12,33 @@ class Scanner extends Component {
         text: 0,
         mutlipleTracks: false,
         no_permission: false,
+        locked: false,
     };
 
-    switchCamera = () => {
-        let num = this.state.usedCamera + 1;
-        if (num >= this.state.devices.length) {
-            num = 0;
+    locked = false;
+
+    switchCamera = async () => {
+        if (!this.state.locked) {
+            this.setState({ locked: true });
+            let num = this.state.usedCamera + 1;
+            if (num >= this.state.devices.length) {
+                num = 0;
+            }
+            this.setState({ usedCamera: num });
+            Quagga.stop();
+            this.QuaggaInit(this.state.devices[num].deviceId);
+            await delay(800);
+            this.setState({ locked: false });
         }
-        this.setState({ usedCamera: num });
-        Quagga.stop();
-        this.QuaggaInit(this.state.devices[num].deviceId);
     };
 
     componentDidMount = async () => {
-        this.QuaggaInit(this.props.capabilities);
+        if (this.props.capabilities) {
+            this.setState({ devices: this.props.capabilities, usedCamera: 0 });
+            this.QuaggaInit(this.props.capabilities[0]);
+        } else {
+            this.QuaggaInit({ facingMode: "environment" });
+        }
     };
 
     QuaggaInit = (capabilities) => {
@@ -84,7 +97,7 @@ class Scanner extends Component {
         let stop = await this.props.onDetected(result);
         console.log(stop);
         if (stop) {
-            Quagga.stop();
+            // Quagga.stop();
         }
     };
 
@@ -166,21 +179,31 @@ class Scanner extends Component {
         return (
             <React.Fragment>
                 <div className="interactive-wrapper">
-                    <div id="interactive" className={this.state.error ? "hidden" : "viewport"} />
-                    {/* {this.state.devices?.length > 1 ? (
-                    <button className="code-switch-camera" onClick={this.switchCamera}>
-                        <span className="material-icons">cameraswitch</span>
-                        {this.state.usedCamera}
-                    </button>
-                ) : (
-                    <React.Fragment />
-                )} */}
+                    <div id="interactive" className={this.state.error ? "hidden" : "viewport"}>
+                        <div className="a" />
+                        <div className="b" />
+                        <div className="c" />
+                        <div className="d" />
+                    </div>
+                    {this.state.devices?.length > 1 ? (
+                        <button className="code-switch-camera" onClick={this.switchCamera}>
+                            <span
+                                className="material-icons"
+                                style={{ color: this.state.locked ? "#777777" : "#1b3044" }}
+                            >
+                                cameraswitch
+                            </span>
+                            {this.state.usedCamera}
+                        </button>
+                    ) : (
+                        <React.Fragment />
+                    )}
 
-                    <button className="code-switch-camera" onClick={this.setImport}>
+                    {/* <button className="code-switch-camera" onClick={this.setImport}>
                         <span className="material-icons green">
                             {!this.state.error ? "upload_file" : "flip"}
                         </span>
-                    </button>
+                    </button> */}
 
                     {this.state.error ? (
                         <div className="scan-error">
@@ -238,3 +261,5 @@ class Scanner extends Component {
 }
 
 export default Scanner;
+
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));

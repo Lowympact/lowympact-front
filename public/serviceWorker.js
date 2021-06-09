@@ -1,4 +1,4 @@
-let CACHE_NAME = "lowympact-cache-v1.0.6";
+let CACHE_NAME = "lowympact-cache-v1.0.7";
 const CACHED_URLS = ["/", "/index.html", "/manifest.json"];
 // "/images/alternatives/appartement.svg",
 // "/images/alternatives/bus.svg",

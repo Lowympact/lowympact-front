@@ -14,7 +14,7 @@ class Navbar extends React.Component {
         barcode: undefined,
         bcProductId: undefined,
         height: 0,
-        capabilities: { facingMode: "environment" },
+        capabilities: undefined,
     };
 
     componentDidMount = async () => {
@@ -78,13 +78,13 @@ class Navbar extends React.Component {
                 }
 
                 if (capa[0]) {
-                    this.setState({ capabilities: capa[0] });
-                } else this.setState({ capabilities: { facingMode: "environment" } });
+                    this.setState({ capabilities: capa });
+                } else this.setState({ capabilities: undefined });
             } else {
-                this.setState({ capabilities: { facingMode: "environment" } });
+                this.setState({ capabilities: undefined });
             }
         } catch (err) {
-            this.setState({ capabilities: { facingMode: "environment" } });
+            this.setState({ capabilities: undefined });
         }
     };
 
