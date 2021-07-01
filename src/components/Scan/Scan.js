@@ -148,7 +148,14 @@ class Scan extends Component {
         let item = this.state.product?.product;
         if (item) {
             retour = (
-                <Link className="history-item" to={"/products/" + this.state.product.code}>
+                <Link
+                    className="history-item"
+                    to={"/products/" + this.state.product.code}
+                    onClick={() => {
+                        if (this.state.Quagga) this.state.Quagga.stop();
+                        this.props.showScanner(false);
+                    }}
+                >
                     <div className="history-img-container">
                         <img src={item.image_url} alt="" />
                     </div>
