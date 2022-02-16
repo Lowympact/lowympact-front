@@ -7,6 +7,112 @@ import "./Product.css";
 import { Link } from "react-router-dom";
 import jwt from "jsonwebtoken";
 
+let productsTemp = {
+    data: {
+        traceability: [
+            {
+                depth: 1,
+                productsOutput: [{ productName: "Huile de palme" }],
+                TransportCO2Impact: {
+                    value: 26,
+                },
+                dist: {
+                    value: 19400,
+                },
+                transport: "Plane",
+
+                seller: {
+                    name: "The Palm Oil Company",
+                    type: "productor",
+                    localisation: {
+                        city: "Kuala Lumpur",
+                        country: "Malaisie",
+                        latitude: 3,
+                        longitude: 101,
+                    },
+                },
+                buyer: {
+                    name: "Ferrero",
+                    type: "maker",
+                    localisation: {
+                        city: "Villers-Ecalles",
+                        country: "France",
+                        latitude: 48,
+                        longitude: 3,
+                    },
+                },
+            },
+            {
+                depth: 1,
+                productsOutput: [{ productName: "Noisettes" }],
+                TransportCO2Impact: {
+                    value: 6,
+                },
+                dist: {
+                    value: 1200,
+                },
+                transport: "Train",
+
+                seller: {
+                    name: "Noisetti",
+                    type: "productor",
+                    localisation: {
+                        city: "Lagos",
+                        country: "Portugal",
+                        latitude: 37,
+                        longitude: -8,
+                    },
+                },
+                buyer: {
+                    name: "Ferrero",
+                    type: "maker",
+                    localisation: {
+                        city: "Villers-Ecalles",
+                        country: "France",
+                        latitude: 48,
+                        longitude: 3,
+                    },
+                },
+            },
+            {
+                depth: 1,
+                productsOutput: [{ productName: "Pot de Nutella" }],
+                TransportCO2Impact: {
+                    value: 19,
+                },
+                dist: {
+                    value: 5500,
+                },
+                transport: "Plane",
+
+                seller: {
+                    name: "Ferrero",
+                    type: "maker",
+                    localisation: {
+                        city: "Villers-Ecalles",
+                        country: "France",
+                        latitude: 48,
+                        longitude: 3,
+                    },
+                },
+                buyer: {
+                    name: "Maxi",
+                    type: "shop",
+                    localisation: {
+                        city: "Montréal",
+                        country: "Canada",
+                        latitude: 45,
+                        longitude: -73,
+                    },
+                },
+            },
+        ],
+
+        impact: "",
+        transportCO2Impact: 9.87,
+    },
+};
+
 class Product extends React.Component {
     state = {
         barcode: this.props.match.params.barcode,
@@ -42,10 +148,15 @@ class Product extends React.Component {
         }
         this.loadFromOpenFoodFacts(this.props.match.params.barcode);
         if (this.props.match.params.bcProductId) {
-            this.loadProductInformations(
-                this.props.match.params.barcode,
-                this.props.match.params.bcProductId
-            );
+            // this.loadProductInformations(
+            //     this.props.match.params.barcode,
+            //     this.props.match.params.bcProductId
+            // );
+            this.setState({
+                products: productsTemp?.data?.traceability,
+                impact: productsTemp?.data?.impact,
+                totalCO2Traceability: productsTemp?.data?.transportCO2Impact,
+            });
         }
     };
 

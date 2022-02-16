@@ -313,14 +313,15 @@ class Traceability extends React.Component {
                         Impact total carbone :&nbsp;
                         <span className="carbon-total-number">
                             {parseFloat(this.props.totalCO2Traceability).toFixed(1)}
-                        </span>
-                        kg CO2 soit &nbsp;
+                        </span>{" "}
+                        kg CO2
+                        {/* kg CO2 soit &nbsp;
                         <span className="carbon-total-number">
                             {parseFloat(
                                 ((this.props.totalCO2Traceability * 0.05) / 11.0) * 1000.0
                             ).toFixed(1)}
                         </span>
-                        kms parcourus en voiture
+                        kms parcourus en voiture */}
                     </span>
                 </div>
 
@@ -388,8 +389,8 @@ function toRadian(degree) {
 
 function getZoomRatio(origin, destination) {
     var distance = getDistance(origin, destination);
-
-    return 9 - Math.sqrt(distance * 150);
+    let a = 9 - Math.sqrt(distance * 150);
+    return a < 1 ? 1 : a;
 }
 
 function getCurveOptions(lat1, long1, lat2, long2) {

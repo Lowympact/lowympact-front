@@ -1,0 +1,35 @@
+{
+    "data": {
+        "traceability": {
+            "depth": 1,
+            "TransportCO2Impact": {
+                "value": 1
+            },
+            "transport": "Charette",
+
+            "seller": {
+                "name": "Noisetti",
+                "type": "productor",
+                "localisation": {
+                    "city": "Angers",
+                    "country": "France",
+                    "latitude": 10,
+                    "longitude": 10
+                }
+            },
+            "buyer": {
+                "name": "Nutella",
+                "type": "maker",
+                "localisation": {
+                    "city": "Paris",
+                    "country": "France",
+                    "latitude": 20,
+                    "longitude": 20
+                }
+            }
+        },
+
+        "impact": "",
+        "transportCO2Impact": 65
+    }
+}
