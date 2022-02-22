@@ -324,7 +324,15 @@ class Traceability extends React.Component {
                         kms parcourus en voiture */}
                     </span>
                 </div>
-
+                <Swiper
+                    spaceBetween={10}
+                    slidesPerView={1.2}
+                    centeredSlides={true}
+                    onSlideChange={(i) => this.onSlideChange(i.activeIndex)}
+                    onSwiper={(swiper) => this.setState({ swiper: swiper })}
+                >
+                    {this.displaySlides()}
+                </Swiper>
                 <Map
                     center={[51.505, -0.09]}
                     zoom={1}
@@ -349,15 +357,6 @@ class Traceability extends React.Component {
 
                     {this.displayMarker()}
                 </Map>
-                <Swiper
-                    spaceBetween={10}
-                    slidesPerView={1.2}
-                    centeredSlides={true}
-                    onSlideChange={(i) => this.onSlideChange(i.activeIndex)}
-                    onSwiper={(swiper) => this.setState({ swiper: swiper })}
-                >
-                    {this.displaySlides()}
-                </Swiper>
             </div>
         );
     };

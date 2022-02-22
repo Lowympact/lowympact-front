@@ -374,7 +374,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 140px;
+    /* margin-bottom: 140px; */
 }
 .product-header-container {
     position: relative;

@@ -643,10 +643,10 @@ class Product extends React.Component {
                             />
                         </div>
                     )}
-                    <Navbar
+                    {/* <Navbar
                         barcode={this.props.match.params.barcode}
                         bcProductId={this.props.match.params.bcProductId}
-                    />
+                    /> */}
                 </div>
             </React.Fragment>
         );
