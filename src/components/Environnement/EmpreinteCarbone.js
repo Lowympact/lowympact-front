@@ -14,7 +14,6 @@ class EmpreinteCarbone extends React.Component {
     };
 
     render = () => {
-        if (this.props.dataEcoScore?.agribalyse?.co2_total) {
             let repartition = [
                 {
                     image: "agriculture",
@@ -77,7 +76,7 @@ class EmpreinteCarbone extends React.Component {
             });
 
             let equivalent = getEquivalent(
-                parseFloat(this.props.dataEcoScore?.agribalyse?.co2_total),
+                parseFloat(9.9),
                 this.state.alea
             );
 
@@ -92,12 +91,11 @@ class EmpreinteCarbone extends React.Component {
                         <div className="empreinte-carbone-header">
                             <div className="header-text">
                                 <div className="header-main">Empreinte Carbone</div>
-                                <div className="header-small">source : ADEME</div>
                             </div>
                             <div className="empreinte-carbone-number">
                                 <span>
                                     {parseFloat(
-                                        this.props.dataEcoScore?.agribalyse?.co2_total
+                                        9.9
                                     ).toFixed(2)}
                                     kg CO2e
                                 </span>
@@ -127,8 +125,8 @@ class EmpreinteCarbone extends React.Component {
                             </div>
                         </div>
                     </div>
-
-                    <div className="empreinte-carbone-container no-margin-container">
+                    { this.props.dataEcoScore ?
+                        <div className="empreinte-carbone-container no-margin-container">
                         <div className="empreinte-carbone-header">
                             <div className="header-text">
                                 <div className="header-main">
@@ -149,12 +147,10 @@ class EmpreinteCarbone extends React.Component {
                             </div> */}
                         </div>
                         <div className="empreinte-carbone-repartition">{repartition}</div>
-                    </div>
+                        </div>
+                    : null }
                 </React.Fragment>
             );
-        } else {
-            return <React.Fragment />;
-        }
     };
 }
 

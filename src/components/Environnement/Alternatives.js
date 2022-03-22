@@ -10,54 +10,30 @@ class Alternatives extends React.Component {
     };
 
     componentDidMount = () => {
-        if (this.props.ecoScore) {
-            this.loadAlternatives(this.props.ciqual_code);
-        }
+        this.loadAlternatives();
     };
 
-    componentDidUpdate = (lastProps) => {
-        if (lastProps.ciqual_code !== this.props.ciqual_code) {
-            if (this.props.ciqual_code) {
-                this.loadAlternatives(this.props.ciqual_code);
+    loadAlternatives = () => {
+        let alternatives = [
+            {
+                id: 1,
+                img_url: "/images/products/wh_cricket_soft_ST_2018_220x.png",
+                name: "Gâteries d'entrainement aux grillons et shiitake",
+                redirect: "https://fr.wilderharrier.com/collections/dog-treats#main"
             }
-        }
-    };
-
-    loadAlternatives = (code) => {
-        this.setState({ alternatives: "loading" });
-        fetch(`https://api.lowympact.fr/api/v1/alternatives/${code}`)
-            .then((response) => response.json())
-            .then((res) => {
-                if (res.success && res.data?.alternativesInfos) {
-                    if (
-                        res.data?.alternativesInfos?.a?.length == 0 &&
-                        res.data?.alternativesInfos?.b?.length == 0 &&
-                        res.data?.alternativesInfos?.c?.length == 0 &&
-                        res.data?.alternativesInfos?.d?.length == 0
-                    ) {
-                        this.setState({ alternatives: undefined });
-                    } else {
-                        this.setState({ alternatives: res.data.alternativesInfos });
-                    }
-                } else {
-                    this.setState({ alternatives: undefined });
-                }
-            });
+        ]
+        this.setState({ alternatives: alternatives });
     };
 
     renderListAlternatives = (listItems) => {
         let res = <React.Fragment></React.Fragment>;
         res = listItems.map((item) => {
             let pathProduct = "/products/" + item.id;
-            // Mock Front
-            if (item.id === "8001505005707") {
-                pathProduct += "/24";
-            }
 
             if (item.id !== this.props.barcode) {
                 return (
                     <div className="carousel" key={item.id}>
-                        <a href={pathProduct} className="product-alternative">
+                        <a href={item.redirect} className="product-alternative">
                             <div>
                                 <img
                                     src={item.img_url}
@@ -68,7 +44,7 @@ class Alternatives extends React.Component {
                             <div className="product-alternative-text">
                                 <label className="product-alternative-title">{item.name}</label>
                                 <label className="product-alternative-brand">{}</label>
-                                <RenderColor item={item} />
+                                {/* <RenderColor item={item} /> */}
                             </div>
                             <div className="product-alternative-fleche">{">"}</div>
                         </a>
@@ -82,80 +58,6 @@ class Alternatives extends React.Component {
         return res;
     };
 
-    alternativesloop = () => {
-        let alternativesList = <React.Fragment></React.Fragment>;
-        if (
-            this.state.alternatives &&
-            this.state.alternatives !== "loading" &&
-            this.state.alternatives !== ""
-        ) {
-            this.state.alternatives.a.sort(function (a, b) {
-                return b.eco_score - a.eco_score;
-            });
-
-            this.state.alternatives.b.sort(function (a, b) {
-                return b.eco_score - a.eco_score;
-            });
-            this.state.alternatives.c.sort(function (a, b) {
-                return b.eco_score - a.eco_score;
-            });
-            this.state.alternatives.d.sort(function (a, b) {
-                return b.eco_score - a.eco_score;
-            });
-
-            let tab;
-            switch (this.props.ecoScore) {
-                case "a":
-                    return undefined;
-
-                    break;
-                case "b":
-                    tab = this.state.alternatives.a;
-                    if (tab.length == 0) {
-                        return undefined;
-                    } else {
-                        alternativesList = this.renderListAlternatives(tab);
-                    }
-                    break;
-                case "c":
-                    tab = this.state.alternatives.a.concat(this.state.alternatives.b);
-
-                    if (tab.length == 0) {
-                        return undefined;
-                    } else {
-                        alternativesList = this.renderListAlternatives(tab);
-                    }
-                    break;
-                case "d":
-                    tab = this.state.alternatives.a
-                        .concat(this.state.alternatives.b)
-                        .concat(this.state.alternatives.c);
-
-                    if (tab.length == 0) {
-                        return undefined;
-                    } else {
-                        alternativesList = this.renderListAlternatives(tab);
-                    }
-                    break;
-                case "e":
-                    tab = this.state.alternatives.a
-                        .concat(this.state.alternatives.b)
-                        .concat(this.state.alternatives.c)
-                        .concat(this.state.alternatives.d);
-                    if (tab.length == 0) {
-                        return undefined;
-                    } else {
-                        alternativesList = this.renderListAlternatives(tab);
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        return alternativesList;
-    };
-
     render = () => {
         let alternatives_title = "";
         if (!this.state.alternatives) {
@@ -167,7 +69,10 @@ class Alternatives extends React.Component {
                 alternatives_title = "Alternatives";
             }
         }
-        let alternatives = this.alternativesloop();
+        let alternatives;
+        if(this.state.alternatives)
+            alternatives = this.renderListAlternatives(this.state.alternatives);
+
         if (
             this.state.alternatives &&
             this.state.alternatives !== "loading" &&

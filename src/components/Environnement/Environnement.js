@@ -181,28 +181,24 @@ class Environnement extends React.Component {
     };
 
     render = () => {
-        if (this.props.barcode) {
-            return (
-                <React.Fragment>
-                    <EmpreinteCarbone dataEcoScore={this.props.dataEcoScore} />
+        return (
+            <React.Fragment>
+                <EmpreinteCarbone dataEcoScore={this.props.dataEcoScore} />
 
-                    {this.props.origins ? (
-                        <Origins origins={this.props.origins} />
-                    ) : (
-                        <React.Fragment />
-                    )}
-                    {/* {this.displayPackagingImpact()} */}
+                {this.props.origins ? (
+                    <Origins origins={this.props.origins} />
+                ) : (
+                    <React.Fragment />
+                )}
+                {/* {this.displayPackagingImpact()} */}
 
-                    <Alternatives
-                        barcode={this.props.barcode}
-                        ecoScore={this.props.ecoScore}
-                        ciqual_code={this.props.dataEcoScore?.agribalyse?.code}
-                    />
-                </React.Fragment>
-            );
-        } else {
-            return <React.Fragment></React.Fragment>;
-        }
+                <Alternatives
+                    barcode={this.props.barcode}
+                    ecoScore={this.props.ecoScore}
+                    ciqual_code={this.props.dataEcoScore?.agribalyse?.code}
+                />
+            </React.Fragment>
+        );
     };
 }
 

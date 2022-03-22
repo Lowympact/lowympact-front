@@ -14,8 +14,8 @@ class Login extends React.Component {
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
 
-        if (window.innerWidth > 1200 && urlParams.get("from") != "website") {
-            window.location.assign("https://lowympact.fr");
+        if (window.innerWidth > 1200 && urlParams.get("from") != "website") { // If from computer then redirection
+            //window.location.assign("https://lowympact.fr");
         }
     };
 

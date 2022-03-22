@@ -1,11 +1,8 @@
-import React from "react";
 import Navbar from "../components/Navbar/Navbar";
+import React from "react";
 import Traceability from "../components/Traceability/Traceability";
 import Environnement from "../components/Environnement/Environnement";
-// import Labels from "../components/Labels/Labels";
 import "./Product.css";
-import { Link } from "react-router-dom";
-import jwt from "jsonwebtoken";
 
 let productsTemp = {
     data: {
@@ -107,9 +104,11 @@ let productsTemp = {
                 },
             },
         ],
-
         impact: "",
         transportCO2Impact: 9.87,
+        productImageUrl : "/images/products/wh_cricket_soft_BH_2018_220x.png",
+        productName : "Gâteries d'entraînement aux grillons et bleuets",
+        //origins : "Québec",
     },
 };
 
@@ -125,7 +124,6 @@ class Product extends React.Component {
         dataEcoScore: undefined,
         value: 0,
         connected: false,
-        productData: undefined,
         userId: undefined,
         cart: 0,
         totalCO2Traceability: undefined,
@@ -140,343 +138,16 @@ class Product extends React.Component {
     };
 
     componentDidMount = () => {
-        this.Verify();
-        let userId = localStorage.getItem("userId");
-        if (userId) {
-            this.setState({ userId: userId });
-            this.loadCartInfo(userId);
-        }
-        this.loadFromOpenFoodFacts(this.props.match.params.barcode);
-        if (this.props.match.params.bcProductId) {
-            // this.loadProductInformations(
-            //     this.props.match.params.barcode,
-            //     this.props.match.params.bcProductId
-            // );
-            this.setState({
-                products: productsTemp?.data?.traceability,
-                impact: productsTemp?.data?.impact,
-                totalCO2Traceability: productsTemp?.data?.transportCO2Impact,
-            });
-        }
-    };
-
-    handleBarCodeUpdate = () => {
-        if (this.state.barcode !== this.props.match.params.barcode) {
-            this.setState({
-                barcode: this.props.match.params.barcode,
-                bcProductId: this.props.match.params.bcProductId,
-            });
-            this.loadFromOpenFoodFacts(this.props.match.params.barcode);
-            if (this.props.match.params.bcProductId) {
-                this.loadProductInformations(
-                    this.props.match.params.barcode,
-                    this.props.match.params.bcProductId
-                );
-            }
-        }
-    };
-
-    Verify = () => {
-        let isExpired = true;
-        const token = localStorage.getItem("token");
-        if (token) {
-            var decodedToken = jwt.decode(token, { complete: true });
-            var dateNow = new Date();
-            if (decodedToken.payload.exp >= dateNow.getTime() / 1000) {
-                isExpired = false;
-            }
-        }
-        if (isExpired === false) {
-            this.setState({ connected: true });
-        }
-    };
-
-    loadProductInformations = (barcode, bcProductId) => {
-        fetch(
-            `https://api.lowympact.fr/api/v1/products/${barcode}?bcProductId=${bcProductId}`,
-            // `http://localhost:8080/api/v1/products/${barcode}?bcProductId=${bcProductId}`,
-            {
-                method: "get",
-                credentials: "include",
-                headers: new Headers({
-                    "api-key": "99d8fb95-abdd-4885-bf6c-3a81d8874043",
-                    "Content-Type": "application/json",
-                }),
-            }
-        )
-            .then((response) => response.json())
-            .then((res) => {
-                this.setState({
-                    products: res?.data?.traceability,
-                    impact: res?.data?.impact,
-                    totalCO2Traceability: res?.data?.transportCO2Impact,
-                });
-            });
-    };
-
-    loadFromOpenFoodFacts = (barcode) => {
-        let dataEcoScore;
-
-        fetch(`https://world.openfoodfacts.org/api/v0/product/${barcode}.json/`)
-            .then((response) => response.json())
-            .then((res) => {
-                let productImageUrl = res?.product?.image_url;
-                let productName = res?.product?.product_name;
-                let genericName = res?.product?.generic_name;
-                let ecoScore = res?.product?.ecoscore_grade;
-
-                dataEcoScore = res?.product?.ecoscore_data;
-
-                // console.log(res);
-                let origins = res?.product?.origins_hierarchy;
-                if (origins && origins != "") {
-                    this.setState({ origins: origins });
-                }
-
-                if (res?.product) {
-                    this.setState({ productData: res.product });
-                }
-
-                if (productImageUrl) {
-                    this.setState({ productImageUrl: productImageUrl });
-                }
-                if (productName) {
-                    this.setState({ productName: productName });
-                }
-                if (genericName) {
-                    this.setState({ genericName: genericName });
-                }
-                if (
-                    ecoScore &&
-                    (ecoScore === "a" ||
-                        ecoScore === "b" ||
-                        ecoScore === "c" ||
-                        ecoScore === "d" ||
-                        ecoScore === "e")
-                ) {
-                    this.setState({ ecoScore: ecoScore });
-                }
-                if (dataEcoScore) {
-                    this.setState({ dataEcoScore: dataEcoScore });
-                }
-                if (res.status === 1) {
-                    this.saveHistory();
-                }
-
-                // Mock Soutenance
-                if (barcode === "80135463") {
-                    this.setState({ productName: "Nutella 200g" });
-                }
-
-                var scoreSearch = "a";
-
-                switch (res.product?.ecoscore_grade) {
-                    case "b":
-                        scoreSearch = "a";
-                        break;
-                    case "c":
-                        scoreSearch = "b";
-                        break;
-                    case "d":
-                        scoreSearch = "c";
-                        break;
-                    case "e":
-                        scoreSearch = "c";
-                        break;
-
-                    default:
-                        break;
-                }
-            });
-    };
-
-    // Get if a connected user already added this item in this cart in the past 2 hours
-    loadCartInfo = (userId) => {
-        if (userId && this.state.barcode) {
-            fetch(
-                `https://api.lowympact.fr/api/v1/users/${userId}/cart/${this.state.barcode}?bcProductAddress=${this.state.bcProductId}`,
-                // `http://localhost:8080/api/v1/users/${this.state.userId}/history`,
-                {
-                    method: "get",
-                    credentials: "include",
-                    headers: new Headers({
-                        Authorization: localStorage.getItem("token"),
-                        "api-key": "99d8fb95-abdd-4885-bf6c-3a81d8874043",
-                        "Content-Type": "application/json",
-                    }),
-                }
-            )
-                .then((response) => response.json())
-                .then((res) => {
-                    console.log(res);
-                    if (res.success) {
-                        this.setState({ cart: res.data?.quantity });
-                    }
-                });
-        }
-    };
-
-    saveHistory = async () => {
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const add = urlParams.get("cart");
-        if (add !== "no") {
-            await delay(2000);
-
-            let history = JSON.parse(localStorage.getItem("local_history"));
-            let exist = null;
-            if (history) {
-                history = history?.filter(
-                    (element) =>
-                        !(
-                            element.barcode == this.state.barcode &&
-                            element.bcProductId == this.state.bcProductId
-                        )
-                );
-            } else {
-                history = [];
-            }
-
-            history.push({
-                barcode: this.state.barcode,
-                bcProductId: this.state.bcProductId,
-                brand: this.state.productData.brands,
-                image: this.state.productImageUrl,
-                label: this.state.ecoScore,
-                name: this.state.productName,
-                date: Date.now(),
-            });
-            localStorage.setItem("local_history", JSON.stringify(history));
-
-            if (this.state.userId) {
-                fetch(
-                    `https://api.lowympact.fr/api/v1/users/${this.state.userId}/history`,
-                    // `http://localhost:8080/api/v1/users/${this.state.userId}/history`,
-                    {
-                        method: "put",
-                        credentials: "include",
-                        headers: new Headers({
-                            Authorization: localStorage.getItem("token"),
-                            "api-key": "99d8fb95-abdd-4885-bf6c-3a81d8874043",
-                            "Content-Type": "application/json",
-                        }),
-                        body: JSON.stringify({
-                            barcode: this.state.barcode,
-                            bcProductAddress: this.state.bcProductId,
-                        }),
-                    }
-                )
-                    .then((response) => response.json())
-                    .then((res) => {
-                        //console.log(res);
-                    });
-            }
-        }
-    };
-
-    addToCart = () => {
-        if (this.state.barcode && this.state.cart >= 0) {
-            let co2 = -1;
-            if (this.state.dataEcoScore?.agribalyse?.co2_total) {
-                co2 = parseFloat(this.state.dataEcoScore?.agribalyse?.co2_total);
-            }
-
-            let ecoscore = "unknown";
-            if (this.state.ecoScore) {
-                ecoscore = this.state.ecoScore;
-            }
-            this.flip();
-            fetch(
-                `https://api.lowympact.fr/api/v1/users/${this.state.userId}/cart`,
-                // `http://localhost:8080/api/v1/users/${this.state.userId}/cart`,
-                {
-                    method: "put",
-                    credentials: "include",
-                    headers: new Headers({
-                        Authorization: localStorage.getItem("token"),
-                        "api-key": "99d8fb95-abdd-4885-bf6c-3a81d8874043",
-                        "Content-Type": "application/json",
-                    }),
-                    body: JSON.stringify({
-                        barcode: this.state.barcode,
-                        bcProductAddress: this.state.bcProductId,
-                        quantityDelta: 1,
-                        ecoscore: ecoscore,
-                        carbonImpact: co2,
-                    }),
-                }
-            )
-                .then((response) => response.json())
-                .then((res) => {
-                    //console.log(res);
-                    if (res.success) {
-                        this.setState({ cart: this.state.cart + 1 });
-                    }
-                });
-        }
-    };
-
-    removeFromCart = () => {
-        if (this.state.barcode && this.state.cart > 0) {
-            this.flip();
-            let co2 = -1;
-            if (this.state.dataEcoScore?.agribalyse?.co2_total) {
-                co2 = parseFloat(this.state.dataEcoScore?.agribalyse?.co2_total);
-            }
-            let ecoscore = "unkown";
-            if (this.state.ecoScore) {
-                ecoscore = this.state.ecoScore;
-            }
-            fetch(
-                `https://api.lowympact.fr/api/v1/users/${this.state.userId}/cart`,
-                // `http://localhost:8080/api/v1/users/${this.state.userId}/cart`,
-                {
-                    method: "put",
-                    credentials: "include",
-                    headers: new Headers({
-                        Authorization: localStorage.getItem("token"),
-                        "api-key": "99d8fb95-abdd-4885-bf6c-3a81d8874043",
-                        "Content-Type": "application/json",
-                    }),
-                    body: JSON.stringify({
-                        barcode: this.state.barcode,
-                        bcProductAddress: this.state.bcProductId,
-                        quantityDelta: -1,
-                        ecoscore: ecoscore,
-                        carbonImpact: co2,
-                    }),
-                }
-            )
-                .then((response) => response.json())
-                .then((res) => {
-                    //console.log(res);
-                    if (res.success) {
-                        this.setState({ cart: this.state.cart - 1 });
-                    }
-                });
-        }
-    };
-
-    flip = async (event) => {
-        // if (!this.isFlipping) {
-        // 	this.isFlipping = true;
-        // 	await delay(500);
-        //console.log(this.imageFlip.style.transform);
-        if (this.imageFlip && !this.state.isFlipping) {
-            if (this.imageFlip.style.transform === "rotateY(360deg)") {
-                this.imageFlip.style.transform = "rotateY(0deg)";
-            } else {
-                this.imageFlip.style.transform = "rotateY(360deg)";
-            }
-        }
-        // await delay(1000);
-        // this.isFlipping = false;
-        // }
+        this.setState({
+            products: productsTemp?.data?.traceability,
+            impact: productsTemp?.data?.impact,
+            totalCO2Traceability: productsTemp?.data?.transportCO2Impact,
+            productImageUrl: productsTemp?.data?.productImageUrl,
+            productName: productsTemp?.data?.productName,
+        });
     };
 
     displayImage = () => {
-        this.handleBarCodeUpdate();
-
         let image = <React.Fragment />;
         let productName = <React.Fragment />;
         let genericName = <React.Fragment />;
@@ -545,7 +216,6 @@ class Product extends React.Component {
 
     displayNavbar = () => {
         let retour = <React.Fragment />;
-        if (this.state.bcProductId) {
             retour = (
                 <div className="product-navbar-container">
                     <button
@@ -556,7 +226,7 @@ class Product extends React.Component {
                         }
                         onClick={() => this.handleChange("", 0)}
                     >
-                        Environnement
+                        Informations
                     </button>
                     <button
                         className={
@@ -577,7 +247,6 @@ class Product extends React.Component {
                     ></div>
                 </div>
             );
-        }
         return retour;
     };
 
@@ -591,9 +260,6 @@ class Product extends React.Component {
             <React.Fragment>
                 <div className="product-page-container">
                     <div className="product-header-container">
-                        <div className="product-history-link">
-                            <Link to="/history"> {"<"} Historique</Link>
-                        </div>
                         <img
                             className="product-bitmap-image"
                             src="/images/utils/bitmap.png"
@@ -602,29 +268,14 @@ class Product extends React.Component {
                     </div>
                     <div
                         className="product-image-container"
-                        // onClick={this.flip}
                         ref={(ref) => (this.imageFlip = ref)}
                     >
                         {this.displayImage()}
                     </div>
 
                     {this.displayNavbar()}
-
-                    {/* <AppBar position="static">
-						<Tabs
-							value={this.state.value}
-							onChange={this.handleChange}
-							aria-label="simple tabs example"
-						>
-							<Tab label="Traçabilité" />
-							<Tab label="Environnement" />
-						</Tabs>
-					</AppBar>
-					<TabPanel value={this.state.value} index={0}></TabPanel>
-					<TabPanel value={this.state.value} index={1}>
-				</TabPanel> */}
-                    {this.state.value === 0 ? (
-                        <Environnement
+                        {this.state.value === 0 ?
+                            <Environnement
                             dataEcoScore={this.state.dataEcoScore}
                             ecoScore={this.state.ecoScore}
                             origins={this.state.origins}
@@ -633,20 +284,14 @@ class Product extends React.Component {
                                 this.props.match.params.bcProductId !== undefined
                             }
                             barcode={this.props.match.params.barcode}
-                        ></Environnement>
-                    ) : (
-                        <div className="product-bottom-container">
-                            <Traceability
-                                products={products}
-                                getBottomRef={this.getBottomRef}
-                                totalCO2Traceability={this.state.totalCO2Traceability}
-                            />
-                        </div>
-                    )}
-                    {/* <Navbar
-                        barcode={this.props.match.params.barcode}
-                        bcProductId={this.props.match.params.bcProductId}
-                    /> */}
+                        ></Environnement> : <div className="product-bottom-container">
+                        <Traceability
+                            products={products}
+                            getBottomRef={this.getBottomRef}
+                            totalCO2Traceability={this.state.totalCO2Traceability}
+                        />
+                    </div>
+                    }
                 </div>
             </React.Fragment>
         );
