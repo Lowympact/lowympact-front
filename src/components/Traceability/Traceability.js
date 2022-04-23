@@ -1,11 +1,13 @@
-import React from "react";
-import { Map, TileLayer, Marker } from "react-leaflet";
 import "./Traceability.css";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Curve } from "./leaflet-curve";
-import L from "leaflet";
 // Import Swiper styles
 import "swiper/swiper-bundle.css";
+
+import { Map, Marker, TileLayer } from "react-leaflet";
+import { Swiper, SwiperSlide } from "swiper/react";
+
+import { Curve } from "./leaflet-curve";
+import L from "leaflet";
+import React from "react";
 
 class Traceability extends React.Component {
     map = undefined;
@@ -106,7 +108,7 @@ class Traceability extends React.Component {
                                     </div>
                                     <div className="product-slide-lowername2">
                                         {this.getTranslation(product.seller?.type)}
-                                        {": "}
+                                        {product.seller?.name ? ": " : null}
                                         {product.seller?.name}
                                     </div>
 
@@ -312,7 +314,7 @@ class Traceability extends React.Component {
                     <span className="product-CO2-total-tracability">
                         Impact total carbone :&nbsp;
                         <span className="carbon-total-number">
-                            {parseFloat(this.props.totalCO2Traceability).toFixed(1)}
+                            {parseFloat(this.props.totalCO2Traceability).toFixed(2)}
                         </span>{" "}
                         kg CO2
                         {/* kg CO2 soit &nbsp;

@@ -80,7 +80,7 @@ class EmpreinteCarbone extends React.Component {
                 this.state.alea
             );
 
-            let circle = "cmauve";
+            let circle = "cgreen"; //"cmauve";
             if (this.props.dataEcoScore?.agribalyse?.co2_total < 15) circle = "cred";
             if (this.props.dataEcoScore?.agribalyse?.co2_total < 7) circle = "corange";
             if (this.props.dataEcoScore?.agribalyse?.co2_total < 3) circle = "cgreen";
