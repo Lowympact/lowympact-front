@@ -211,7 +211,7 @@
     height: 15px;
     border-radius: 15px;
     position: absolute;
-    right: 90px;
+    right: 100px;
     top: 10px;
 }
 
@@ -253,7 +253,7 @@
         height: 8px;
         border-radius: 15px;
         position: absolute;
-        right: 60px;
+        right: 80px;
         top: 7px;
     }
 }

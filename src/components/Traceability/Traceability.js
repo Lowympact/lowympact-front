@@ -130,9 +130,9 @@ class Traceability extends React.Component {
                                 <div className={pastille}></div>
                                 <div>{Math.round(product.dist.value)} km </div>
                                 <div>
-                                    {product.TransportCO2Impact?.value > 1
-                                        ? Math.round(product.TransportCO2Impact?.value)
-                                        : "< 1"}{" "}
+                                    {product.TransportCO2Impact?.value > 0.009
+                                        ? parseFloat(product.TransportCO2Impact?.value).toFixed(2)
+                                        : "< 0.01"}{" "}
                                     kg CO2{" "}
                                 </div>
                             </div>
@@ -312,7 +312,7 @@ class Traceability extends React.Component {
             <div className="tracability-container">
                 <div className="product-CO2-total-tracability-container">
                     <span className="product-CO2-total-tracability">
-                        Impact total carbone :&nbsp;
+                        Impact carbone du transport :&nbsp;
                         <span className="carbon-total-number">
                             {parseFloat(this.props.totalCO2Traceability).toFixed(2)}
                         </span>{" "}

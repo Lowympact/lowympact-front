@@ -4,6 +4,7 @@ import Environnement from "../components/Environnement/Environnement";
 import Navbar from "../components/Navbar/Navbar";
 import React from "react";
 import Traceability from "../components/Traceability/Traceability";
+import amplitude from "amplitude-js";
 
 let productsTemp = {
     data: {
@@ -394,7 +395,24 @@ class Product extends React.Component {
         this.bottomComponent = component;
     };
 
+    fireAmplitudeEvent = (event) => {
+        try {
+            amplitude.getInstance().logEvent(event, { product: "gateries_grillon-bleuet-miel" });
+        } catch (e) {
+            console.error(e);
+        }
+    };
+
     componentDidMount = () => {
+        try {
+            amplitude.getInstance().init("0e3fa5bb2eaddf34671d8d9591791815", null, {
+                apiEndpoint: "api.lowympact.fr/amplitude",
+            });
+        } catch (e) {
+            console.error(e);
+        }
+        this.fireAmplitudeEvent("qrcode-scanned");
+
         this.setState({
             products: productsTemp?.data?.traceability,
             impact: productsTemp?.data?.impact,
@@ -481,7 +499,10 @@ class Product extends React.Component {
                             ? "product-navbar-button selected"
                             : "product-navbar-button"
                     }
-                    onClick={() => this.handleChange("", 0)}
+                    onClick={() => {
+                        this.handleChange("", 0);
+                        this.fireAmplitudeEvent("informations-clicked");
+                    }}
                 >
                     Informations
                 </button>
@@ -491,7 +512,10 @@ class Product extends React.Component {
                             ? "product-navbar-button selected"
                             : "product-navbar-button"
                     }
-                    onClick={() => this.handleChange("", 1)}
+                    onClick={() => {
+                        this.handleChange("", 1);
+                        this.fireAmplitudeEvent("traceability-clicked");
+                    }}
                 >
                     Traçabilité
                 </button>

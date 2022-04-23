@@ -3,6 +3,7 @@ import React from "react";
 // import "swiper/swiper-bundle.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
+import amplitude from "amplitude-js";
 
 class Alternatives extends React.Component {
     state = {
@@ -24,6 +25,13 @@ class Alternatives extends React.Component {
         ];
         this.setState({ alternatives: alternatives });
     };
+    fireAmplitudeEvent = (event, product) => {
+        try {
+            amplitude.getInstance().logEvent(event, { product: product });
+        } catch (e) {
+            console.error(e);
+        }
+    };
 
     renderListAlternatives = (listItems) => {
         let res = <React.Fragment></React.Fragment>;
@@ -32,8 +40,17 @@ class Alternatives extends React.Component {
 
             if (item.id !== this.props.barcode) {
                 return (
-                    <div className="carousel" key={item.id}>
-                        <a href={item.redirect} className="product-alternative">
+                    <div
+                        className="carousel"
+                        key={item.id}
+                        onClick={() => this.fireAmplitudeEvent("suggestion_redirected", item.name)}
+                    >
+                        <a
+                            href={item.redirect}
+                            className="product-alternative"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
                             <div>
                                 <img
                                     src={item.img_url}

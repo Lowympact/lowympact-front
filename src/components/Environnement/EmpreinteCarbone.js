@@ -14,119 +14,124 @@ class EmpreinteCarbone extends React.Component {
     };
 
     render = () => {
-            let repartition = [
-                {
-                    image: "agriculture",
-                    name: "Agriculture",
-                    percent: (
-                        (parseFloat(this.props.dataEcoScore?.agribalyse?.co2_agriculture) * 100) /
-                        parseFloat(this.props.dataEcoScore?.agribalyse?.co2_total)
-                    ).toFixed(0),
-                },
-                {
-                    image: "local_shipping",
-                    name: "Transport",
-                    percent: (
-                        (parseFloat(this.props.dataEcoScore?.agribalyse?.co2_transportation) *
-                            100) /
-                        parseFloat(this.props.dataEcoScore?.agribalyse?.co2_total)
-                    ).toFixed(0),
-                },
-                {
-                    image: "view_in_ar",
-                    name: "Emballage",
-                    percent: (
-                        (parseFloat(this.props.dataEcoScore?.agribalyse?.co2_packaging) * 100) /
-                        parseFloat(this.props.dataEcoScore?.agribalyse?.co2_total)
-                    ).toFixed(0),
-                },
-                {
-                    image: "transform",
-                    name: "Transformation",
-                    percent: (
-                        (parseFloat(this.props.dataEcoScore?.agribalyse?.co2_processing) * 100) /
-                        parseFloat(this.props.dataEcoScore?.agribalyse?.co2_total)
-                    ).toFixed(0),
-                },
-                {
-                    image: "store",
-                    name: "Distribution",
-                    percent: (
-                        (parseFloat(this.props.dataEcoScore?.agribalyse?.co2_distribution) * 100) /
-                        parseFloat(this.props.dataEcoScore?.agribalyse?.co2_total)
-                    ).toFixed(0),
-                },
-                {
-                    image: "microwave",
-                    name: "Consommation",
-                    percent: (
-                        (parseFloat(this.props.dataEcoScore?.agribalyse?.co2_consumption) * 100) /
-                        parseFloat(this.props.dataEcoScore?.agribalyse?.co2_total)
-                    ).toFixed(0),
-                },
-            ];
-            repartition = repartition.map((i) => {
-                return (
-                    <div className="empreinte-single" key={i.name}>
-                        <div className="material-icons">{i.image}</div>
-                        <div className="name">{i.name} : </div>
-                        <div className="pourcent">{i.percent} %</div>
-                    </div>
-                );
-            });
-
-            let equivalent = getEquivalent(
-                parseFloat(0.4),
-                this.state.alea
-            );
-
-            let circle = "cgreen"; //"cmauve";
-            if (this.props.dataEcoScore?.agribalyse?.co2_total < 15) circle = "cred";
-            if (this.props.dataEcoScore?.agribalyse?.co2_total < 7) circle = "corange";
-            if (this.props.dataEcoScore?.agribalyse?.co2_total < 3) circle = "cgreen";
-            if (this.props.dataEcoScore?.agribalyse?.co2_total < 1) circle = "cdarkgreen";
+        let repartition = [
+            {
+                image: "agriculture",
+                name: "Agriculture",
+                percent: (
+                    (parseFloat(this.props.dataEcoScore?.agribalyse?.co2_agriculture) * 100) /
+                    parseFloat(this.props.dataEcoScore?.agribalyse?.co2_total)
+                ).toFixed(0),
+            },
+            {
+                image: "local_shipping",
+                name: "Transport",
+                percent: (
+                    (parseFloat(this.props.dataEcoScore?.agribalyse?.co2_transportation) * 100) /
+                    parseFloat(this.props.dataEcoScore?.agribalyse?.co2_total)
+                ).toFixed(0),
+            },
+            {
+                image: "view_in_ar",
+                name: "Emballage",
+                percent: (
+                    (parseFloat(this.props.dataEcoScore?.agribalyse?.co2_packaging) * 100) /
+                    parseFloat(this.props.dataEcoScore?.agribalyse?.co2_total)
+                ).toFixed(0),
+            },
+            {
+                image: "transform",
+                name: "Transformation",
+                percent: (
+                    (parseFloat(this.props.dataEcoScore?.agribalyse?.co2_processing) * 100) /
+                    parseFloat(this.props.dataEcoScore?.agribalyse?.co2_total)
+                ).toFixed(0),
+            },
+            {
+                image: "store",
+                name: "Distribution",
+                percent: (
+                    (parseFloat(this.props.dataEcoScore?.agribalyse?.co2_distribution) * 100) /
+                    parseFloat(this.props.dataEcoScore?.agribalyse?.co2_total)
+                ).toFixed(0),
+            },
+            {
+                image: "microwave",
+                name: "Consommation",
+                percent: (
+                    (parseFloat(this.props.dataEcoScore?.agribalyse?.co2_consumption) * 100) /
+                    parseFloat(this.props.dataEcoScore?.agribalyse?.co2_total)
+                ).toFixed(0),
+            },
+        ];
+        repartition = repartition.map((i) => {
             return (
-                <React.Fragment>
-                    <div className="empreinte-carbone-container">
-                        <div className="empreinte-carbone-header">
-                            <div className="header-text">
-                                <div className="header-main">Empreinte Carbone</div>
-                            </div>
-                            <div className="empreinte-carbone-number">
-                                <span>
-                                    {parseFloat(
-                                        0.4
-                                    ).toFixed(2)}
-                                    kg CO2e
-                                </span>
-                                <div className={"circle " + circle}></div>
-                            </div>
+                <div className="empreinte-single" key={i.name}>
+                    <div className="material-icons">{i.image}</div>
+                    <div className="name">{i.name} : </div>
+                    <div className="pourcent">{i.percent} %</div>
+                </div>
+            );
+        });
+
+        let equivalent = getEquivalent(
+            parseFloat(
+                this.props.dataEcoScore?.agribalyse?.co2_total
+                    ? this.props.dataEcoScore?.agribalyse?.co2_total
+                    : 0.4
+            ),
+            this.state.alea
+        );
+
+        let circle = "cgreen"; //"cmauve";
+        if (this.props.dataEcoScore?.agribalyse?.co2_total < 15) circle = "cred";
+        if (this.props.dataEcoScore?.agribalyse?.co2_total < 7) circle = "corange";
+        if (this.props.dataEcoScore?.agribalyse?.co2_total < 3) circle = "cgreen";
+        if (this.props.dataEcoScore?.agribalyse?.co2_total < 1) circle = "cdarkgreen";
+        return (
+            <React.Fragment>
+                <div className="empreinte-carbone-container">
+                    <div className="empreinte-carbone-header">
+                        <div className="header-text">
+                            <div className="header-main">Empreinte Carbone Totale</div>
                         </div>
-                        <div className="empreinte-carbone-equivalent">
-                            <div className="icon-container">
-                                <div className="material-icons">
-                                    <img
-                                        src={`/images/alternatives/${equivalent[1]}`}
-                                        alt="alternative"
-                                    />
-                                </div>
-                            </div>
-                            <div className="equivalent-container">
-                                <div className="text-small">Soit l'équivalent...</div>
-                                <div className="text-big">{equivalent[0]}</div>
-                            </div>
-                        </div>
-                        <div className="arrow">
-                            <div className="material-icons" onClick={() => this.setAlea(1)}>
-                                arrow_back_ios
-                            </div>
-                            <div className="material-icons" onClick={() => this.setAlea(-1)}>
-                                arrow_forward_ios
-                            </div>
+                        <div className="empreinte-carbone-number">
+                            <span>
+                                {parseFloat(
+                                    this.props.dataEcoScore?.agribalyse?.co2_total
+                                        ? this.props.dataEcoScore?.agribalyse?.co2_total
+                                        : 1.44
+                                ).toFixed(2)}
+                                kg CO2e
+                            </span>
+                            <div className={"circle " + circle}></div>
                         </div>
                     </div>
-                    { this.props.dataEcoScore ?
-                        <div className="empreinte-carbone-container no-margin-container">
+                    <div className="empreinte-carbone-equivalent">
+                        <div className="icon-container">
+                            <div className="material-icons">
+                                <img
+                                    src={`/images/alternatives/${equivalent[1]}`}
+                                    alt="alternative"
+                                />
+                            </div>
+                        </div>
+                        <div className="equivalent-container">
+                            <div className="text-small">Soit l'équivalent...</div>
+                            <div className="text-big">{equivalent[0]}</div>
+                        </div>
+                    </div>
+                    <div className="arrow">
+                        <div className="material-icons" onClick={() => this.setAlea(1)}>
+                            arrow_back_ios
+                        </div>
+                        <div className="material-icons" onClick={() => this.setAlea(-1)}>
+                            arrow_forward_ios
+                        </div>
+                    </div>
+                </div>
+                {this.props.dataEcoScore ? (
+                    <div className="empreinte-carbone-container no-margin-container">
                         <div className="empreinte-carbone-header">
                             <div className="header-text">
                                 <div className="header-main">
@@ -147,10 +152,10 @@ class EmpreinteCarbone extends React.Component {
                             </div> */}
                         </div>
                         <div className="empreinte-carbone-repartition">{repartition}</div>
-                        </div>
-                    : null }
-                </React.Fragment>
-            );
+                    </div>
+                ) : null}
+            </React.Fragment>
+        );
     };
 }
 
@@ -167,9 +172,7 @@ function getEquivalent(co2, alea) {
             ];
         case 1:
             return [
-                "De la production de " +
-                    (co2 / 0.6).toFixed(1) +
-                    " kg de pommes de terre",
+                "De la production de " + (co2 / 0.6).toFixed(1) + " kg de pommes de terre",
                 "potatoe.png",
             ];
         case 2:
