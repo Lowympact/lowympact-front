@@ -194,7 +194,7 @@
 }
 
 .product-slide-name-product {
-    white-space: nowrap;
+    /* white-space: nowrap; */
     width: 40vw;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -204,6 +204,7 @@
     position: absolute;
     right: 20px;
     top: 20px;
+    font-size: 14px;
 }
 .product-slide-pastille {
     width: 15px;

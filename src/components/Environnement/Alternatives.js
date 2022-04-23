@@ -19,9 +19,9 @@ class Alternatives extends React.Component {
                 id: 1,
                 img_url: "/images/products/wh_cricket_soft_ST_2018_220x.png",
                 name: "Gâteries d'entrainement aux grillons et shiitake",
-                redirect: "https://fr.wilderharrier.com/collections/dog-treats#main"
-            }
-        ]
+                redirect: "https://fr.wilderharrier.com/collections/dog-treats#main",
+            },
+        ];
         this.setState({ alternatives: alternatives });
     };
 
@@ -66,11 +66,11 @@ class Alternatives extends React.Component {
             if (this.state.alternatives === "loading") {
                 alternatives_title = "Chargement des alternatives ...";
             } else {
-                alternatives_title = "Alternatives";
+                alternatives_title = "Découvrez aussi...";
             }
         }
         let alternatives;
-        if(this.state.alternatives)
+        if (this.state.alternatives)
             alternatives = this.renderListAlternatives(this.state.alternatives);
 
         if (

@@ -25,6 +25,7 @@ const ProfileConfiguration = React.lazy(() => import("./pages/ProfileConfigurati
 const Statistics = React.lazy(() => import("./pages/Statistics"));
 const Debug = React.lazy(() => import("./pages/Debug"));
 const Avis = React.lazy(() => import("./pages/Avis"));
+const WilderHarrier = React.lazy(() => import("./pages/WilderHarrier"));
 
 class App extends Component {
     render() {
@@ -51,6 +52,12 @@ class App extends Component {
                         <Route path="/" component={Login} exact key={1} />
                         <Route path="/products/:barcode/:bcProductId" component={Product} exact />
                         <Route path="/products/:barcode" component={Product} exact />
+                        <Route
+                            path="/wilderharrier/gateries-grillon-bleuet-miel"
+                            component={WilderHarrier}
+                            exact
+                        />
+                        <Route path="/wilderharrier" component={WilderHarrier} exact />
                         <Route path="/signup" component={Signup} exact />
                         <Route path="/signin" component={Signin} exact />
                         <Route path="/configuration" component={ProfileConfiguration} exact />
