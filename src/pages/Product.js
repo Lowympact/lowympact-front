@@ -22,8 +22,8 @@ let productsTemp = {
                 transport: "Plane",
 
                 seller: {
-                    name: "The Palm Oil Company",
-                    type: "productor",
+                    //name: "The Palm Oil Company",
+                    //type: "productor",
                     localisation: {
                         city: "Kuala Lumpur",
                         country: "Malaisie",
@@ -54,8 +54,8 @@ let productsTemp = {
                 transport: "Train",
 
                 seller: {
-                    name: "Noisetti",
-                    type: "productor",
+                    //name: "Noisetti",
+                    //type: "productor",
                     localisation: {
                         city: "Lagos",
                         country: "Portugal",
@@ -83,11 +83,11 @@ let productsTemp = {
                 dist: {
                     value: 5500,
                 },
-                transport: "Plane",
+                transport: "Boat",
 
                 seller: {
-                    name: "Ferrero",
-                    type: "maker",
+                    //name: "Ferrero",
+                    //type: "maker",
                     localisation: {
                         city: "Villers-Ecalles",
                         country: "France",

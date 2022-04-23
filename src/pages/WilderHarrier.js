@@ -12,7 +12,7 @@ let productsTemp = {
                 depth: 1,
                 productsOutput: [{ productName: "Pois chiches" }],
                 TransportCO2Impact: {
-                    value: 19.8,
+                    value: 0.000571428571428571,
                 },
                 dist: {
                     value: 198,
@@ -20,8 +20,8 @@ let productsTemp = {
                 transport: "Truck",
 
                 seller: {
-                    name: "",
-                    type: "productor",
+                    //name: "The Palm Oil Company",
+                    //type: "productor",
                     localisation: {
                         city: "Ottawa",
                         country: "Canada",
@@ -44,7 +44,7 @@ let productsTemp = {
                 depth: 1,
                 productsOutput: [{ productName: "Graines de lin" }],
                 TransportCO2Impact: {
-                    value: 227.4,
+                    value: 0.005448,
                 },
                 dist: {
                     value: 2274,
@@ -52,8 +52,8 @@ let productsTemp = {
                 transport: "Truck",
 
                 seller: {
-                    name: "",
-                    type: "productor",
+                    //name: "Noisetti",
+                    //type: "productor",
                     localisation: {
                         city: "Winkler",
                         country: "Canada",
@@ -76,16 +76,16 @@ let productsTemp = {
                 depth: 1,
                 productsOutput: [{ productName: "Dattes" }],
                 TransportCO2Impact: {
-                    value: 1051.4,
+                    value: 0.01067,
                 },
                 dist: {
                     value: 6917,
                 },
-                transport: "Plane",
+                transport: "Boat",
 
                 seller: {
-                    name: "",
-                    type: "maker",
+                    //name: "Ferrero",
+                    //type: "maker",
                     localisation: {
                         city: "Tunis",
                         country: "Tunisie",
@@ -108,7 +108,7 @@ let productsTemp = {
                 depth: 1,
                 productsOutput: [{ productName: "Grillons" }],
                 TransportCO2Impact: {
-                    value: 46.0,
+                    value: 0.00276,
                 },
                 dist: {
                     value: 460,
@@ -116,8 +116,8 @@ let productsTemp = {
                 transport: "Truck",
 
                 seller: {
-                    name: "",
-                    type: "maker",
+                    //name: "Ferrero",
+                    //type: "maker",
                     localisation: {
                         city: "Peterborough",
                         country: "Canada",
@@ -140,7 +140,7 @@ let productsTemp = {
                 depth: 1,
                 productsOutput: [{ productName: "Glycérine végétale" }],
                 TransportCO2Impact: {
-                    value: 1.0,
+                    value: 0.000088,
                 },
                 dist: {
                     value: 10,
@@ -148,8 +148,8 @@ let productsTemp = {
                 transport: "Truck",
 
                 seller: {
-                    name: "",
-                    type: "maker",
+                    //name: "Ferrero",
+                    //type: "maker",
                     localisation: {
                         city: "Montréal",
                         country: "Canada",
@@ -172,7 +172,7 @@ let productsTemp = {
                 depth: 1,
                 productsOutput: [{ productName: "Bleuets" }],
                 TransportCO2Impact: {
-                    value: 25.5,
+                    value: 0.000819,
                 },
                 dist: {
                     value: 255,
@@ -180,8 +180,8 @@ let productsTemp = {
                 transport: "Truck",
 
                 seller: {
-                    name: "",
-                    type: "maker",
+                    //name: "Ferrero",
+                    //type: "maker",
                     localisation: {
                         city: "Quebec city",
                         country: "Canada",
@@ -204,7 +204,7 @@ let productsTemp = {
                 depth: 1,
                 productsOutput: [{ productName: "Saveur naturelle" }],
                 TransportCO2Impact: {
-                    value: 187.5,
+                    value: 0.007332,
                 },
                 dist: {
                     value: 1875,
@@ -212,8 +212,8 @@ let productsTemp = {
                 transport: "Truck",
 
                 seller: {
-                    name: "",
-                    type: "maker",
+                    //name: "Ferrero",
+                    //type: "maker",
                     localisation: {
                         city: "Des Moines, Iowa",
                         country: "USA",
@@ -236,16 +236,16 @@ let productsTemp = {
                 depth: 1,
                 productsOutput: [{ productName: "Huile d'olive" }],
                 TransportCO2Impact: {
-                    value: 11629.5,
+                    value: 0.0013936,
                 },
                 dist: {
                     value: 7651,
                 },
-                transport: "Plane",
+                transport: "Boat",
 
                 seller: {
-                    name: "",
-                    type: "maker",
+                    //name: "Ferrero",
+                    //type: "maker",
                     localisation: {
                         city: "Athènes",
                         country: "Grèce",
@@ -268,7 +268,7 @@ let productsTemp = {
                 depth: 1,
                 productsOutput: [{ productName: "Miel" }],
                 TransportCO2Impact: {
-                    value: 68.3,
+                    value: 0.007072,
                 },
                 dist: {
                     value: 683,
@@ -276,8 +276,8 @@ let productsTemp = {
                 transport: "Truck",
 
                 seller: {
-                    name: "Abitemis",
-                    type: "productor",
+                    //name: "Abitemis",
+                    //type: "productor",
                     localisation: {
                         city: "Saint-Bruno-de-Guigues, QC",
                         country: "Canada",
@@ -300,7 +300,7 @@ let productsTemp = {
                 depth: 1,
                 productsOutput: [{ productName: "Acide citrique et vinaigre tamponné" }],
                 TransportCO2Impact: {
-                    value: 187.5,
+                    value: 0.002444,
                 },
                 dist: {
                     value: 1875,
@@ -308,8 +308,8 @@ let productsTemp = {
                 transport: "Truck",
 
                 seller: {
-                    name: "Abitemis",
-                    type: "productor",
+                    //name: "Abitemis",
+                    //type: "productor",
                     localisation: {
                         city: "Des Moines, Iowa",
                         country: "USA",
@@ -332,7 +332,7 @@ let productsTemp = {
                 depth: 1,
                 productsOutput: [{ productName: "Mélange de tocophérols" }],
                 TransportCO2Impact: {
-                    value: 187.5,
+                    value: 0.0004888,
                 },
                 dist: {
                     value: 1875,
@@ -340,8 +340,8 @@ let productsTemp = {
                 transport: "Truck",
 
                 seller: {
-                    name: "Abitemis",
-                    type: "productor",
+                    //name: "Abitemis",
+                    //type: "productor",
                     localisation: {
                         city: "Des Moines, Iowa",
                         country: "Canada",
@@ -362,7 +362,7 @@ let productsTemp = {
             },
         ],
         impact: "",
-        transportCO2Impact: 0.4,
+        transportCO2Impact: 0.0390868285714286,
         productImageUrl: "/images/products/wh_cricket_soft_BH_2018_220x.png",
         productName: "Gâteries d'entraînement aux grillons et bleuets",
         //origins : "Québec",
