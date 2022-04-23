@@ -1,84 +1,85 @@
+import "./Product.css";
+
+import Environnement from "../components/Environnement/Environnement";
 import Navbar from "../components/Navbar/Navbar";
 import React from "react";
 import Traceability from "../components/Traceability/Traceability";
-import Environnement from "../components/Environnement/Environnement";
-import "./Product.css";
 
 let productsTemp = {
     data: {
         traceability: [
             {
                 depth: 1,
-                productsOutput: [{ productName: "Huile de palme" }],
+                productsOutput: [{ productName: "Pois chiches" }],
                 TransportCO2Impact: {
-                    value: 26,
+                    value: 19.8,
                 },
                 dist: {
-                    value: 19400,
+                    value: 198,
                 },
-                transport: "Plane",
+                transport: "Truck",
 
                 seller: {
                     name: "The Palm Oil Company",
                     type: "productor",
                     localisation: {
-                        city: "Kuala Lumpur",
-                        country: "Malaisie",
-                        latitude: 3,
-                        longitude: 101,
+                        city: "Ottawa",
+                        country: "Canada",
+                        latitude: 45.4215,
+                        longitude: -75.6972,
                     },
                 },
                 buyer: {
-                    name: "Ferrero",
+                    name: "Wilder Harrier",
                     type: "maker",
                     localisation: {
-                        city: "Villers-Ecalles",
-                        country: "France",
-                        latitude: 48,
-                        longitude: 3,
+                        city: "Montréal",
+                        country: "Canada",
+                        latitude: 45.5017,
+                        longitude: -73.5673,
                     },
                 },
             },
             {
                 depth: 1,
-                productsOutput: [{ productName: "Noisettes" }],
+                productsOutput: [{ productName: "Graines de lin" }],
                 TransportCO2Impact: {
-                    value: 6,
+                    value: 227.4,
                 },
                 dist: {
-                    value: 1200,
+                    value: 2274,
                 },
-                transport: "Train",
+                transport: "Truck",
 
                 seller: {
                     name: "Noisetti",
                     type: "productor",
                     localisation: {
-                        city: "Lagos",
-                        country: "Portugal",
-                        latitude: 37,
-                        longitude: -8,
+                        city: "Winkler",
+                        country: "Canada",
+                        latitude: 49.1801,
+                        longitude: -97.9389,
                     },
                 },
                 buyer: {
-                    name: "Ferrero",
+                    name: "Wilder Harrier",
                     type: "maker",
                     localisation: {
-                        city: "Villers-Ecalles",
-                        country: "France",
-                        latitude: 48,
-                        longitude: 3,
+                        city: "Montréal",
+                        country: "Canada",
+                        latitude: 45.5017,
+                        longitude: -73.5673,
                     },
                 },
             },
             {
                 depth: 1,
-                productsOutput: [{ productName: "Pot de Nutella" }],
+                productsOutput: [{ productName: "Dattes" }],
                 TransportCO2Impact: {
-                    value: 19,
+                    value: 1051.4,
                 },
                 dist: {
-                    value: 5500,
+                    value: 6917,
                 },
                 transport: "Plane",
 
@@ -86,26 +87,282 @@ let productsTemp = {
                     name: "Ferrero",
                     type: "maker",
                     localisation: {
-                        city: "Villers-Ecalles",
-                        country: "France",
-                        latitude: 48,
-                        longitude: 3,
+                        city: "Tunis",
+                        country: "Tunisie",
+                        latitude: 36.8065,
+                        longitude: 10.1815,
                     },
                 },
                 buyer: {
-                    name: "Maxi",
-                    type: "shop",
+                    name: "Wilder Harrier",
+                    type: "maker",
                     localisation: {
                         city: "Montréal",
                         country: "Canada",
-                        latitude: 45,
-                        longitude: -73,
+                        latitude: 45.5017,
+                        longitude: -73.5673,
+                    },
+                },
+            },
+            {
+                depth: 1,
+                productsOutput: [{ productName: "Grillons" }],
+                TransportCO2Impact: {
+                    value: 46.0,
+                },
+                dist: {
+                    value: 460,
+                },
+                transport: "Truck",
+
+                seller: {
+                    name: "Ferrero",
+                    type: "maker",
+                    localisation: {
+                        city: "Peterborough",
+                        country: "Canada",
+                        latitude: 44.3091,
+                        longitude: -78.3197,
+                    },
+                },
+                buyer: {
+                    name: "Wilder Harrier",
+                    type: "maker",
+                    localisation: {
+                        city: "Montréal",
+                        country: "Canada",
+                        latitude: 45.5017,
+                        longitude: -73.5673,
+                    },
+                },
+            },
+            {
+                depth: 1,
+                productsOutput: [{ productName: "Glycérine végétale" }],
+                TransportCO2Impact: {
+                    value: 1.0,
+                },
+                dist: {
+                    value: 10,
+                },
+                transport: "Truck",
+
+                seller: {
+                    name: "Ferrero",
+                    type: "maker",
+                    localisation: {
+                        city: "Montréal",
+                        country: "Canada",
+                        latitude: 45.5017,
+                        longitude: -73.5673,
+                    },
+                },
+                buyer: {
+                    name: "Wilder Harrier",
+                    type: "maker",
+                    localisation: {
+                        city: "Montréal",
+                        country: "Canada",
+                        latitude: 45.5017,
+                        longitude: -73.5673,
+                    },
+                },
+            },
+            {
+                depth: 1,
+                productsOutput: [{ productName: "Bleuets" }],
+                TransportCO2Impact: {
+                    value: 25.5,
+                },
+                dist: {
+                    value: 255,
+                },
+                transport: "Truck",
+
+                seller: {
+                    name: "Ferrero",
+                    type: "maker",
+                    localisation: {
+                        city: "Quebec city",
+                        country: "Canada",
+                        latitude: 46.8139,
+                        longitude: -71.2080,
+                    },
+                },
+                buyer: {
+                    name: "Wilder Harrier",
+                    type: "maker",
+                    localisation: {
+                        city: "Montréal",
+                        country: "Canada",
+                        latitude: 45.5017,
+                        longitude: -73.5673,
+                    },
+                },
+            },
+            {
+                depth: 1,
+                productsOutput: [{ productName: "Saveur naturelle" }],
+                TransportCO2Impact: {
+                    value: 187.5,
+                },
+                dist: {
+                    value: 1875,
+                },
+                transport: "Truck",
+
+                seller: {
+                    name: "Ferrero",
+                    type: "maker",
+                    localisation: {
+                        city: "Des Moines, Iowa",
+                        country: "USA",
+                        latitude: 41.5868,
+                        longitude: -93.6250,
+                    },
+                },
+                buyer: {
+                    name: "Wilder Harrier",
+                    type: "maker",
+                    localisation: {
+                        city: "Montréal",
+                        country: "Canada",
+                        latitude: 45.5017,
+                        longitude: -73.5673,
+                    },
+                },
+            },
+            {
+                depth: 1,
+                productsOutput: [{ productName: "Huile d'olive" }],
+                TransportCO2Impact: {
+                    value: 11629.5,
+                },
+                dist: {
+                    value: 7651,
+                },
+                transport: "Plane",
+
+                seller: {
+                    name: "Ferrero",
+                    type: "maker",
+                    localisation: {
+                        city: "Athènes",
+                        country: "Grèce",
+                        latitude: 37.9838,
+                        longitude: 23.7275,
+                    },
+                },
+                buyer: {
+                    name: "Wilder Harrier",
+                    type: "maker",
+                    localisation: {
+                        city: "Montréal",
+                        country: "Canada",
+                        latitude: 45.5017,
+                        longitude: -73.5673,
+                    },
+                },
+            },
+            {
+                depth: 1,
+                productsOutput: [{ productName: "Miel" }],
+                TransportCO2Impact: {
+                    value: 68.3,
+                },
+                dist: {
+                    value: 683,
+                },
+                transport: "Truck",
+
+                seller: {
+                    name: "Abitemis",
+                    type: "productor",
+                    localisation: {
+                        city: "Saint-Bruno-de-Guigues, QC",
+                        country: "Canada",
+                        latitude: 47.4641,
+                        longitude: -79.4381,
+                    },
+                },
+                buyer: {
+                    name: "Wilder Harrier",
+                    type: "maker",
+                    localisation: {
+                        city: "Montréal",
+                        country: "Canada",
+                        latitude: 45.5017,
+                        longitude: -73.5673,
+                    },
+                },
+            },
+            {
+                depth: 1,
+                productsOutput: [{ productName: "Acide citrique et vinaigre tamponné" }],
+                TransportCO2Impact: {
+                    value: 187.5,
+                },
+                dist: {
+                    value: 1875,
+                },
+                transport: "Truck",
+
+                seller: {
+                    name: "Abitemis",
+                    type: "productor",
+                    localisation: {
+                        city: "Des Moines, Iowa",
+                        country: "USA",
+                        latitude: 41.5868,
+                        longitude: -93.6250,
+                    },
+                },
+                buyer: {
+                    name: "Wilder Harrier",
+                    type: "maker",
+                    localisation: {
+                        city: "Montréal",
+                        country: "Canada",
+                        latitude: 45.5017,
+                        longitude: -73.5673,
+                    },
+                },
+            },
+            {
+                depth: 1,
+                productsOutput: [{ productName: "Mélange de tocophérols" }],
+                TransportCO2Impact: {
+                    value: 187.5,
+                },
+                dist: {
+                    value: 1875,
+                },
+                transport: "Truck",
+
+                seller: {
+                    name: "Abitemis",
+                    type: "productor",
+                    localisation: {
+                        city: "Des Moines, Iowa",
+                        country: "Canada",
+                        latitude: 41.5868,
+                        longitude: -93.6250,
+                    },
+                },
+                buyer: {
+                    name: "Wilder Harrier",
+                    type: "maker",
+                    localisation: {
+                        city: "Montréal",
+                        country: "Canada",
+                        latitude: 45.5017,
+                        longitude: -73.5673,
                     },
                 },
             },
         ],
         impact: "",
-        transportCO2Impact: 9.87,
+        transportCO2Impact: 0.4,
         productImageUrl : "/images/products/wh_cricket_soft_BH_2018_220x.png",
         productName : "Gâteries d'entraînement aux grillons et bleuets",
         //origins : "Québec",

@@ -76,7 +76,7 @@ class EmpreinteCarbone extends React.Component {
             });
 
             let equivalent = getEquivalent(
-                parseFloat(9.9),
+                parseFloat(0.4),
                 this.state.alea
             );
 
@@ -95,7 +95,7 @@ class EmpreinteCarbone extends React.Component {
                             <div className="empreinte-carbone-number">
                                 <span>
                                     {parseFloat(
-                                        9.9
+                                        0.4
                                     ).toFixed(2)}
                                     kg CO2e
                                 </span>
@@ -169,12 +169,12 @@ function getEquivalent(co2, alea) {
             return [
                 "De la production de " +
                     (co2 / 0.6).toFixed(1) +
-                    " kg de pommes de terre en France",
+                    " kg de pommes de terre",
                 "potatoe.png",
             ];
         case 2:
             return [
-                "De la production de " + (co2 / 0.53).toFixed(1) + " kg de fraises en France",
+                "De la production de " + (co2 / 0.53).toFixed(1) + " kg de fraises",
                 "strawberry.png",
             ];
         case 3:
