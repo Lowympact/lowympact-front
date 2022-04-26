@@ -57,6 +57,7 @@ class App extends Component {
                             component={WilderHarrier}
                             exact
                         />
+                        <Route path="/1" component={WilderHarrier} exact />
                         <Route path="/wilderharrier" component={WilderHarrier} exact />
                         <Route path="/signup" component={Signup} exact />
                         <Route path="/signin" component={Signin} exact />
