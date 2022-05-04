@@ -187,10 +187,16 @@
 }
 
 .product-slide-arrow {
-    font-size: 30px;
+    font-size: 25px;
     position: absolute;
     right: 10px;
-    top: calc(50% - 15px);
+    top: calc(65% - 15px);
+}
+.product-slide-arrow-left {
+    font-size: 25px;
+    position: absolute;
+    left: 10px;
+    top: calc(65% - 15px);
 }
 
 .product-slide-name-product {
