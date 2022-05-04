@@ -125,7 +125,12 @@ class Traceability extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="product-slide-arrow">{">"}</div>
+                            <div
+                                className="product-slide-arrow"
+                                onClick={() => this.handleSwipeClick()}
+                            >
+                                {">"}
+                            </div>
                             <div className="product-slide-consumption">
                                 <div className={pastille}></div>
                                 <div>{Math.round(product.dist.value)} km </div>
@@ -142,6 +147,16 @@ class Traceability extends React.Component {
             });
         }
         return slides;
+    };
+
+    handleSwipeClick = () => {
+        console.log(this.state.currentIndex);
+        let nextIndex = this.state.currentIndex + 1;
+        if (nextIndex >= this.props.products?.length) {
+            this.state.swiper.slideTo(nextIndex - 1, 500);
+        } else {
+            this.state.swiper.slideTo(nextIndex, 500);
+        }
     };
 
     handleMarkerClick = (latlng, index) => {
